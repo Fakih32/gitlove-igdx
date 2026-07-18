@@ -11,7 +11,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     public static Dragandropscript instance;
     public GameObject objectawal;
     public RectTransform tujuan;
-    private Vector3 startPosition;         // initial world position of objectawal
+    private Vector3 startPosition;        
     private Vector2 dragOffset;
     void Start()
     {
@@ -23,7 +23,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
         }
     }
 
-    // --- Drag event handlers ---
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -57,8 +57,13 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     {
         RectTransform transformawal = objectawal.GetComponent<RectTransform>();
 
-        // --- Determine if the drop is successful ---
+      
         bool isOverTarget = IsOverTargetWithMargin(transformawal, tujuan, margin: 15f);
+        if (isOverTarget)
+        {
+            objectawal.transform.position = tujuan.position;
+            AudioScript.instance.playcorrectaudio();
+        }
 
         // --- Evaluate conditions (order matters) ---
     }
@@ -66,13 +71,13 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     {
         if (dragged == null || target == null) return false;
 
-        // Get world corners of both rects (order: bottom-left, top-left, top-right, bottom-right)
+       
         Vector3[] draggedCorners = new Vector3[4];
         Vector3[] targetCorners = new Vector3[4];
         dragged.GetWorldCorners(draggedCorners);
         target.GetWorldCorners(targetCorners);
 
-        // Convert to Rect (world space)
+       
         Rect draggedRect = new Rect(
             draggedCorners[0].x - margin,
             draggedCorners[0].y - margin,
