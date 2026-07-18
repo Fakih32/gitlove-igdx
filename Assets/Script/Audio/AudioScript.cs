@@ -2,29 +2,8 @@ using UnityEngine;
 
 public class AudioScript : MonoBehaviour
 {
-    public static AudioScript instance;
-    public AudioSource sfxplayer;
-    public AudioClip correct;
-
-    void Awake()
-    {
-        instance = this;
-        if (instance != this && instance == null)
-        {
-            Destroy(gameObject);
-
-        }
-        else
-        {
-            instance = this;
-        }
-    }
-    public void correctaudioplay()
-    {
-        sfxplayer.clip = correct;
-        sfxplayer.Play();
-        
-    }
+    public AudioSource sfxaudioplayer;
+    public AudioClip correctaudio;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
