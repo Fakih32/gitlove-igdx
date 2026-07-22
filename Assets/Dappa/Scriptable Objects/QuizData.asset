@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: QuizData
   m_EditorClassIdentifier: 
   quizzes:
-  - image: {fileID: 0}
-    correctWord: 
-  - image: {fileID: 0}
-    correctWord: 
-  - image: {fileID: 0}
-    correctWord: 
+  - image: {fileID: 21300000, guid: 49e25f43f69b5494ca8feb459e86a100, type: 3}
+    correctWord: LOVE
+  - image: {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
+    correctWord: PINK
+  - image: {fileID: 21300000, guid: 05a0b41460a194445ab15f7564a19114, type: 3}
+    correctWord: FLOYD
