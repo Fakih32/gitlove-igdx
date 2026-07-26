@@ -13,6 +13,8 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     public RectTransform tujuan;
     private Vector3 startPosition;        
     private Vector2 dragOffset;
+    private bool placedOnTarget = false;
+
     void Start()
     {
         if (objectawal != null)
@@ -27,6 +29,9 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (placedOnTarget)
+            return;
+
         RectTransform rect = objectawal.GetComponent<RectTransform>();
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -40,6 +45,9 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     }
     public void OnDrag(PointerEventData eventData)
     {
+        if (placedOnTarget)
+            return;
+
         RectTransform rect = objectawal.GetComponent<RectTransform>();
 
         Vector2 localPoint;
@@ -55,13 +63,23 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (placedOnTarget)
+            return;
+
         RectTransform transformawal = objectawal.GetComponent<RectTransform>();
 
-      
         bool isOverTarget = IsOverTargetWithMargin(transformawal, tujuan, margin: 15f);
         if (isOverTarget)
         {
             objectawal.transform.position = tujuan.position;
+            placedOnTarget = true;
+
+            if (DraganddropLevelHandler.instance != null)
+            {
+                DraganddropLevelHandler.instance.tujuancount += 1;
+                DraganddropLevelHandler.instance.Addpoint();
+            }
+
             AudioScript.instance.playcorrectaudio();
         }
 
@@ -70,7 +88,6 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     private bool IsOverTargetWithMargin(RectTransform dragged, RectTransform target, float margin = 0f)
     {
         if (dragged == null || target == null) return false;
-
        
         Vector3[] draggedCorners = new Vector3[4];
         Vector3[] targetCorners = new Vector3[4];
