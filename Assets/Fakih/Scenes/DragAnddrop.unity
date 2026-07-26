@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   islevel1: 0
-  timer: 5
+  timer: 20
   Listtujuan:
   - {fileID: 273571595}
   - {fileID: 359073218}
@@ -1161,6 +1161,8 @@ MonoBehaviour:
   tujuanmax: 0
   currentpoint: 0
   poin_got: 10
+  poin_waktu: 0
+  time_need: 5
   onestarpoint: 10
   twostarpoint: 20
   threestarpoint: 30
@@ -1614,7 +1616,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1

@@ -19,6 +19,9 @@ public class DraganddropLevelHandler : MonoBehaviour
     [Header("Poin Yang Didapat")]
     [HideInInspector] public float currentpoint = 0;
     public float poin_got;
+    public float poin_waktu;
+    [Header("Waktu Yang diperlukan mencapai poin tambahan")]
+    public float time_need;
     [Header("Poin Minimal")]
     public float onestarpoint;
     public float twostarpoint;
@@ -101,12 +104,21 @@ public class DraganddropLevelHandler : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+public void Addpointpertimer(){
+     InvokeRepeating("addpointtime", 1f ,time_need);
+     Debug.Log(currentpoint); 
+}
+    void addpointtime(){
+        if (TimerScript.instance.timer> time_need){
+            currentpoint += poin_waktu;
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
         tujuanmax = Listtujuan.Count;
-        Debug.Log(tujuanmax);
+      
         
     }
 
@@ -119,7 +131,7 @@ public class DraganddropLevelHandler : MonoBehaviour
         if (tujuancount == tujuanmax){
             skortype = Scoresenum.threestar; 
             Gamewin();
-            
+            TimerScript.instance.timer = 0f;
             
         }
         }
