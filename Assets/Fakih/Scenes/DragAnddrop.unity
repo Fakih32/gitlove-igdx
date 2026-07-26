@@ -1161,7 +1161,7 @@ MonoBehaviour:
   tujuanmax: 0
   currentpoint: 0
   poin_got: 10
-  poin_waktu: 0
+  poin_waktu: 1
   time_need: 5
   onestarpoint: 10
   twostarpoint: 20
