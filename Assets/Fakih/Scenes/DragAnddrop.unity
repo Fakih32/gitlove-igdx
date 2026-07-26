@@ -1919,7 +1919,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxaudioplayer: {fileID: 1170926027}
+  Bgmaudioplayer: {fileID: 0}
   correctaudio: {fileID: 8300000, guid: fc25b1a4e41156244b59d8db57d36882, type: 3}
+  Dragingup: {fileID: 8300000, guid: a21163a586b143546a250509ecae11c9, type: 3}
+  Dropingdown: {fileID: 8300000, guid: 1c0580a0e872797408d8f8bf306f36f9, type: 3}
 --- !u!1 &2134550218
 GameObject:
   m_ObjectHideFlags: 0

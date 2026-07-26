@@ -29,6 +29,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+         
         if (placedOnTarget)
             return;
 
@@ -42,6 +43,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
         );
 
         dragOffset = rect.localPosition - (Vector3)dragOffset;
+        AudioScript.instance.Playsfx(AudioScript.instance.Dragingup);
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -63,6 +65,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        AudioScript.instance.Playsfx(AudioScript.instance.Dropingdown);
         if (placedOnTarget)
             return;
 
@@ -81,7 +84,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
                 DraganddropLevelHandler.instance.Addpointpertimer();
             }
 
-            AudioScript.instance.playcorrectaudio();
+            AudioScript.instance.Playsfx(AudioScript.instance.correctaudio);
         }
 
         // --- Evaluate conditions (order matters) ---
