@@ -4,23 +4,67 @@ using UnityEngine.UI;
 public class TimerScript : MonoBehaviour
 {
     public static TimerScript instance;
-    public float timer = 10f;
-    public Slider timeslide;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    [SerializeField] private Image timerImage;
+    [SerializeField] private float duration = 10f;
+
+    [HideInInspector]public float timer;
+    void Awake()
     {
-        timeslide.maxValue = timer;
-        timeslide.value = timer;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        timer -= Time.deltaTime;
-        if (timeslide != null)
+        timer = duration;
+        timerImage.fillAmount = 1f;
+    }
+
+    private void Start()
+    {
+        if (DraganddropLevelHandler.instance != null && DraganddropLevelHandler.instance.timer > 0f)
         {
-            timeslide.value = timer;
+            duration = DraganddropLevelHandler.instance.timer;
+            timer = duration;
         }
-        
+        else
+        {
+            timer = duration;
+        }
+
+        UpdateTimerFill();
+    }
+
+    private void Update()
+    {
+        if (timer <= 0f)
+            return;
+
+        timer -= Time.deltaTime;
+        timer = Mathf.Max(timer, 0f);
+
+        UpdateTimerFill();
+
+        if (timer <= 0f)
+        {
+            timer = 0f;
+            UpdateTimerFill();
+            Debug.Log("Timer Finished");
+        }
+    }
+
+    private void UpdateTimerFill()
+    {
+        if (timerImage != null)
+        {
+            timerImage.fillAmount = Mathf.Clamp01(timer / duration);
+        }
     }
 }
