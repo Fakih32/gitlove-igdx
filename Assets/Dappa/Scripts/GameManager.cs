@@ -22,16 +22,16 @@ public class GameManager : MonoBehaviour {
     private float timeRemaining;
     private bool isGameActive = true;
 
-    private void Start() {
+    void Start() {
         LoadQuiz(currentQuizIndex);
     }
 
-    private void Update() {
+    void Update() {
         if(isGameActive)
             UpdateTimer();
     }
 
-    private void LoadQuiz(int quizIndex) {
+    void LoadQuiz(int quizIndex) {
         Debug.Log("Loading Quiz: " + quizIndex);
 
         if(quizData == null || quizData.quizzes == null || quizData.quizzes.Length == 0) {
@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour {
         image.sprite = quiz.image;
 
         CreateLetterFields(quiz.correctWord.Length);
-        //CreateLetterButtons(quiz.correctWord);
+        CreateLetterButtons(quiz.correctWord);
 
         timeRemaining = timeLimit;
         isGameActive = true;
     }
 
-    private void CreateLetterFields(int fieldCount) {
+    void CreateLetterFields(int fieldCount) {
         Debug.Log("Creating Letter Fields: " + fieldCount);
 
         foreach(Transform child in letterFieldParent) {
@@ -78,21 +78,47 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void CreateLetterButtons(string correctWord) {
+    void CreateLetterButtons(string correctWord) {
         Debug.Log("Creating Letter Buttons");
 
         foreach(Transform child in letterButtonsParent) {
             Destroy(child.gameObject);
         }
 
-        letterButtons = new Button[0];
+        letterButtons = new Button[8];
 
         char[] correctLetters = correctWord.ToCharArray();
-        //char[] wrongLetters = GenerateRandomLetters(8 - correctLetters.Length, correctLetters);
+        char[] wrongLetters = GenerateRandomLetters(8 - correctLetters.Length, correctLetters);
 
         char[] allLetters = new char[8];
         correctLetters.CopyTo(allLetters, 0);
-        //wrongLetters.CopyTo(allLetters, correctLetters.Length);
+        wrongLetters.CopyTo(allLetters, correctLetters.Length);
+
+        ShuffleLetters(allLetters);
+
+        for(int i = 0; i < allLetters.Length; i++) {
+            GameObject button = Instantiate(letterButtonPrefab, letterButtonsParent);
+            button.GetComponentInChildren<Text>().text = allLetters[i].ToString();
+            int index = i;
+            button.GetComponent<Button>().onClick.AddListener(() => OnLetterButtonClick(index));
+
+            letterButtons[i] = button.GetComponent<Button>();
+            if (letterButtons[i] == null) {
+                Debug.Log("Letter Button Prefab is missing button component!");
+            }
+        }
+    }
+
+    void OnLetterButtonClick(int buttonIndex) {
+        if (currentFieldIndex < letterFields.Length) {
+            string letter = letterButtons[buttonIndex].GetComponentInChildren<Text>().text;
+
+            letterFields[currentFieldIndex].text = letter;
+
+            letterButtons[buttonIndex].interactable = false;
+
+            currentFieldIndex++;
+        }
     }
 
     char[] GenerateRandomLetters(int count, char[] excludeLetters) {
@@ -110,7 +136,16 @@ public class GameManager : MonoBehaviour {
         return randomLetters;
     }
 
-    private void UpdateTimer() {
+    void ShuffleLetters(char[] letters) {
+        for(int i = letters.Length - 1; i > 0; i--) {
+            int randomIndex = Random.Range(0, i + 1);
+            char temp = letters[i];
+            letters[i] = letters[randomIndex];
+            letters[randomIndex] = temp;
+        }
+    }
+
+    void UpdateTimer() {
 
     }
 }
