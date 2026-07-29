@@ -95,6 +95,21 @@ public class GameManager : MonoBehaviour {
         //wrongLetters.CopyTo(allLetters, correctLetters.Length);
     }
 
+    char[] GenerateRandomLetters(int count, char[] excludeLetters) {
+        char[] randomLetters = new char[count];
+        for(int i = 0; i < count; i++) {
+            char randomLetter;
+
+            do {
+                randomLetter = (char)('A' + Random.Range(0, 26));
+            }
+            while(System.Array.Exists(excludeLetters, c  => c == randomLetter));
+            randomLetters[i] = randomLetter;
+        }
+
+        return randomLetters;
+    }
+
     private void UpdateTimer() {
 
     }
