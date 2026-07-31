@@ -27,19 +27,21 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
-        if(isGameActive)
+        if (isGameActive)
             UpdateTimer();
     }
 
     void LoadQuiz(int quizIndex) {
         Debug.Log("Loading Quiz: " + quizIndex);
 
-        if(quizData == null || quizData.quizzes == null || quizData.quizzes.Length == 0) {
+        ResetGame();
+
+        if (quizData == null || quizData.quizzes == null || quizData.quizzes.Length == 0) {
             Debug.LogError("Quiz Data or quizzes is not setup correctly");
             return;
         }
 
-        if(quizIndex < 0 || quizIndex >= quizData.quizzes.Length) {
+        if (quizIndex < 0 || quizIndex >= quizData.quizzes.Length) {
             Debug.LogError("Invalid quiz index: " + quizIndex);
             return;
         }
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour {
         QuizData.Quiz quiz = quizData.quizzes[quizIndex];
 
         Image image = GameObject.Find("QuizImage")?.GetComponent<Image>();
-        if(image == null) {
+        if (image == null) {
             Debug.LogError("Quiz Image not found or missing idk");
             return;
         }
@@ -63,16 +65,16 @@ public class GameManager : MonoBehaviour {
     void CreateLetterFields(int fieldCount) {
         Debug.Log("Creating Letter Fields: " + fieldCount);
 
-        foreach(Transform child in letterFieldParent) {
+        foreach (Transform child in letterFieldParent) {
             Destroy(child.gameObject);
         }
 
         letterFields = new Text[fieldCount];
 
-        for(int i = 0; i < fieldCount; i++) {
+        for (int i = 0; i < fieldCount; i++) {
             GameObject field = Instantiate(letterFieldPrefab, letterFieldParent);
             letterFields[i] = field.GetComponentInChildren<Text>();
-            if(letterFields[i] == null) {
+            if (letterFields[i] == null) {
                 Debug.LogError("Letter field prefab is missing a text component");
             }
         }
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour {
     void CreateLetterButtons(string correctWord) {
         Debug.Log("Creating Letter Buttons");
 
-        foreach(Transform child in letterButtonsParent) {
+        foreach (Transform child in letterButtonsParent) {
             Destroy(child.gameObject);
         }
 
@@ -96,7 +98,7 @@ public class GameManager : MonoBehaviour {
 
         ShuffleLetters(allLetters);
 
-        for(int i = 0; i < allLetters.Length; i++) {
+        for (int i = 0; i < allLetters.Length; i++) {
             GameObject button = Instantiate(letterButtonPrefab, letterButtonsParent);
             button.GetComponentInChildren<Text>().text = allLetters[i].ToString();
             int index = i;
@@ -123,7 +125,7 @@ public class GameManager : MonoBehaviour {
 
     char[] GenerateRandomLetters(int count, char[] excludeLetters) {
         char[] randomLetters = new char[count];
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             char randomLetter;
 
             do {
@@ -137,7 +139,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void ShuffleLetters(char[] letters) {
-        for(int i = letters.Length - 1; i > 0; i--) {
+        for (int i = letters.Length - 1; i > 0; i--) {
             int randomIndex = Random.Range(0, i + 1);
             char temp = letters[i];
             letters[i] = letters[randomIndex];
@@ -145,7 +147,99 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void UpdateTimer() {
+    public void CheckReply() {
+        string playerReply = "";
 
+        foreach (Text field in letterFields) {
+            if (field == null) {
+                Debug.LogError("Letter field is null");
+                return;
+            }
+
+            playerReply += field.text;
+        }
+
+        if (playerReply == quizData.quizzes[currentQuizIndex].correctWord) {
+            Debug.Log("Correct!");
+
+            foreach (Text field in letterFields) {
+                field.color = Color.green;
+            }
+
+            isGameActive = false;
+            Invoke("NextQuiz", 2f);
+        }
+        
+        else {
+            Debug.Log("Incorrect!");
+
+            foreach (Text field in letterFields) {
+                field.color = Color.red;
+            }            
+        }
+    }
+
+    void NextQuiz() {
+        currentQuizIndex++;
+
+        if (currentQuizIndex < quizData.quizzes.Length) {
+            LoadQuiz(currentQuizIndex);
+        }
+        
+        else {
+            Debug.Log("Game Over,all quizzes completed");
+        }
+    }
+
+    public void DeleteLastLetter() {
+        if (currentFieldIndex > 0) {
+            currentFieldIndex--;
+
+            string deletedLetter = letterFields[currentFieldIndex].text;
+            foreach (Button button in letterButtons) {
+                if (button.GetComponentInChildren<Text>().text == deletedLetter && !button.interactable) {
+                    button.interactable = true;
+                    break;
+                }
+            }
+
+            letterFields[currentFieldIndex].text = "";
+        }
+    }
+
+    void ResetGame() {
+        Debug.Log("Resetting Game");
+
+        if (letterFields != null) {
+            foreach (Text field in letterFields) {
+                if (field != null) {
+                    field.text = "";
+                    field.color = Color.white;
+                }
+            }
+        }
+
+        if (letterButtons != null) {
+            foreach (Button button in letterButtons) {
+                if (button != null) {
+                    button.interactable = true;
+                }
+            }
+        }
+
+        currentFieldIndex = 0;
+    }
+
+    void UpdateTimer() {
+        if (timeRemaining > 0) {
+            timeRemaining -= Time.deltaTime;
+            timerText.text = "" + Mathf.CeilToInt(timeRemaining).ToString();
+        }
+        
+        else {
+            Debug.Log("Time's up!");
+            isGameActive = false;
+            CheckReply();
+        }
     }
 }
