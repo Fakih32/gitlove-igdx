@@ -5,17 +5,14 @@ public class DraganddropLevelScriptable : ScriptableObject
      [System.Serializable]
      public class Dragdropdata
     {
-        public int indicates;
+        public int Levels;
         public Sprite firstimage;
         public Sprite secondimage;
         public Sprite thirdimage;
-        public float firstimagexpos;
-        public float secondimagexpos;
-        public float thirdimagexpos;
-        public float firstimageypos;
-        public float secondimageypos;
-        public float thirdimageypos;
+        public Vector2 firstImagePos;
+public Vector2 secondImagePos;
+public Vector2 thirdImagePos;
         
     }
-   public Dragdropdata[] data;
+   public Dragdropdata[] levels;
 }

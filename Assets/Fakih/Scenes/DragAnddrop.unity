@@ -1161,12 +1161,14 @@ MonoBehaviour:
   tujuanmax: 0
   currentpoint: 0
   poin_got: 10
-  firstimagexpos: 0
-  secondimagexpos: 0
-  thirdmagexpos: 0
-  firstimageypos: 0
-  secondimageypos: 0
-  thirdmageypos: 0
+  leveldata: {fileID: 11400000, guid: 0647db6e9a1a6f745b390542f92d32b4, type: 2}
+  firstimg: {fileID: 914078396}
+  secondimg: {fileID: 1918180942}
+  thirdimg: {fileID: 132443969}
+  firstImagePos: {x: 0, y: 0}
+  secondImagePos: {x: 0, y: 0}
+  thirdImagePos: {x: 0, y: 0}
+  curlevel: 0
   onestartime: 19
   twostartime: 15
   threestartime: 5
@@ -1175,6 +1177,9 @@ MonoBehaviour:
   secondstar: {fileID: 1889154933}
   thirdstar: {fileID: 841392823}
   losepanel: {fileID: 1263613419}
+  tujuan1: {fileID: 359073217}
+  tujuan2: {fileID: 273571594}
+  tujuan3: {fileID: 644104488}
 --- !u!1 &1170926025
 GameObject:
   m_ObjectHideFlags: 0

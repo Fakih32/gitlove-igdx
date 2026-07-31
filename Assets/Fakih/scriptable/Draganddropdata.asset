@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6c531292d7a9c44a88919795d31a7b, type: 3}
   m_Name: Draganddropdata
   m_EditorClassIdentifier: 
-  data:
-  - indicates: 0
+  levels:
+  - Levels: 1
+    firstimage: {fileID: -3723311018319764795, guid: f287d2b7897e10049b7afbb2226c0123, type: 3}
+    secondimage: {fileID: -8471984187987269628, guid: 6780b26c755044a4d88005ed727a458a, type: 3}
+    thirdimage: {fileID: -3938450829377559834, guid: e1d7bf3e6ab4ea04baa375c8b0ab9a82, type: 3}
+    firstImagePos: {x: 0, y: 0}
+    secondImagePos: {x: 0, y: 0}
+    thirdImagePos: {x: 0, y: 0}
+  - Levels: 0
     firstimage: {fileID: 0}
     secondimage: {fileID: 0}
     thirdimage: {fileID: 0}
-    firstimagexpos: 0
-    secondimagexpos: 0
-    thirdimagexpos: 0
-    firstimageypos: 0
-    secondimageypos: 0
-    thirdimageypos: 0
+    firstImagePos: {x: 0, y: 0}
+    secondImagePos: {x: 0, y: 0}
+    thirdImagePos: {x: 0, y: 0}
