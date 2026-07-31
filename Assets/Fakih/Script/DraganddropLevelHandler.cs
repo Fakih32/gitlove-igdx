@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
+using System.Threading;
 public enum Scoresenum{
     onestar,
     twostar,
@@ -16,19 +18,31 @@ public class DraganddropLevelHandler : MonoBehaviour
     public List<Transform> Listtujuan;
     [HideInInspector]public int tujuancount;
     [HideInInspector]public int tujuanmax;
+    private bool gameEnded = false;
     [Header("Poin Yang Didapat")]
     [HideInInspector] public float currentpoint = 0;
     public float poin_got;
-    public float poin_waktu;
-    [Header("Waktu Yang diperlukan mencapai poin tambahan")]
-    public float time_need;
-    [Header("Poin Minimal")]
-    public float onestarpoint;
-    public float twostarpoint;
-    public float threestarpoint;
 
+   
     [Header("Game Objek Yang Ingin Di drag")]
-    public List<GameObject> dragobject;
+    public Image firstimg;
+    public Image secondimg;
+    public Image thirdimg;
+    [Header("Posisi X masing-masing tujuan gambar")]
+     public float firstimagexpos;
+     public float secondimagexpos;
+     public float thirdmagexpos;
+     [Header("Posisi y masing-masing tujuan gambar")]
+     public float firstimageypos;
+     public float secondimageypos;
+     public float thirdmageypos;
+    
+     [Header("Waktu yang dibutuhkan untuk mencapai poin")]
+  
+     public float onestartime;
+     public float twostartime;
+     public float threestartime; 
+     private float timetotal;
     private Scoresenum skortype;
     [Header("Panel menang kalah")]
     [Header("Panel Menang")]
@@ -52,25 +66,27 @@ public class DraganddropLevelHandler : MonoBehaviour
     }
     void Checkwin(){
         
-        if (currentpoint< onestarpoint){
-            Gamelost();
-        }
+        float waktuterpakai = timetotal-TimerScript.instance.timer;
+        
 
-       if (currentpoint >= onestarpoint && currentpoint< twostarpoint)
+       if (waktuterpakai<=threestartime)
         {
-             skortype = Scoresenum.onestar; 
+            Debug.Log("solving under"+waktuterpakai+"seconds");
+             skortype = Scoresenum.threestar; 
              Gamewin();
              
         }
-         else if (currentpoint >= twostarpoint && currentpoint< threestarpoint)
+         else if (waktuterpakai<=twostartime)
         {
+              Debug.Log("solving under"+waktuterpakai+"seconds");
              skortype = Scoresenum.twostar;
              Gamewin(); 
              
         }
-         else if (currentpoint >= threestarpoint)
+         else if (waktuterpakai<=onestartime)
         {
-             skortype = Scoresenum.threestar; 
+              Debug.Log("solving under"+waktuterpakai+"seconds");
+             skortype = Scoresenum.onestar; 
              Gamewin();
              
         }
@@ -104,20 +120,13 @@ public class DraganddropLevelHandler : MonoBehaviour
             Destroy(gameObject);
         }
     }
-public void Addpointpertimer(){
-     InvokeRepeating("addpointtime", 1f ,time_need);
-     Debug.Log(currentpoint); 
-}
-    void addpointtime(){
-        if (TimerScript.instance.timer> time_need){
-            currentpoint += poin_waktu;
-        }
-    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
         tujuanmax = Listtujuan.Count;
+        timetotal = TimerScript.instance.timer;
       
         
     }
@@ -125,19 +134,21 @@ public void Addpointpertimer(){
     // Update is called once per frame
     void Update()
     {
-        if (TimerScript.instance.timer> 0f){
-          
+        if (gameEnded) return;
         
-        if (tujuancount == tujuanmax){
-            skortype = Scoresenum.threestar; 
-            Gamewin();
-            TimerScript.instance.timer = 0f;
-            
+        if (TimerScript.instance.timer > 0f)
+        {
+            if (tujuancount == tujuanmax)
+            {
+                gameEnded = true;
+                Checkwin();
+                TimerScript.instance.timer = 0;
+            }
         }
+        else if (TimerScript.instance.timer <= 0f)
+        {
+            gameEnded = true;
+            Gamelost();
         }
-        else if (TimerScript.instance.timer<= 0f){
-            Checkwin();
-        }
-        
     }
 }

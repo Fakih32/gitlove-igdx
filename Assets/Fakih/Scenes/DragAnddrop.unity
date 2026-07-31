@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerImage: {fileID: 1385314532}
-  duration: 5
+  duration: 20
   timer: 0
 --- !u!1 &359073217
 GameObject:
@@ -1161,15 +1161,15 @@ MonoBehaviour:
   tujuanmax: 0
   currentpoint: 0
   poin_got: 10
-  poin_waktu: 1
-  time_need: 5
-  onestarpoint: 10
-  twostarpoint: 20
-  threestarpoint: 30
-  dragobject:
-  - {fileID: 914078394}
-  - {fileID: 1918180939}
-  - {fileID: 132443966}
+  firstimagexpos: 0
+  secondimagexpos: 0
+  thirdmagexpos: 0
+  firstimageypos: 0
+  secondimageypos: 0
+  thirdmageypos: 0
+  onestartime: 19
+  twostartime: 15
+  threestartime: 5
   winpanel: {fileID: 13686409}
   firststar: {fileID: 310544299}
   secondstar: {fileID: 1889154933}
