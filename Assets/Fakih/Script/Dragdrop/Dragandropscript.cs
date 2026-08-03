@@ -81,7 +81,7 @@ public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, 
             {
                 DraganddropLevelHandler.instance.tujuancount += 1;
                 DraganddropLevelHandler.instance.Addpoint();
-                DraganddropLevelHandler.instance.Addpointpertimer();
+               
             }
 
             AudioScript.instance.Playsfx(AudioScript.instance.correctaudio);

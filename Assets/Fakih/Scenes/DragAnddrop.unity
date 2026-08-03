@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerImage: {fileID: 1385314532}
-  duration: 5
+  duration: 20
   timer: 0
 --- !u!1 &359073217
 GameObject:
@@ -1161,20 +1161,25 @@ MonoBehaviour:
   tujuanmax: 0
   currentpoint: 0
   poin_got: 10
-  poin_waktu: 1
-  time_need: 5
-  onestarpoint: 10
-  twostarpoint: 20
-  threestarpoint: 30
-  dragobject:
-  - {fileID: 914078394}
-  - {fileID: 1918180939}
-  - {fileID: 132443966}
+  leveldata: {fileID: 11400000, guid: 0647db6e9a1a6f745b390542f92d32b4, type: 2}
+  firstimg: {fileID: 914078396}
+  secondimg: {fileID: 1918180942}
+  thirdimg: {fileID: 132443969}
+  firstImagePos: {x: 0, y: 0}
+  secondImagePos: {x: 0, y: 0}
+  thirdImagePos: {x: 0, y: 0}
+  curlevel: 0
+  onestartime: 19
+  twostartime: 15
+  threestartime: 5
   winpanel: {fileID: 13686409}
   firststar: {fileID: 310544299}
   secondstar: {fileID: 1889154933}
   thirdstar: {fileID: 841392823}
   losepanel: {fileID: 1263613419}
+  tujuan1: {fileID: 359073217}
+  tujuan2: {fileID: 273571594}
+  tujuan3: {fileID: 644104488}
 --- !u!1 &1170926025
 GameObject:
   m_ObjectHideFlags: 0
