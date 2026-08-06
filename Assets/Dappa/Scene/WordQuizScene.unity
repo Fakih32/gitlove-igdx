@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 121450299}
   - component: {fileID: 121450301}
   - component: {fileID: 121450300}
+  - component: {fileID: 121450302}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -198,6 +199,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 121450298}
   m_CullTransparentMesh: 1
+--- !u!114 &121450302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121450298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03779963df337bb44b8d242840c1fca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerFillImage: {fileID: 0}
+  timerText: {fileID: 121450300}
 --- !u!1 &302878790
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +346,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 8
+  m_Spacing: 16
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -1110,7 +1125,7 @@ GameObject:
   - component: {fileID: 2126994910}
   - component: {fileID: 2126994909}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Word Quiz Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1133,8 +1148,8 @@ MonoBehaviour:
   letterButtonPrefab: {fileID: 6388107390838378685, guid: c5a7a7e936690c342a5e068c2cef6650, type: 3}
   letterFieldParent: {fileID: 348484362}
   letterButtonsParent: {fileID: 2089600678}
-  timerText: {fileID: 121450300}
-  timeLimit: 30
+  quizImage: {fileID: 451365857}
+  questionsPerLevel: 3
 --- !u!4 &2126994910
 Transform:
   m_ObjectHideFlags: 0
