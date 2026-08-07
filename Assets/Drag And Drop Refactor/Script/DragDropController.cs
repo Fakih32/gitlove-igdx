@@ -35,8 +35,7 @@ public class DragDropController : MonoBehaviour {
     public GameObject targetSlot2;
     public GameObject targetSlot3;
 
-    [Header("Poin per Target yang Benar")]
-    public int pointsPerHit = 50;
+  
 
     void Awake() {
         Instance = this;

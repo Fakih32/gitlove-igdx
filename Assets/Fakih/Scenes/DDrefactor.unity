@@ -285,12 +285,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4179efcd166474cb025012a8f8e164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootCanvas: {fileID: 180591179}
-  draggedObject: {fileID: 132443966}
-  target: {fileID: 644104489}
-  dragStartSfx: {fileID: 8300000, guid: a21163a586b143546a250509ecae11c9, type: 3}
-  dropSfx: {fileID: 8300000, guid: 1c0580a0e872797408d8f8bf306f36f9, type: 3}
-  correctSfx: {fileID: 8300000, guid: fc25b1a4e41156244b59d8db57d36882, type: 3}
+  rootCanvas: {fileID: 0}
+  draggedObject: {fileID: 0}
+  target: {fileID: 0}
+  dragStartSfx: {fileID: 0}
+  dropSfx: {fileID: 0}
+  correctSfx: {fileID: 0}
 --- !u!1 &180591176
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,10 +969,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootCanvas: {fileID: 180591179}
   draggedObject: {fileID: 914078394}
-  target: {fileID: 359073218}
-  dragStartSfx: {fileID: 8300000, guid: a21163a586b143546a250509ecae11c9, type: 3}
-  dropSfx: {fileID: 8300000, guid: 1c0580a0e872797408d8f8bf306f36f9, type: 3}
-  correctSfx: {fileID: 8300000, guid: fc25b1a4e41156244b59d8db57d36882, type: 3}
+  target: {fileID: 2134550219}
+  dragStartSfx: {fileID: 0}
+  dropSfx: {fileID: 0}
+  correctSfx: {fileID: 0}
 --- !u!1 &917666142
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,19 +1154,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46858bcfe9832984da2a54811700cde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: 1ec5e827a11bf4f44a27be80b5a76496, type: 2}
+  levelData: {fileID: 0}
   currentLevel: 0
-  targets:
-  - {fileID: 273571595}
-  - {fileID: 644104489}
-  - {fileID: 359073218}
+  targets: []
   targetsHit: 0
-  firstImage: {fileID: 914078396}
-  secondImage: {fileID: 1918180942}
-  thirdImage: {fileID: 132443969}
-  targetSlot1: {fileID: 359073217}
-  targetSlot2: {fileID: 273571594}
-  targetSlot3: {fileID: 644104488}
+  firstImage: {fileID: 0}
+  secondImage: {fileID: 0}
+  thirdImage: {fileID: 0}
+  targetSlot1: {fileID: 0}
+  targetSlot2: {fileID: 0}
+  targetSlot3: {fileID: 0}
   pointsPerHit: 50
 --- !u!1 &1170926025
 GameObject:
@@ -1942,12 +1939,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4179efcd166474cb025012a8f8e164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootCanvas: {fileID: 180591179}
-  draggedObject: {fileID: 1918180939}
-  target: {fileID: 273571595}
-  dragStartSfx: {fileID: 8300000, guid: a21163a586b143546a250509ecae11c9, type: 3}
-  dropSfx: {fileID: 8300000, guid: 1c0580a0e872797408d8f8bf306f36f9, type: 3}
-  correctSfx: {fileID: 8300000, guid: fc25b1a4e41156244b59d8db57d36882, type: 3}
+  rootCanvas: {fileID: 0}
+  draggedObject: {fileID: 0}
+  target: {fileID: 0}
+  dragStartSfx: {fileID: 0}
+  dropSfx: {fileID: 0}
+  correctSfx: {fileID: 0}
 --- !u!1 &2004414373
 GameObject:
   m_ObjectHideFlags: 0
