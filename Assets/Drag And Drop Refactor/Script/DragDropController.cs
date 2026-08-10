@@ -66,7 +66,7 @@ public class DragDropController : MonoBehaviour {
     // Dipanggil dari DraggableItem tiap kali 1 item berhasil ditaruh di target yang benar
     public void OnTargetHit() {
         targetsHit++;
-        LevelSessionManager.Instance?.AddScore(pointsPerHit);
+        //LevelSessionManager.Instance?.AddScore(pointsPerHit);
 
         if (targetsHit >= targetsTotal) {
             LevelSessionManager.Instance?.OnMechanicComplete();
