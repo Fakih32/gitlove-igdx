@@ -13,17 +13,10 @@ MonoBehaviour:
   m_Name: Draganddropdata
   m_EditorClassIdentifier: 
   levels:
-  - Levels: 1
-    firstimage: {fileID: -3723311018319764795, guid: f287d2b7897e10049b7afbb2226c0123, type: 3}
-    secondimage: {fileID: -8471984187987269628, guid: 6780b26c755044a4d88005ed727a458a, type: 3}
-    thirdimage: {fileID: -3938450829377559834, guid: e1d7bf3e6ab4ea04baa375c8b0ab9a82, type: 3}
-    firstImagePos: {x: 0, y: 0}
-    secondImagePos: {x: 0, y: 0}
-    thirdImagePos: {x: 0, y: 0}
   - Levels: 0
-    firstimage: {fileID: 0}
-    secondimage: {fileID: 0}
-    thirdimage: {fileID: 0}
+    firstimage: {fileID: 6284320701668298175, guid: b763802433c1ec048b12766948e0544a, type: 3}
+    secondimage: {fileID: -6788383481362236174, guid: 86b007f6f0959c5449ac3dd5aa231ad1, type: 3}
+    thirdimage: {fileID: 21300000, guid: f7ef3688b1a807347acca36dccca32d5, type: 3}
     firstImagePos: {x: 0, y: 0}
     secondImagePos: {x: 0, y: 0}
     thirdImagePos: {x: 0, y: 0}

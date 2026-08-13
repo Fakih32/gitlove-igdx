@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using UnityEngine;
+
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class Dragandropscript : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler

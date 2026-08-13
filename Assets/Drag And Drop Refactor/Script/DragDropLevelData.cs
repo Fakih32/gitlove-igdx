@@ -12,6 +12,7 @@ public class DragDropLevelData : ScriptableObject {
         public Sprite firstImage;
         public Sprite secondImage;
         public Sprite thirdImage;
+        public Sprite BackgroundImage;
         public Vector2 firstImagePos;
         public Vector2 secondImagePos;
         public Vector2 thirdImagePos;

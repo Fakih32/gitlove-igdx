@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586d2106892cb9c4a801ef069e584a04, type: 3}
   m_Name: DragDropLevelData
   m_EditorClassIdentifier: 
-  levels: []
+  levels:
+  - level: 1
+    firstImage: {fileID: 6284320701668298175, guid: b763802433c1ec048b12766948e0544a, type: 3}
+    secondImage: {fileID: -6788383481362236174, guid: 86b007f6f0959c5449ac3dd5aa231ad1, type: 3}
+    thirdImage: {fileID: 21300000, guid: f7ef3688b1a807347acca36dccca32d5, type: 3}
+    BackgroundImage: {fileID: -7318459309356265662, guid: dcc1a2f47cea99f48b8c5c4090806ed3, type: 3}
+    firstImagePos: {x: 100, y: 180}
+    secondImagePos: {x: 100, y: 100}
+    thirdImagePos: {x: 100, y: 120}

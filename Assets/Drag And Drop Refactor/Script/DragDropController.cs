@@ -29,6 +29,7 @@ public class DragDropController : MonoBehaviour {
     public Image firstImage;
     public Image secondImage;
     public Image thirdImage;
+    public Image backgroundImage;
 
     [Header("Posisi Tujuan di Scene")]
     public GameObject targetSlot1;
@@ -44,18 +45,28 @@ public class DragDropController : MonoBehaviour {
     void Start() {
         LoadLevel();
         targetsTotal = targets.Count;
+      
     }
 
     void LoadLevel() {
+        if (levelData == null) {
+            Debug.LogError("DragDropController: levelData belum di-set");
+            return;
+        }
+       
         foreach (var data in levelData.levels) {
             if (data.level == currentLevel) {
                 firstImage.sprite = data.firstImage;
                 secondImage.sprite = data.secondImage;
                 thirdImage.sprite = data.thirdImage;
-
-                targetSlot1.transform.position = data.firstImagePos;
-                targetSlot2.transform.position = data.secondImagePos;
-                targetSlot3.transform.position = data.thirdImagePos;
+                if (backgroundImage != null) {
+                    backgroundImage.sprite = data.BackgroundImage;
+                } else {
+                    Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
+                }
+                targetSlot1.GetComponent<RectTransform>().anchoredPosition = data.firstImagePos;
+                targetSlot2.GetComponent<RectTransform>().anchoredPosition = data.secondImagePos;
+                targetSlot3.GetComponent<RectTransform>().anchoredPosition = data.thirdImagePos;
                 return;
             }
         }
