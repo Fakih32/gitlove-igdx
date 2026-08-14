@@ -1856,7 +1856,7 @@ MonoBehaviour:
   bookPanel: {fileID: 0}
   currentlevel: 0
   maxLevel: 3
-  totalunlockedLevel: 3
+  totalunlockedLevel: 1
 --- !u!1 &909393409
 GameObject:
   m_ObjectHideFlags: 0
