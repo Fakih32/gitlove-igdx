@@ -59,6 +59,9 @@ public class DragDropController : MonoBehaviour {
                 firstImage.sprite = data.firstImage;
                 secondImage.sprite = data.secondImage;
                 thirdImage.sprite = data.thirdImage;
+                 firstImage.GetComponent<RectTransform>().localScale = data.firstimageScale;
+            secondImage.GetComponent<RectTransform>().localScale = data.secondimageScale;
+            thirdImage.GetComponent<RectTransform>().localScale = data.thirdimageScale;
                 if (backgroundImage != null) {
                     backgroundImage.sprite = data.BackgroundImage;
                 } else {

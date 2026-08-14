@@ -16,6 +16,9 @@ public class DragDropLevelData : ScriptableObject {
         public Vector2 firstImagePos;
         public Vector2 secondImagePos;
         public Vector2 thirdImagePos;
+        public Vector2 firstimageScale;
+        public Vector2 secondimageScale;
+        public Vector2 thirdimageScale;
     }
 
     public LevelEntry[] levels;
