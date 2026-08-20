@@ -10,11 +10,14 @@ public class LevelSessionManager : MonoBehaviour {
 
     [Header("Level yang sedang dimainkan")]
     public LevelData currentLevel;
-
+    public int levelsaatini;
     [HideInInspector] public float timeRemaining;
     [HideInInspector] public int score;
     [HideInInspector] public int currentMechanicIndex = 0;
     [HideInInspector] public bool levelFailed = false;
+    [HideInInspector] public int totalunlockedLevel;
+        [HideInInspector] public int currentlevel;
+        [HideInInspector] public int maxLevel;
 
     void Awake() {
         if (Instance == null) {
@@ -26,6 +29,12 @@ public class LevelSessionManager : MonoBehaviour {
     }
 
     void Update() {
+        if(LevelSelectionHandler.Instance != null)
+        {
+        totalunlockedLevel = LevelSelectionHandler.Instance.totalunlockedLevel;
+        currentlevel = LevelSelectionHandler.Instance.currentlevel;
+        maxLevel = LevelSelectionHandler.Instance.maxLevel;
+        }
         if (timeRemaining <= 0f) return;
 
         timeRemaining -= Time.deltaTime;

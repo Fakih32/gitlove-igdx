@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
+  m_Name: Panel3
+  m_EditorClassIdentifier: 
+  panelImage: {fileID: 1794357778271110103, guid: 3294aa8b631918d499cbfed5791b83af, type: 3}
+  bubbleSprite: {fileID: -1256213575624702963, guid: dc7ee8e10df5e0540b34514d66a20c21, type: 3}
+  dialogueText: Welcome
+  displayDuration: 1
+  waitForInput: 0
+  transitionIn: 4
+  transitionDuration: 0.4
+  sfxOnEnter: {fileID: 0}
+  voiceOver: {fileID: 0}
+  useKenBurnsEffect: 1
+  zoomAmount: 1.15
