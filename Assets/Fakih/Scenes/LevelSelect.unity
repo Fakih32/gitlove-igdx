@@ -1835,11 +1835,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockedLevelImages:
   - {fileID: -339601555855121937, guid: e0dac6ee506fde547a3a4e710f074ba9, type: 3}
-  - {fileID: -5663524995921270603, guid: d34a658ab0ba0f8448b2d40ab472aefc, type: 3}
-  - {fileID: -5663524995921270603, guid: d34a658ab0ba0f8448b2d40ab472aefc, type: 3}
+  - {fileID: 21300000, guid: 05a0b41460a194445ab15f7564a19114, type: 3}
+  - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
+  - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
+  - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
   unlockedLevelImages:
+  - {fileID: -1152087883420782232, guid: 508523221144c4244bea58af76fadafb, type: 3}
   - {fileID: -5122792506541145818, guid: ff67d1e15d58708419c8f078c753005b, type: 3}
-  - {fileID: -7479393008202049932, guid: d407ad15abdfb6e43b669efcaca34955, type: 3}
   - {fileID: -1152087883420782232, guid: 508523221144c4244bea58af76fadafb, type: 3}
   levelButtons:
   - {fileID: 1712170534}
@@ -1856,7 +1858,7 @@ MonoBehaviour:
   bookPanel: {fileID: 0}
   currentlevel: 0
   maxLevel: 3
-  totalunlockedLevel: 1
+  totalunlockedLevel: 3
 --- !u!1 &909393409
 GameObject:
   m_ObjectHideFlags: 0
