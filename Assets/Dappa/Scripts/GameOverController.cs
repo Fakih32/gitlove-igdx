@@ -1,19 +1,19 @@
 using UnityEngine;
 
-// BARU. Sebelumnya logic ini (Checkwin, Gamewin, Gamelost, panel, star)
-// nyangkut di DraganddropLevelHandler dan cuma jalan kalau drag & drop
-// yang terakhir selesai. Sekarang dipisah ke scene sendiri karena kondisi
-// menang/kalah itu level-wide -- dipicu dari mekanik manapun yang terakhir
-// jalan, atau dari LevelSessionManager kalau waktu habis duluan.
+// ROMBAK dari versi sebelumnya (dulu pakai istilah "star").
+// Perubahan:
+// 1. Nama field diganti jadi "sticker" biar sesuai konsep collectible kalian
+// 2. Setelah menang, status unlock stiker disimpan permanen lewat
+//    StickerCollection, biar bisa dibaca lagi sama scene Level Selection
 public class GameOverController : MonoBehaviour {
     [Header("Panel")]
     public GameObject winPanel;
     public GameObject losePanel;
 
-    [Header("Bintang")]
-    public GameObject firstStar;
-    public GameObject secondStar;
-    public GameObject thirdStar;
+    [Header("Stiker (placeholder dulu, nanti diganti sprite asli)")]
+    public GameObject bronzeSticker;
+    public GameObject silverSticker;
+    public GameObject goldSticker;
 
     void Start() {
         if (LevelSessionManager.Instance == null) {
@@ -24,7 +24,9 @@ public class GameOverController : MonoBehaviour {
         if (LevelSessionManager.Instance.levelFailed) {
             ShowLose();
         } else {
-            ShowWin(LevelSessionManager.Instance.GetScoreTier());
+            ScoreTier tier = LevelSessionManager.Instance.GetScoreTier();
+            ShowWin(tier);
+            SaveUnlockedStickers(tier);
         }
     }
 
@@ -34,19 +36,28 @@ public class GameOverController : MonoBehaviour {
 
     void ShowWin(ScoreTier tier) {
         winPanel.SetActive(true);
-        firstStar.SetActive(false);
-        secondStar.SetActive(false);
-        thirdStar.SetActive(false);
+        bronzeSticker.SetActive(false);
+        silverSticker.SetActive(false);
+        goldSticker.SetActive(false);
 
+        // Kumulatif: tier lebih tinggi otomatis nyalain semua yang di bawahnya juga
         if (tier == ScoreTier.OneStar) {
-            firstStar.SetActive(true);
+            bronzeSticker.SetActive(true);
         } else if (tier == ScoreTier.TwoStar) {
-            firstStar.SetActive(true);
-            secondStar.SetActive(true);
+            bronzeSticker.SetActive(true);
+            silverSticker.SetActive(true);
         } else if (tier == ScoreTier.ThreeStar) {
-            firstStar.SetActive(true);
-            secondStar.SetActive(true);
-            thirdStar.SetActive(true);
+            bronzeSticker.SetActive(true);
+            silverSticker.SetActive(true);
+            goldSticker.SetActive(true);
         }
+    }
+
+    void SaveUnlockedStickers(ScoreTier tier) {
+        string levelId = LevelSessionManager.Instance.currentLevel.levelId;
+
+        StickerCollection.Unlock(levelId, ScoreTier.OneStar);
+        if (tier >= ScoreTier.TwoStar) StickerCollection.Unlock(levelId, ScoreTier.TwoStar);
+        if (tier >= ScoreTier.ThreeStar) StickerCollection.Unlock(levelId, ScoreTier.ThreeStar);
     }
 }
