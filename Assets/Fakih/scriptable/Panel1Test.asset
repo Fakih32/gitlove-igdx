@@ -17,8 +17,13 @@ MonoBehaviour:
   dialogueText: 
   displayDuration: 2.5
   waitForInput: 0
+  isNextPanel: 0
+  distancex: 1920
+  distancey: 1080
   transitionIn: 2
+  chatPanelTransitionType: 5
   transitionDuration: 0.4
+  chatPanelTransitionDuration: 0.2
   sfxOnEnter: {fileID: 0}
   voiceOver: {fileID: 0}
   useKenBurnsEffect: 1

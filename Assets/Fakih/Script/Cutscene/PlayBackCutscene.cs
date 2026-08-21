@@ -31,6 +31,9 @@ public class ComicCutscenePlayer : MonoBehaviour
     [Tooltip("Root empty GO for the entire cutscene UI — SetActive(false) when done.")]
     [SerializeField] private GameObject panelParent;
 
+    [Tooltip("The chat/dialogue bubble panel (RectTransform — needs a CanvasGroup on the same GO).")]
+    [SerializeField] private RectTransform chatPanel;
+
     [Header("Panel Slots  (parallel lists, same length)")]
     [SerializeField] private List<Image>    panelImages;
     [SerializeField] private List<Image>    bubbleImages;
@@ -52,7 +55,9 @@ public class ComicCutscenePlayer : MonoBehaviour
     // ── Runtime state ──────────────────────────────────────────────────────
     private int             currentIndex;
     private CanvasGroup[]   slotCanvasGroups;   // one per slot, for alpha transitions
-    private float[]         slotPositionsX;     // cached editor-placed x positions of each slot root
+    private Vector2[]       slotRestingPositions; // cached design-time anchoredPositions of each slot root
+    private CanvasGroup     chatPanelCG;        // CanvasGroup on the chatPanel GO
+    private Vector2         chatPanelRestPos;   // editor-placed resting anchoredPosition of chatPanel
 
     // ───────────────────────────────────────────────────────────────────────
     private void Awake()
@@ -69,6 +74,14 @@ public class ComicCutscenePlayer : MonoBehaviour
             slotCanvasGroups[i] = cg;
 
             root.SetActive(false);   // hidden until it's this slot's turn
+        }
+
+        // Cache chat panel CanvasGroup and its resting position
+        if (chatPanel != null)
+        {
+            chatPanelCG = chatPanel.GetComponent<CanvasGroup>();
+            if (chatPanelCG == null) chatPanelCG = chatPanel.gameObject.AddComponent<CanvasGroup>();
+            chatPanelRestPos = chatPanel.anchoredPosition;
         }
 
         // Next button: hide, wire up click
@@ -99,43 +112,52 @@ public class ComicCutscenePlayer : MonoBehaviour
         StartCoroutine(ShowCurrentPanel());
     }
 
-    // ── Slot setup (called once on Play) ───────────────────────────────────
-    private void PrepareAllSlots()
+ private void PrepareAllSlots()
+{
+    if (sequence == null || sequence.panels == null) return;
+
+    int count = Mathf.Min(sequence.panels.Length, panelImages.Count);
+    slotRestingPositions = new Vector2[count];
+
+    for (int i = 0; i < count; i++)
     {
-        if (sequence == null || sequence.panels == null) return;
+        ComicPanelSO data = sequence.panels[i];
+        if (data == null) continue;
 
-        int count = Mathf.Min(sequence.panels.Length, panelImages.Count);
-        slotPositionsX = new float[count];
+        GameObject root = GetSlotRoot(i);
+        RectTransform rt = root != null
+            ? root.GetComponent<RectTransform>()
+            : null;
 
-        for (int i = 0; i < count; i++)
+        // IMPORTANT:
+        // Use the position that you placed in the Inspector.
+        // Do NOT calculate it from the previous panel.
+        Vector2 restPos = rt != null
+            ? rt.anchoredPosition
+            : Vector2.zero;
+
+        slotRestingPositions[i] = restPos;
+
+        // Set panel sprite
+        if (panelImages[i] != null)
+            panelImages[i].sprite = data.panelImage;
+
+        // Bubble
+        bool hasBubble = data.bubbleSprite != null;
+
+        if (i < bubbleImages.Count && bubbleImages[i] != null)
         {
-            ComicPanelSO data = sequence.panels[i];
-            if (data == null) continue;
+            bubbleImages[i].gameObject.SetActive(hasBubble);
 
-            // Read the slot's position exactly as placed in the editor — do NOT move it
-            GameObject root = GetSlotRoot(i);
-            if (root != null)
-            {
-                RectTransform rt = root.GetComponent<RectTransform>();
-                slotPositionsX[i] = rt != null ? rt.anchoredPosition.x : 0f;
-            }
-
-            // Fill content
-            if (panelImages[i] != null)
-                panelImages[i].sprite = data.panelImage;
-
-            bool hasBubble = data.bubbleSprite != null;
-            if (i < bubbleImages.Count && bubbleImages[i] != null)
-            {
-                bubbleImages[i].gameObject.SetActive(hasBubble);
-                if (hasBubble) bubbleImages[i].sprite = data.bubbleSprite;
-            }
-
-            if (i < dialogueTexts.Count && dialogueTexts[i] != null)
-                dialogueTexts[i].text = data.dialogueText;
+            if (hasBubble)
+                bubbleImages[i].sprite = data.bubbleSprite;
         }
-    }
 
+        // Dialogue
+        if (i < dialogueTexts.Count && dialogueTexts[i] != null)
+            dialogueTexts[i].text = data.dialogueText;
+    }
+}
     // ── Main panel loop ────────────────────────────────────────────────────
     private IEnumerator ShowCurrentPanel()
     {
@@ -156,12 +178,13 @@ public class ComicCutscenePlayer : MonoBehaviour
         if (panel.sfxOnEnter && sfxSource)   sfxSource.PlayOneShot(panel.sfxOnEnter);
         if (panel.voiceOver  && voiceSource)  voiceSource.PlayOneShot(panel.voiceOver);
 
-        // ── 4. Slide container to this slot's editor-placed position ──
-        float targetX = slotPositionsX != null && currentIndex < slotPositionsX.Length
-            ? -slotPositionsX[currentIndex]
-            : 0f;
-        yield return StartCoroutine(SlideAndTransitionIn(panel, currentIndex, targetX, cg));
+        // ── 4. Slide container to this slot's position ──
+       // 4. Keep the container fixed
+Vector2 targetPos = Vector2.zero;
 
+yield return StartCoroutine(
+    SlideAndTransitionIn(panel, currentIndex, targetPos, cg)
+);
         // ── 5. Ken Burns (optional slow zoom) ──
         Coroutine kb = panel.useKenBurnsEffect
             ? StartCoroutine(KenBurns(panel, currentIndex))
@@ -187,54 +210,158 @@ public class ComicCutscenePlayer : MonoBehaviour
     }
 
     // ── Slide container + per-slot entrance effect (run simultaneously) ──────
-    // IMPORTANT: slot anchoredPosition is NEVER touched here.
-    // Slots always stay at their fixed (i * panelWidth) resting position.
-    // Only panelContainer.anchoredPosition moves to reveal the correct slot.
+    // IMPORTANT: panelContainer is snapped to the correct targetPos instantly,
+    // and the individual slot entrance transition is played relative to its resting position.
+    // Chat panel runs on its own independent chatPanelTransitionDuration timer.
     private IEnumerator SlideAndTransitionIn(ComicPanelSO panel, int index,
-                                              float targetX, CanvasGroup cg)
+                                              Vector2 targetPos, CanvasGroup cg)
     {
-        float dur          = Mathf.Max(panel.transitionDuration, 0.05f);
+        float panelDur     = Mathf.Max(panel.transitionDuration, 0.05f);
+        float chatDur      = Mathf.Max(panel.chatPanelTransitionDuration, 0.05f);
+        float totalDur     = Mathf.Max(panelDur, chatDur);
         float t            = 0f;
-        Vector2 slideStart = panelContainer.anchoredPosition;
-        Vector2 slideEnd   = new Vector2(targetX, 0f);
+        Vector2 slideEnd   = targetPos;
 
-        while (t < dur)
+        // Snap container to reveal the target slot position instantly
+        if (panelContainer != null)
         {
-            float p = Mathf.SmoothStep(0f, 1f, t / dur);
+            panelContainer.anchoredPosition = slideEnd;
+        }
 
-            // Container slides to reveal the slot — THIS is the slide transition
-            panelContainer.anchoredPosition = Vector2.Lerp(slideStart, slideEnd, p);
+        GameObject slotRoot = GetSlotRoot(index);
+        RectTransform slotRt = slotRoot != null ? slotRoot.GetComponent<RectTransform>() : null;
+        Vector2 slotRestPos = (slotRestingPositions != null && index < slotRestingPositions.Length)
+            ? slotRestingPositions[index]
+            : Vector2.zero;
 
-            // Per-slot entrance: alpha and/or scale only (no position change)
-            switch (panel.transitionIn)
+        while (t < totalDur)
+        {
+            float p      = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / panelDur));
+            float pChat  = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / chatDur));
+
+            // Slot entrance animation
+            if (slotRt != null)
             {
-                case PanelTransitionType.Fade:
-                case PanelTransitionType.SlideFromRight:
-                case PanelTransitionType.SlideFromLeft:
-                case PanelTransitionType.SlideFromTop:
-                case PanelTransitionType.SlideFromBottom:
-                    // Fade in as the container slides into position
-                    cg.alpha = Mathf.Lerp(0f, 1f, p);
-                    break;
+                float offsetWidth = slotRt.rect.width > 0f ? slotRt.rect.width : Screen.width;
+                float offsetHeight = slotRt.rect.height > 0f ? slotRt.rect.height : Screen.height;
 
-                case PanelTransitionType.ComicPop:
-                    cg.alpha = Mathf.Lerp(0f, 1f, p);
-                    panelImages[index].transform.localScale = Vector3.one * Mathf.Lerp(0.5f, 1f, p);
-                    break;
+                switch (panel.transitionIn)
+                {
+                    case PanelTransitionType.Fade:
+                        cg.alpha = Mathf.Lerp(0f, 1f, p);
+                        slotRt.anchoredPosition = slotRestPos;
+                        break;
 
-                default: // None / PanelWipe → instant reveal
-                    cg.alpha = 1f;
-                    break;
+                    case PanelTransitionType.ComicPop:
+                        cg.alpha = Mathf.Lerp(0f, 1f, p);
+                        panelImages[index].transform.localScale = Vector3.one * Mathf.Lerp(0.5f, 1f, p);
+                        slotRt.anchoredPosition = slotRestPos;
+                        break;
+
+                    case PanelTransitionType.SlideFromRight:
+                        cg.alpha = Mathf.Lerp(0f, 1f, p);
+                        slotRt.anchoredPosition = Vector2.Lerp(
+                            slotRestPos + new Vector2(offsetWidth, 0f),
+                            slotRestPos, p);
+                        break;
+
+                    case PanelTransitionType.SlideFromLeft:
+                        cg.alpha = Mathf.Lerp(0f, 1f, p);
+                        slotRt.anchoredPosition = Vector2.Lerp(
+                            slotRestPos - new Vector2(offsetWidth, 0f),
+                            slotRestPos, p);
+                        break;
+
+                    case PanelTransitionType.SlideFromTop:
+                        cg.alpha = Mathf.Lerp(0f, 1f, p);
+                        slotRt.anchoredPosition = Vector2.Lerp(
+                            slotRestPos + new Vector2(0f, offsetHeight),
+                            slotRestPos, p);
+                        break;
+
+                    case PanelTransitionType.SlideFromBottom:
+                        cg.alpha = Mathf.Lerp(0f, 1f, p);
+                        slotRt.anchoredPosition = Vector2.Lerp(
+                            slotRestPos - new Vector2(0f, offsetHeight),
+                            slotRestPos, p);
+                        break;
+
+                    default: // None / PanelWipe → instant reveal
+                        cg.alpha = 1f;
+                        slotRt.anchoredPosition = slotRestPos;
+                        break;
+                }
+            }
+
+            // Chat panel entrance — uses its own pChat progress
+            if (chatPanel != null && chatPanelCG != null)
+            {
+                switch (panel.chatPanelTransitionType)
+                {
+                    case ChatPanelTransitionType.Fade:
+                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
+                        break;
+
+                    case ChatPanelTransitionType.Pop:
+                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
+                        chatPanel.localScale = Vector3.one * Mathf.Lerp(0.5f, 1f, pChat);
+                        break;
+
+                    case ChatPanelTransitionType.SlideFromRight:
+                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
+                        chatPanel.anchoredPosition = Vector2.Lerp(
+                            chatPanelRestPos + new Vector2(chatPanel.rect.width, 0f),
+                            chatPanelRestPos, pChat);
+                        break;
+
+                    case ChatPanelTransitionType.SlideFromLeft:
+                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
+                        chatPanel.anchoredPosition = Vector2.Lerp(
+                            chatPanelRestPos - new Vector2(chatPanel.rect.width, 0f),
+                            chatPanelRestPos, pChat);
+                        break;
+
+                    case ChatPanelTransitionType.SlideFromTop:
+                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
+                        chatPanel.anchoredPosition = Vector2.Lerp(
+                            chatPanelRestPos + new Vector2(0f, chatPanel.rect.height),
+                            chatPanelRestPos, pChat);
+                        break;
+
+                    case ChatPanelTransitionType.SlideFromBottom:
+                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
+                        chatPanel.anchoredPosition = Vector2.Lerp(
+                            chatPanelRestPos - new Vector2(0f, chatPanel.rect.height),
+                            chatPanelRestPos, pChat);
+                        break;
+
+                    default: // None
+                        chatPanelCG.alpha = 1f;
+                        break;
+                }
             }
 
             t += Time.deltaTime;
             yield return null;
         }
 
-        // Snap container to exact target; snap slot alpha/scale (never touch anchoredPosition)
-        panelContainer.anchoredPosition         = slideEnd;
+        // Snap everything to final state
+        if (panelContainer != null)
+        {
+            panelContainer.anchoredPosition = slideEnd;
+        }
         cg.alpha                                = 1f;
         panelImages[index].transform.localScale = Vector3.one;
+        if (slotRt != null)
+        {
+            slotRt.anchoredPosition = slotRestPos;
+        }
+        if (chatPanel != null && chatPanelCG != null)
+        {
+            chatPanelCG.alpha            = 1f;
+            chatPanel.localScale         = Vector3.one;
+            chatPanel.anchoredPosition   = chatPanelRestPos;
+        }
     }
 
     // ── Wait for player to advance ──────────────────────────────────────────
@@ -305,18 +432,88 @@ public class ComicCutscenePlayer : MonoBehaviour
 
     /// <summary>
     /// Prepares a slot's alpha/scale for its entrance animation.
-    /// Never touches anchoredPosition — slots stay at their fixed (i * panelWidth) position.
+    /// Also resets the chat panel to its pre-transition starting state.
     /// </summary>
     private void PrepareEntrance(ComicPanelSO panel, int index, CanvasGroup cg)
     {
         // Start fully transparent (all transition types fade in)
         if (cg != null) cg.alpha = 0f;
 
+        // Reset/prepare slot position and scale based on transition type
+        GameObject root = GetSlotRoot(index);
+        if (root != null)
+        {
+            RectTransform rt = root.GetComponent<RectTransform>();
+            if (rt != null && slotRestingPositions != null && index < slotRestingPositions.Length)
+            {
+                Vector2 restPos = slotRestingPositions[index];
+                float offsetWidth = rt.rect.width > 0f ? rt.rect.width : Screen.width;
+                float offsetHeight = rt.rect.height > 0f ? rt.rect.height : Screen.height;
+
+                switch (panel.transitionIn)
+                {
+                    case PanelTransitionType.SlideFromRight:
+                        rt.anchoredPosition = restPos + new Vector2(offsetWidth, 0f);
+                        break;
+                    case PanelTransitionType.SlideFromLeft:
+                        rt.anchoredPosition = restPos - new Vector2(offsetWidth, 0f);
+                        break;
+                    case PanelTransitionType.SlideFromTop:
+                        rt.anchoredPosition = restPos + new Vector2(0f, offsetHeight);
+                        break;
+                    case PanelTransitionType.SlideFromBottom:
+                        rt.anchoredPosition = restPos - new Vector2(0f, offsetHeight);
+                        break;
+                    default:
+                        rt.anchoredPosition = restPos;
+                        break;
+                }
+            }
+        }
+
         // ComicPop also starts scaled down
         if (panel.transitionIn == PanelTransitionType.ComicPop)
             panelImages[index].transform.localScale = Vector3.one * 0.5f;
         else
             panelImages[index].transform.localScale = Vector3.one;
+
+        // Reset chat panel to its pre-transition state
+        if (chatPanel != null && chatPanelCG != null)
+        {
+            chatPanel.localScale = Vector3.one;
+            switch (panel.chatPanelTransitionType)
+            {
+                case ChatPanelTransitionType.None:
+                    chatPanelCG.alpha          = 1f;
+                    chatPanel.anchoredPosition = chatPanelRestPos;
+                    break;
+                case ChatPanelTransitionType.Pop:
+                    chatPanelCG.alpha          = 0f;
+                    chatPanel.localScale       = Vector3.one * 0.5f;
+                    chatPanel.anchoredPosition = chatPanelRestPos;
+                    break;
+                case ChatPanelTransitionType.SlideFromRight:
+                    chatPanelCG.alpha          = 0f;
+                    chatPanel.anchoredPosition = chatPanelRestPos + new Vector2(chatPanel.rect.width, 0f);
+                    break;
+                case ChatPanelTransitionType.SlideFromLeft:
+                    chatPanelCG.alpha          = 0f;
+                    chatPanel.anchoredPosition = chatPanelRestPos - new Vector2(chatPanel.rect.width, 0f);
+                    break;
+                case ChatPanelTransitionType.SlideFromTop:
+                    chatPanelCG.alpha          = 0f;
+                    chatPanel.anchoredPosition = chatPanelRestPos + new Vector2(0f, chatPanel.rect.height);
+                    break;
+                case ChatPanelTransitionType.SlideFromBottom:
+                    chatPanelCG.alpha          = 0f;
+                    chatPanel.anchoredPosition = chatPanelRestPos - new Vector2(0f, chatPanel.rect.height);
+                    break;
+                default: // Fade
+                    chatPanelCG.alpha          = 0f;
+                    chatPanel.anchoredPosition = chatPanelRestPos;
+                    break;
+            }
+        }
     }
 
     

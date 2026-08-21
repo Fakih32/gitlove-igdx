@@ -152,11 +152,11 @@ RectTransform:
   - {fileID: 1383656439}
   m_Father: {fileID: 809916025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.489}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -541.08, y: 174.02}
-  m_SizeDelta: {x: 389.8816, y: 348.043}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 22, y: -463}
+  m_SizeDelta: {x: 389.8816, y: 348.04297}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &142511345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,11 +228,11 @@ RectTransform:
   - {fileID: 809916025}
   m_Father: {fileID: 1788498775}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -601, y: 284}
-  m_SizeDelta: {x: 389.8816, y: 348.04297}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -16, y: -27.917175}
+  m_SizeDelta: {x: 1920, y: 1052.1}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!225 &667704825
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -331,6 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 809916025}
   - component: {fileID: 809916026}
+  - component: {fileID: 809916027}
   m_Layer: 5
   m_Name: Panelrect
   m_TagString: Untagged
@@ -358,7 +359,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1847.1, y: 1074.54}
+  m_SizeDelta: {x: 389.88, y: 348.04004}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &809916026
 CanvasRenderer:
@@ -368,6 +369,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809916024}
   m_CullTransparentMesh: 1
+--- !u!225 &809916027
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809916024}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 1
 --- !u!1 &895451826
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.489}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 570, y: 177}
+  m_AnchoredPosition: {x: 1279, y: -394}
   m_SizeDelta: {x: 389.8816, y: 348.043}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &895451828
@@ -614,11 +627,11 @@ RectTransform:
   - {fileID: 1097034787}
   m_Father: {fileID: 809916025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.489}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 85, y: 174.02}
-  m_SizeDelta: {x: 389.8816, y: 348.043}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 726, y: -388}
+  m_SizeDelta: {x: 389.8816, y: 348.04297}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1059736128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1279,6 +1292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelContainer: {fileID: 809916025}
   panelParent: {fileID: 667704823}
+  chatPanel: {fileID: 0}
   panelImages:
   - {fileID: 142511345}
   - {fileID: 1059736128}
@@ -1331,7 +1345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1426.0348, y: -795.4538}
+  m_AnchoredPosition: {x: 783, y: -325}
   m_SizeDelta: {x: 160, y: 162.4273}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898947034

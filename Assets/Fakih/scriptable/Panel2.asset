@@ -17,8 +17,13 @@ MonoBehaviour:
   dialogueText: Africa
   displayDuration: 2.5
   waitForInput: 0
-  transitionIn: 2
+  isNextPanel: 1
+  distancex: 500
+  distancey: 0
+  transitionIn: 4
+  chatPanelTransitionType: 5
   transitionDuration: 0.4
+  chatPanelTransitionDuration: 0.2
   sfxOnEnter: {fileID: 0}
   voiceOver: {fileID: 0}
   useKenBurnsEffect: 0
