@@ -4,10 +4,11 @@ using UnityEngine;
 public class DataLevelHandler : MonoBehaviour
 {
     public static DataLevelHandler Instance { get; private set; }
-   
-        [HideInInspector] public int totalunlockedLevel;
+   [HideInInspector] public int totalunlockedLevel;
         [HideInInspector] public int currentlevel;
         [HideInInspector] public int maxLevel;
+
+        
     void Awake()
     {
         if (Instance != null && Instance != this)

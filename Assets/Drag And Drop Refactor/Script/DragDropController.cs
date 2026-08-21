@@ -40,8 +40,8 @@ public class DragDropController : MonoBehaviour {
 
     void Awake() {
         Instance = this;
-        if (LevelSessionManager.Instance != null) {
-            currentLevel = LevelSessionManager.Instance.currentlevel;
+        if (DataLevelHandler.Instance != null) {
+            currentLevel = DataLevelHandler.Instance.currentlevel;
         } else {
             Debug.LogWarning("LevelSessionManager.Instance is null, using default currentLevel");
         }
