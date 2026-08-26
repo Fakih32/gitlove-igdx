@@ -1301,7 +1301,7 @@ MonoBehaviour:
   letterFieldParent: {fileID: 348484362}
   letterButtonsParent: {fileID: 2089600678}
   quizImage: {fileID: 451365857}
-  questionsPerLevel: 3
+  questionsPerLevel: 2
 --- !u!4 &2126994910
 Transform:
   m_ObjectHideFlags: 0
