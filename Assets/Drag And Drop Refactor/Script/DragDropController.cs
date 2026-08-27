@@ -64,14 +64,6 @@ public class DragDropController : MonoBehaviour {
                 firstImage.sprite = data.firstImage;
                 secondImage.sprite = data.secondImage;
                 thirdImage.sprite = data.thirdImage;
-                if (targetSlot1 != null && targetSlot2 != null && targetSlot3 != null) {
-                    targetSlot1.GetComponent<Image>().sprite = data.firstshilloute;
-                    targetSlot2.GetComponent<Image>().sprite = data.secondshilloute;
-                    targetSlot3.GetComponent<Image>().sprite = data.thirdshilloute;
-                } else {
-                    Debug.LogWarning("DragDropController: target slots are not assigned in the Inspector!");
-                }
-               
                  firstImage.GetComponent<RectTransform>().localScale = data.firstimageScale;
             secondImage.GetComponent<RectTransform>().localScale = data.secondimageScale;
             thirdImage.GetComponent<RectTransform>().localScale = data.thirdimageScale;

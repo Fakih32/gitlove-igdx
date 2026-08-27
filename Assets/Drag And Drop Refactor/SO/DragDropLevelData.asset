@@ -17,9 +17,6 @@ MonoBehaviour:
     firstImage: {fileID: 21300000, guid: 4e80a49b4db6d144b9e5c16a2284bcde, type: 3}
     secondImage: {fileID: -3251921084466635551, guid: 08c9fa4893159af4f9f46840c4988c5c, type: 3}
     thirdImage: {fileID: 21300000, guid: 6d5a564e4c144af4d9d645a269bfc324, type: 3}
-    firstshilloute: {fileID: 21300000, guid: 05a0b41460a194445ab15f7564a19114, type: 3}
-    secondshilloute: {fileID: 0}
-    thirdshilloute: {fileID: 0}
     BackgroundImage: {fileID: 21300000, guid: 1008ab9d7d36d0c428bc1daecfa93b90, type: 3}
     firstImagePos: {x: 200, y: 150}
     secondImagePos: {x: 200, y: -100}
@@ -27,17 +24,3 @@ MonoBehaviour:
     firstimageScale: {x: 3.5, y: 3.5}
     secondimageScale: {x: 2.5, y: 2.5}
     thirdimageScale: {x: 2.5, y: 2.5}
-  - level: 2
-    firstImage: {fileID: -7332438992775210462, guid: 251dc51786c2e274bb587062fd3ef331, type: 3}
-    secondImage: {fileID: -7290557219107452013, guid: 585a595e98ea75c479debfa082a7c054, type: 3}
-    thirdImage: {fileID: 6238890190473424551, guid: 3f24f5e926e9648418ea82544d9e3c3e, type: 3}
-    firstshilloute: {fileID: 0}
-    secondshilloute: {fileID: 0}
-    thirdshilloute: {fileID: 0}
-    BackgroundImage: {fileID: 21300000, guid: 1008ab9d7d36d0c428bc1daecfa93b90, type: 3}
-    firstImagePos: {x: 200, y: 150}
-    secondImagePos: {x: 200, y: -100}
-    thirdImagePos: {x: 200, y: -200}
-    firstimageScale: {x: 1, y: 1}
-    secondimageScale: {x: 1, y: 1}
-    thirdimageScale: {x: 1, y: 1}
