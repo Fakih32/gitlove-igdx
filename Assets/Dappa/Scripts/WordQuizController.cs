@@ -80,12 +80,12 @@ public class WordQuizController : MonoBehaviour {
             Destroy(child.gameObject);
         }
 
-        letterButtons = new Button[8];
+        letterButtons = new Button[9];
 
         char[] correctLetters = correctWord.ToCharArray();
-        char[] wrongLetters = GenerateRandomLetters(8 - correctLetters.Length, correctLetters);
+        char[] wrongLetters = GenerateRandomLetters(9 - correctLetters.Length, correctLetters);
 
-        char[] allLetters = new char[8];
+        char[] allLetters = new char[9];
         correctLetters.CopyTo(allLetters, 0);
         wrongLetters.CopyTo(allLetters, correctLetters.Length);
 
