@@ -958,7 +958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 376.271, y: 25.416382}
+  m_AnchoredPosition: {x: 353, y: 25.416382}
   m_SizeDelta: {x: 316.5419, y: 145.386}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &632084269
@@ -1581,7 +1581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 724, y: 25.416382}
+  m_AnchoredPosition: {x: 907, y: 25.416382}
   m_SizeDelta: {x: 316.5419, y: 145.386}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &789551395
@@ -1794,13 +1794,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
   - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
   unlockedLevelImages:
-  - {fileID: -1152087883420782232, guid: 508523221144c4244bea58af76fadafb, type: 3}
-  - {fileID: -5122792506541145818, guid: ff67d1e15d58708419c8f078c753005b, type: 3}
-  - {fileID: -1152087883420782232, guid: 508523221144c4244bea58af76fadafb, type: 3}
+  - {fileID: 21300000, guid: 50286c334fe7bbb49b0090439eeb12a5, type: 3}
+  - {fileID: 21300000, guid: 345e4916aa7726347a29c1893a1c520f, type: 3}
+  - {fileID: 21300000, guid: e3abf629965cfdd4185abbe84eea2dc4, type: 3}
   levelButtons:
   - {fileID: 1712170534}
   - {fileID: 632084269}
   - {fileID: 789551395}
+  levelImageSizes:
+  - {x: 1, y: 1}
+  - {x: 1, y: 1.5}
+  - {x: 1, y: 1.5}
   gameScene: DragAnddropCopy
 --- !u!1 &909393409
 GameObject:
@@ -2788,7 +2792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 31.0645}
+  m_AnchoredPosition: {x: -349, y: 31.0645}
   m_SizeDelta: {x: 316.5419, y: 156.6822}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712170534
