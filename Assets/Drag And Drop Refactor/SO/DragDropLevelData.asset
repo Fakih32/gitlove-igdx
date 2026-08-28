@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DragDropLevelData
   m_EditorClassIdentifier: 
   levels:
+<<<<<<< Updated upstream
   - level: 1
     firstImage: {fileID: 6284320701668298175, guid: b763802433c1ec048b12766948e0544a, type: 3}
     secondImage: {fileID: -6788383481362236174, guid: 86b007f6f0959c5449ac3dd5aa231ad1, type: 3}
@@ -21,3 +22,38 @@ MonoBehaviour:
     firstImagePos: {x: 100, y: 180}
     secondImagePos: {x: 100, y: 100}
     thirdImagePos: {x: 100, y: 120}
+=======
+  - level: 0
+    firstImage: {fileID: 21300000, guid: 4e80a49b4db6d144b9e5c16a2284bcde, type: 3}
+    secondImage: {fileID: -3251921084466635551, guid: 08c9fa4893159af4f9f46840c4988c5c, type: 3}
+    thirdImage: {fileID: 21300000, guid: 6d5a564e4c144af4d9d645a269bfc324, type: 3}
+    BackgroundImage: {fileID: 21300000, guid: 1008ab9d7d36d0c428bc1daecfa93b90, type: 3}
+    firstImagePos: {x: 0, y: 320}
+    secondImagePos: {x: 0, y: 100}
+    thirdImagePos: {x: 0, y: 80}
+    firstimageScale: {x: 3.8, y: 3.5}
+    secondimageScale: {x: 2.5, y: 2.5}
+    thirdimageScale: {x: 2.5, y: 2.5}
+  - level: 1
+    firstImage: {fileID: 21300000, guid: 01b5a5bb3951e464bb42be9bbdc27086, type: 3}
+    secondImage: {fileID: 21300000, guid: 345e4916aa7726347a29c1893a1c520f, type: 3}
+    thirdImage: {fileID: 21300000, guid: 27a824b625305e644bd41bbfc6e4c4dd, type: 3}
+    BackgroundImage: {fileID: 21300000, guid: 1008ab9d7d36d0c428bc1daecfa93b90, type: 3}
+    firstImagePos: {x: -300, y: 0}
+    secondImagePos: {x: 0, y: 0}
+    thirdImagePos: {x: 300, y: 0}
+    firstimageScale: {x: 1.2, y: 2.2}
+    secondimageScale: {x: 1.5, y: 2.5}
+    thirdimageScale: {x: 1.7, y: 2.7}
+  - level: 2
+    firstImage: {fileID: 21300000, guid: 69ed4455be822504a843ac3cb142637d, type: 3}
+    secondImage: {fileID: 21300000, guid: e3abf629965cfdd4185abbe84eea2dc4, type: 3}
+    thirdImage: {fileID: 21300000, guid: f9769585798390a4696136685ac85895, type: 3}
+    BackgroundImage: {fileID: 21300000, guid: 1008ab9d7d36d0c428bc1daecfa93b90, type: 3}
+    firstImagePos: {x: -300, y: 0}
+    secondImagePos: {x: 0, y: 0}
+    thirdImagePos: {x: 300, y: 0}
+    firstimageScale: {x: 2, y: 3}
+    secondimageScale: {x: 2, y: 3}
+    thirdimageScale: {x: 2, y: 3}
+>>>>>>> Stashed changes
