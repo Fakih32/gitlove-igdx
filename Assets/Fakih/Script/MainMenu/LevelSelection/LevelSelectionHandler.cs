@@ -23,6 +23,8 @@ public class LevelSelectionHandler : MonoBehaviour {
 
     [Header("gambar level terkunci")]
     public List<Sprite> lockedLevelImages;
+    [Header("Ukuran Gambar ")]
+    public List <Vector2> imageSizes;
     [Header("gambar level terbuka")]
     public List<Sprite> unlockedLevelImages;
 
@@ -72,9 +74,11 @@ public class LevelSelectionHandler : MonoBehaviour {
 
             if (unlocked && index < unlockedLevelImages.Count) {
                 levelButtons[i].GetComponent<Image>().sprite = unlockedLevelImages[index];
+                levelButtons[i].GetComponent<RectTransform>().localScale = imageSizes[index];
                 levelButtons[i].interactable = true;
             } else if (!unlocked && index < lockedLevelImages.Count) {
                 levelButtons[i].GetComponent<Image>().sprite = lockedLevelImages[index];
+                levelButtons[i].GetComponent<RectTransform>().localScale = imageSizes[index];
                 levelButtons[i].interactable = false;
             }
 

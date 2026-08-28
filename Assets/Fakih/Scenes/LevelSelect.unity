@@ -1517,6 +1517,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
   - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
   - {fileID: 21300000, guid: 4f9da738c098bbc4882ca079de435619, type: 3}
+  imageSizes:
+  - {x: 1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1, y: 1}
   unlockedLevelImages:
   - {fileID: -5268541570548603481, guid: 2df1c6999083eea419808f1c55e1d0ba, type: 3}
   - {fileID: 21300000, guid: 01b5a5bb3951e464bb42be9bbdc27086, type: 3}
