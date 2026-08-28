@@ -2,17 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-// ROMBAK dari DraganddropLevelHandler.cs.
+// ROMBAK dari versi sebelumnya.
 // Perubahan utama:
-// 1. Logic menang/kalah/bintang (Checkwin, Gamewin, Gamelost, panel, star)
-//    DIHAPUS dari sini -> pindah ke LevelSessionManager + GameOverController,
-//    karena itu level-wide, bukan cuma milik mekanik drag & drop
-// 2. Timer sendiri (lewat TimerScript.instance) dihapus -> LevelSessionManager
-//    yang urus, termasuk kondisi waktu habis
-// 3. Skor nambah lewat LevelSessionManager.AddScore(), bukan variabel lokal
-//    currentpoint
-// 4. Setelah semua target tercapai, lapor ke
-//    LevelSessionManager.OnMechanicComplete() alih-alih urus menang sendiri
+// - Ketergantungan ke DataLevelHandler DIHAPUS TOTAL. Sebelumnya
+//   currentLevel diambil dari DataLevelHandler.Instance.currentlevel
+//   (int terpisah, disinkronkan lewat polling Update() dari
+//   LevelSelectionHandler) -- ini sumber kebenaran ganda yang bikin
+//   currentLevel gampang nyangkut/telat update.
+//   Sekarang currentLevel diambil langsung dari
+//   LevelSessionManager.Instance.currentLevel.levelIndex, satu-satunya
+//   sumber kebenaran soal "level yang sedang dimainkan", yang sudah
+//   di-set benar oleh LevelSelectionHandler.selectlevel() saat player
+//   memilih level.
 public class DragDropController : MonoBehaviour {
     public static DragDropController Instance;
 
@@ -36,21 +37,14 @@ public class DragDropController : MonoBehaviour {
     public GameObject targetSlot2;
     public GameObject targetSlot3;
 
-  
-
     void Awake() {
         Instance = this;
-        if (DataLevelHandler.Instance != null) {
-            currentLevel = DataLevelHandler.Instance.currentlevel;
-        } else {
-            Debug.LogWarning("LevelSessionManager.Instance is null, using default currentLevel");
-        }
+        currentLevel = ResolveCurrentLevelIndex(LevelSessionManager.Instance?.currentLevel);
     }
 
     void Start() {
         LoadLevel();
         targetsTotal = targets.Count;
-      
     }
 
     void LoadLevel() {
@@ -58,15 +52,15 @@ public class DragDropController : MonoBehaviour {
             Debug.LogError("DragDropController: levelData belum di-set");
             return;
         }
-       
+
         foreach (var data in levelData.levels) {
             if (data.level == currentLevel) {
                 firstImage.sprite = data.firstImage;
                 secondImage.sprite = data.secondImage;
                 thirdImage.sprite = data.thirdImage;
-                 firstImage.GetComponent<RectTransform>().localScale = data.firstimageScale;
-            secondImage.GetComponent<RectTransform>().localScale = data.secondimageScale;
-            thirdImage.GetComponent<RectTransform>().localScale = data.thirdimageScale;
+                firstImage.GetComponent<RectTransform>().localScale = data.firstimageScale;
+                secondImage.GetComponent<RectTransform>().localScale = data.secondimageScale;
+                thirdImage.GetComponent<RectTransform>().localScale = data.thirdimageScale;
                 if (backgroundImage != null) {
                     backgroundImage.sprite = data.BackgroundImage;
                 } else {
@@ -90,5 +84,17 @@ public class DragDropController : MonoBehaviour {
         if (targetsHit >= targetsTotal) {
             LevelSessionManager.Instance?.OnMechanicComplete();
         }
+    }
+
+    // Fallback ke 0 kalau LevelSessionManager/currentLevel belum ke-set --
+    // seharusnya tidak pernah kejadian di alur normal (selalu lewat
+    // LevelSelectionHandler.selectlevel() dulu), tapi tetap aman daripada
+    // NullReferenceException kalau scene ini di-test langsung.
+    public static int ResolveCurrentLevelIndex(LevelData currentLevel) {
+        if (currentLevel == null) {
+            Debug.LogWarning("DragDropController: LevelSessionManager.currentLevel null, fallback ke level index 0");
+            return 0;
+        }
+        return currentLevel.levelIndex;
     }
 }

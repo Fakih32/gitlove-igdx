@@ -1,11 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// ROMBAK dari GameManager.cs.
-// Perubahan dari versi sebelumnya:
-// - Update() dihapus total, karena kondisi "waktu habis" sekarang ditangani
-//   terpusat oleh LevelSessionManager.HandleTimeUp(), bukan dicek manual di sini
-// - Tipe data QuizData -> WordQuizData mengikuti rename
 public class WordQuizController : MonoBehaviour {
     [Header("Data & Referensi Scene")]
     public WordQuizData quizData;
@@ -15,14 +10,10 @@ public class WordQuizController : MonoBehaviour {
     public Transform letterButtonsParent;
     public Image quizImage;
 
-    //[Header("Sound Effects")]
-    //public AudioClip clickSfx;
-    //public AudioClip correctSfx;
-    //public AudioClip wrongSfx;
-
     [Header("Konfigurasi Mekanik Ini")]
     public int questionsPerLevel = 2;
 
+    private WordQuizData.Quiz[] currentLevelQuizzes;
     private Text[] letterFields;
     private Button[] letterButtons;
     private int currentFieldIndex = 0;
@@ -31,18 +22,30 @@ public class WordQuizController : MonoBehaviour {
     private bool isAnswering = true;
 
     void Start() {
+        int levelIndex = ResolveCurrentLevelIndex(LevelSessionManager.Instance?.currentLevel);
+        currentLevelQuizzes = quizData != null ? quizData.GetQuizzesForLevel(levelIndex) : null;
+
+        if (currentLevelQuizzes == null || currentLevelQuizzes.Length == 0) {
+            Debug.LogError($"WordQuizController: tidak ada quiz untuk level index {levelIndex} di WordQuizData");
+            return;
+        }
+
+        if (questionsPerLevel > currentLevelQuizzes.Length) {
+            Debug.LogWarning($"WordQuizController: questionsPerLevel ({questionsPerLevel}) lebih besar dari jumlah quiz yang tersedia ({currentLevelQuizzes.Length}) untuk level ini -- soal akan berulang.");
+        }
+
         LoadQuiz(currentQuizIndex);
     }
 
     void LoadQuiz(int quizIndex) {
         ResetGame();
 
-        if (quizData == null || quizData.quizzes == null || quizData.quizzes.Length == 0) {
+        if (currentLevelQuizzes == null || currentLevelQuizzes.Length == 0) {
             Debug.LogError("Quiz Data belum disetup dengan benar");
             return;
         }
 
-        WordQuizData.Quiz quiz = quizData.quizzes[quizIndex % quizData.quizzes.Length];
+        WordQuizData.Quiz quiz = currentLevelQuizzes[quizIndex % currentLevelQuizzes.Length];
 
         if (quizImage == null) {
             Debug.LogError("Quiz Image belum di-assign di Inspector");
@@ -105,8 +108,6 @@ public class WordQuizController : MonoBehaviour {
     void OnLetterButtonClick(int buttonIndex) {
         if (!isAnswering || currentFieldIndex >= letterFields.Length) return;
 
-        //AudioManager.Instance?.PlaySfx(clickSfx);
-
         string letter = letterButtons[buttonIndex].GetComponentInChildren<Text>().text;
         letterFields[currentFieldIndex].text = letter;
         letterButtons[buttonIndex].interactable = false;
@@ -141,20 +142,17 @@ public class WordQuizController : MonoBehaviour {
             playerReply += field.text;
         }
 
-        bool isCorrect = playerReply == quizData.quizzes[currentQuizIndex % quizData.quizzes.Length].correctWord;
+        bool isCorrect = playerReply == currentLevelQuizzes[currentQuizIndex % currentLevelQuizzes.Length].correctWord;
 
         if (isCorrect) {
-            isAnswering = false; // kunci input, cuma kalau udah benar
+            isAnswering = false;
 
-            //AudioManager.Instance?.PlaySfx(correctSfx);
             foreach (Text field in letterFields) field.color = Color.green;
             LevelSessionManager.Instance?.AddScore(100);
 
-            Invoke(nameof(NextQuiz), 1.5f); // lanjut ke soal berikutnya cuma di sini
+            Invoke(nameof(NextQuiz), 1.5f);
         } else {
-            //AudioManager.Instance?.PlaySfx(wrongSfx);
             foreach (Text field in letterFields) field.color = Color.red;
-            // isAnswering tetap true -> pemain masih bisa pencet Delete lalu coba lagi
         }
     }
 
@@ -205,5 +203,13 @@ public class WordQuizController : MonoBehaviour {
                 if (button != null) button.interactable = true;
             }
         }
+    }
+
+    public static int ResolveCurrentLevelIndex(LevelData currentLevel) {
+        if (currentLevel == null) {
+            Debug.LogWarning("WordQuizController: LevelSessionManager.currentLevel null, fallback ke level index 0");
+            return 0;
+        }
+        return currentLevel.levelIndex;
     }
 }

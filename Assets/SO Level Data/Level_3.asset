@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9d31c357e389d4488bcf77b532d4f6, type: 3}
+  m_Name: Level_3
+  m_EditorClassIdentifier: 
+  levelId: level_3
+  levelIndex: 2
+  mechanicSceneNames:
+  - DragAnddropCopy
+  - WordQuizScene
+  gameOverSceneName: GameOverScene
+  timeLimit: 60
+  threeStarTime: 20
+  twoStarTime: 40
