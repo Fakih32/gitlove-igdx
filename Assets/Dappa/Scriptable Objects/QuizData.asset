@@ -12,8 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3bb8b8605cba74eb6a6e08acd57fea, type: 3}
   m_Name: QuizData
   m_EditorClassIdentifier: 
-  quizzes:
-  - image: {fileID: 21300000, guid: 4e80a49b4db6d144b9e5c16a2284bcde, type: 3}
-    correctWord: TAJUG
-  - image: {fileID: 21300000, guid: 50286c334fe7bbb49b0090439eeb12a5, type: 3}
-    correctWord: JOGLO
+  levels:
+  - level: 0
+    quizzes:
+    - image: {fileID: 21300000, guid: 4e80a49b4db6d144b9e5c16a2284bcde, type: 3}
+      correctWord: TAJUG
+    - image: {fileID: 21300000, guid: 50286c334fe7bbb49b0090439eeb12a5, type: 3}
+      correctWord: JOGLO
+  - level: 1
+    quizzes:
+    - image: {fileID: 21300000, guid: 345e4916aa7726347a29c1893a1c520f, type: 3}
+      correctWord: SURJAN
+    - image: {fileID: 21300000, guid: 27a824b625305e644bd41bbfc6e4c4dd, type: 3}
+      correctWord: JARIK
+  - level: 2
+    quizzes:
+    - image: {fileID: 21300000, guid: 8e974dd0699f59641856f6ffb9184203, type: 3}
+      correctWord: GUDEG
+    - image: {fileID: 21300000, guid: 9c9e4212a3e3ed749b4218fe0795d059, type: 3}
+      correctWord: BAKMIJAWA
