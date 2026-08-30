@@ -74,12 +74,14 @@ public class LevelSelectionHandler : MonoBehaviour {
 
             if (unlocked && index < unlockedLevelImages.Count) {
                 levelButtons[i].GetComponent<Image>().sprite = unlockedLevelImages[index];
-                levelButtons[i].GetComponent<RectTransform>().localScale= levelImageSizes[index];
                 levelButtons[i].interactable = true;
             } else if (!unlocked && index < lockedLevelImages.Count) {
                 levelButtons[i].GetComponent<Image>().sprite = lockedLevelImages[index];
-                levelButtons[i].GetComponent<RectTransform>().localScale= levelImageSizes[index];
                 levelButtons[i].interactable = false;
+            }
+
+            if (index < levelImageSizes.Count) {
+                levelButtons[i].GetComponent<RectTransform>().localScale = levelImageSizes[index];
             }
 
             levelButtons[i].onClick.RemoveAllListeners();
