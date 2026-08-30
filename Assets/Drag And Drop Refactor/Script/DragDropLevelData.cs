@@ -9,9 +9,15 @@ public class DragDropLevelData : ScriptableObject {
     [System.Serializable]
     public class LevelEntry {
         public int level;
+        [Header("Gambar Drag")]
         public Sprite firstImage;
         public Sprite secondImage;
         public Sprite thirdImage;
+        [Header("Siluet")]
+        public Sprite firstsiluet;
+        public Sprite secondsiluet;
+        public Sprite thridsiluet;
+        [Header("Background")]
         public Sprite BackgroundImage;
         public Vector2 firstImagePos;
         public Vector2 secondImagePos;
