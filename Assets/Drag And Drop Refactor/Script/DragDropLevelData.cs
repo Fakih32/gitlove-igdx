@@ -19,12 +19,18 @@ public class DragDropLevelData : ScriptableObject {
         public Sprite thridsiluet;
         [Header("Background")]
         public Sprite BackgroundImage;
+        [Header("Posisi Tujuan")]
         public Vector2 firstImagePos;
         public Vector2 secondImagePos;
         public Vector2 thirdImagePos;
+        [Header("Ukuran Gambar Drag")]
         public Vector2 firstimageScale;
         public Vector2 secondimageScale;
         public Vector2 thirdimageScale;
+        [Header("Ukuran Gambar tujuan")]
+        public Vector2 firstsiluetsize;
+        public Vector2 secondsiluetsize;
+        public Vector2 thridsiluetsize;
     }
 
     public LevelEntry[] levels;

@@ -19,7 +19,7 @@ MonoBehaviour:
     thirdImage: {fileID: 21300000, guid: 6d5a564e4c144af4d9d645a269bfc324, type: 3}
     firstsiluet: {fileID: -5122792506541145818, guid: ff67d1e15d58708419c8f078c753005b, type: 3}
     secondsiluet: {fileID: 21300000, guid: 05a0b41460a194445ab15f7564a19114, type: 3}
-    thridsiluet: {fileID: 0}
+    thridsiluet: {fileID: -7479393008202049932, guid: d407ad15abdfb6e43b669efcaca34955, type: 3}
     BackgroundImage: {fileID: 21300000, guid: 1008ab9d7d36d0c428bc1daecfa93b90, type: 3}
     firstImagePos: {x: 0, y: 320}
     secondImagePos: {x: 0, y: 100}
@@ -27,6 +27,9 @@ MonoBehaviour:
     firstimageScale: {x: 3.5, y: 3.5}
     secondimageScale: {x: 2.5, y: 2.5}
     thirdimageScale: {x: 2.5, y: 2.5}
+    firstsiluetsize: {x: 1, y: 1}
+    secondsiluetsize: {x: 1, y: 1}
+    thridsiluetsize: {x: 1, y: 1}
   - level: 1
     firstImage: {fileID: 21300000, guid: 01b5a5bb3951e464bb42be9bbdc27086, type: 3}
     secondImage: {fileID: 21300000, guid: 345e4916aa7726347a29c1893a1c520f, type: 3}
@@ -41,6 +44,9 @@ MonoBehaviour:
     firstimageScale: {x: 1.5, y: 2}
     secondimageScale: {x: 1.5, y: 2}
     thirdimageScale: {x: 1.5, y: 2}
+    firstsiluetsize: {x: 0, y: 0}
+    secondsiluetsize: {x: 0, y: 0}
+    thridsiluetsize: {x: 0, y: 0}
   - level: 2
     firstImage: {fileID: 21300000, guid: e3abf629965cfdd4185abbe84eea2dc4, type: 3}
     secondImage: {fileID: 21300000, guid: 69ed4455be822504a843ac3cb142637d, type: 3}
@@ -55,3 +61,6 @@ MonoBehaviour:
     firstimageScale: {x: 1.5, y: 2}
     secondimageScale: {x: 1.5, y: 2}
     thirdimageScale: {x: 1.5, y: 2}
+    firstsiluetsize: {x: 0, y: 0}
+    secondsiluetsize: {x: 0, y: 0}
+    thridsiluetsize: {x: 0, y: 0}
