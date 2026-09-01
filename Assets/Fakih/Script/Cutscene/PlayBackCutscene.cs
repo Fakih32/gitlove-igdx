@@ -18,6 +18,11 @@ using TMPro;
 ///      └── NextButton   (shown at the last panel; deactivates PanelParent on click)
 ///
 /// • All slots START hidden (script hides them on Awake).
+/// • Each ComicPanelSO entry in sequence.panels maps to a SLOT, not 1:1 by index:
+///     - panel.isNextPanel == true  → advance to the NEXT slot and play its entrance.
+///     - panel.isNextPanel == false → STAY on the current slot; refresh its sprite /
+///       bubble / dialogue in place and replay the entrance transition on that slot.
+///   (The very first panel in the sequence always lands on Slot_0.)
 /// • Each panel: slot activates → transition plays (fade/slide/pop) → wait for input.
 /// • PanelContainer slides to the next slot position simultaneously with the transition.
 /// </summary>
@@ -53,7 +58,12 @@ public class ComicCutscenePlayer : MonoBehaviour
     public event System.Action OnCutsceneComplete;
 
     // ── Runtime state ──────────────────────────────────────────────────────
-    private int             currentIndex;
+    // currentPanelIndex walks through sequence.panels[] one entry at a time (always +1).
+    // currentSlotIndex is which physical slot (Slot_0, Slot_1, ...) is currently showing.
+    // These are DIFFERENT counters: a panel entry with isNextPanel == false reuses the
+    // same slot as the previous entry instead of advancing to a new one.
+    private int             currentPanelIndex;
+    private int             currentSlotIndex;
     private CanvasGroup[]   slotCanvasGroups;   // one per slot, for alpha transitions
     private Vector2[]       slotRestingPositions; // cached design-time anchoredPositions of each slot root
     private CanvasGroup     chatPanelCG;        // CanvasGroup on the chatPanel GO
@@ -99,111 +109,143 @@ public class ComicCutscenePlayer : MonoBehaviour
     {
         if (panelParent != null) panelParent.SetActive(true);
 
-        currentIndex = 0;
+        currentPanelIndex = 0;
+        currentSlotIndex  = -1; // becomes 0 the moment the first panel is shown
 
         // Reset container to origin
         if (panelContainer != null)
             panelContainer.anchoredPosition = Vector2.zero;
 
-        // Pre-position and populate every slot (they stay hidden)
+        // Cache each slot's design-time resting position (no data pushed here anymore —
+        // which slot a given ComicPanelSO lands on is decided at runtime by isNextPanel).
         PrepareAllSlots();
 
         // Start showing from panel 0
         StartCoroutine(ShowCurrentPanel());
     }
 
- private void PrepareAllSlots()
-{
-    if (sequence == null || sequence.panels == null) return;
-
-    int count = Mathf.Min(sequence.panels.Length, panelImages.Count);
-    slotRestingPositions = new Vector2[count];
-
-    for (int i = 0; i < count; i++)
+    private void PrepareAllSlots()
     {
-        ComicPanelSO data = sequence.panels[i];
-        if (data == null) continue;
+        int slotCount = panelImages.Count;
+        slotRestingPositions = new Vector2[slotCount];
 
-        GameObject root = GetSlotRoot(i);
-        RectTransform rt = root != null
-            ? root.GetComponent<RectTransform>()
-            : null;
-
-        // IMPORTANT:
-        // Use the position that you placed in the Inspector.
-        // Do NOT calculate it from the previous panel.
-        Vector2 restPos = rt != null
-            ? rt.anchoredPosition
-            : Vector2.zero;
-
-        slotRestingPositions[i] = restPos;
-
-        // Set panel sprite
-        if (panelImages[i] != null)
-            panelImages[i].sprite = data.panelImage;
-
-        // Bubble
-        bool hasBubble = data.bubbleSprite != null;
-
-        if (i < bubbleImages.Count && bubbleImages[i] != null)
+        for (int i = 0; i < slotCount; i++)
         {
-            bubbleImages[i].gameObject.SetActive(hasBubble);
+            GameObject root = GetSlotRoot(i);
+            RectTransform rt = root != null
+                ? root.GetComponent<RectTransform>()
+                : null;
 
-            if (hasBubble)
-                bubbleImages[i].sprite = data.bubbleSprite;
+            // IMPORTANT:
+            // Use the position that you placed in the Inspector.
+            // Do NOT calculate it from the previous panel.
+            slotRestingPositions[i] = rt != null
+                ? rt.anchoredPosition
+                : Vector2.zero;
         }
-
-        // Dialogue
-        if (i < dialogueTexts.Count && dialogueTexts[i] != null)
-            dialogueTexts[i].text = data.dialogueText;
     }
-}
+
     // ── Main panel loop ────────────────────────────────────────────────────
     private IEnumerator ShowCurrentPanel()
     {
-        if (sequence == null || currentIndex >= sequence.panels.Length) yield break;
+        if (sequence == null || currentPanelIndex >= sequence.panels.Length) yield break;
 
-        ComicPanelSO panel = sequence.panels[currentIndex];
+        ComicPanelSO panel = sequence.panels[currentPanelIndex];
         if (panel == null) yield break;
 
-        // ── 1. Activate this slot (it was hidden) ──
-        GameObject slotRoot = GetSlotRoot(currentIndex);
+        // ── 0. Decide which slot this entry belongs on ──
+        // First panel ever -> slot 0.
+        // isNextPanel == true  -> advance to a new slot.
+        // isNextPanel == false -> stay on the current slot, just refresh its content.
+        if (currentSlotIndex < 0 || panel.isNextPanel)
+            currentSlotIndex++;
+
+        if (currentSlotIndex >= panelImages.Count)
+        {
+            Debug.LogWarning(
+                $"ComicCutscenePlayer: panel {currentPanelIndex} wants slot {currentSlotIndex}, " +
+                $"but only {panelImages.Count} slots exist. Stopping.");
+            yield break;
+        }
+
+        int slot = currentSlotIndex;
+
+        // ── 1. Push this panel's content onto the target slot ──
+        if (!panel.stayonthefirstslot)
+        {
+            
+        
+        if (panelImages[slot] != null)
+            panelImages[slot].sprite = panel.panelImage;
+        
+       
+        bool hasBubble = panel.bubbleSprite != null;
+        if (slot < bubbleImages.Count && bubbleImages[slot] != null)
+        {
+            bubbleImages[slot].gameObject.SetActive(hasBubble);
+            if (hasBubble)
+                bubbleImages[slot].sprite = panel.bubbleSprite;
+        }
+        
+
+        if (slot < dialogueTexts.Count && dialogueTexts[slot] != null)
+            dialogueTexts[slot].text = panel.dialogueText;
+
+        // ── 2. Activate this slot (harmless if it's already active because it's being reused) ──
+        GameObject slotRoot = GetSlotRoot(slot);
         if (slotRoot != null) slotRoot.SetActive(true);
 
-        // ── 2. Prepare slot for its entrance ──
-        CanvasGroup cg   = GetSlotCG(currentIndex);
-        PrepareEntrance(panel, currentIndex, cg);
-
-        // ── 3. Audio ──
+        // ── 3. Prepare slot for its entrance ──
+        CanvasGroup cg = GetSlotCG(slot);
+        PrepareEntrance(panel, slot, cg);
+        
+    
+        
+        // ── 4. Audio ──
         if (panel.sfxOnEnter && sfxSource)   sfxSource.PlayOneShot(panel.sfxOnEnter);
-        if (panel.voiceOver  && voiceSource)  voiceSource.PlayOneShot(panel.voiceOver);
+        if (panel.voiceOver  && voiceSource) voiceSource.PlayOneShot(panel.voiceOver);
 
-        // ── 4. Slide container to this slot's position ──
-       // 4. Keep the container fixed
-Vector2 targetPos = Vector2.zero;
+        // ── 5. Keep the container fixed ──
+        Vector2 targetPos = Vector2.zero;
 
-yield return StartCoroutine(
-    SlideAndTransitionIn(panel, currentIndex, targetPos, cg)
-);
-        // ── 5. Ken Burns (optional slow zoom) ──
+        yield return StartCoroutine(
+            SlideAndTransitionIn(panel, slot, targetPos, cg)
+        );
+        }
+        else
+        {
+             
+              panelImages[0].sprite = panel.panelImage;
+               bool hasBubble = panel.bubbleSprite != null;
+        if (slot < bubbleImages.Count && bubbleImages[0] != null)
+        {
+            bubbleImages[0].gameObject.SetActive(hasBubble);
+            if (hasBubble)
+                bubbleImages[0].sprite = panel.bubbleSprite;
+                  if (slot < dialogueTexts.Count && dialogueTexts[0] != null)
+            dialogueTexts[0].text = panel.dialogueText;
+
+        }
+        }
+        // ── 6. Ken Burns (optional slow zoom) ──
         Coroutine kb = panel.useKenBurnsEffect
-            ? StartCoroutine(KenBurns(panel, currentIndex))
+            ? StartCoroutine(KenBurns(panel, slot))
             : null;
 
-        // ── 6. Show Next button only at last panel ──
-        bool isLast = (currentIndex == sequence.panels.Length - 1);
+        // ── 7. Show Next button only after the LAST data entry, not the last slot ──
+        bool isLast = (currentPanelIndex == sequence.panels.Length - 1);
         if (nextButton != null) nextButton.gameObject.SetActive(isLast);
 
         if (!isLast)
         {
-            // ── 7. Wait for click / timer ──
+            // ── 8. Wait for click / timer ──
             yield return StartCoroutine(WaitForAdvance(panel));
 
             if (kb != null) StopCoroutine(kb);
-            ResetSlotScale(currentIndex);
+            ResetSlotScale(slot);
 
-            // ── 8. Advance ──
-            currentIndex++;
+            // ── 9. Advance to the next data entry (slot may or may not change) ──
+            currentPanelIndex++;
             yield return StartCoroutine(ShowCurrentPanel());
         }
         // If it IS the last panel → do nothing, Next button handles it.
@@ -515,8 +557,6 @@ yield return StartCoroutine(
             }
         }
     }
-
-    
 
     private void ResetSlotScale(int index)
     {

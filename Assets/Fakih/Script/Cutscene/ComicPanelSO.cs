@@ -15,6 +15,7 @@ public class ComicPanelSO : ScriptableObject
     public bool waitForInput = true;
     [Header("Distance  From Previous Panel")]
     public bool isNextPanel = false;
+    public bool stayonthefirstslot = false;
     public float distancex = 1920;
     public float distancey = 1080;
 

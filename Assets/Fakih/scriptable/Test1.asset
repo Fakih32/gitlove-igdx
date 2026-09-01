@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
-  m_Name: Panel1Test
+  m_Name: Test1
   m_EditorClassIdentifier: 
-  panelImage: {fileID: -5122792506541145818, guid: ff67d1e15d58708419c8f078c753005b, type: 3}
+  panelImage: {fileID: -2122714665603912777, guid: d34a658ab0ba0f8448b2d40ab472aefc, type: 3}
   bubbleSprite: {fileID: 0}
   dialogueText: 
   displayDuration: 2.5
   waitForInput: 0
   isNextPanel: 0
-  stayonthefirstslot: 0
+  stayonthefirstslot: 1
   distancex: 1920
   distancey: 1080
   transitionIn: 2
