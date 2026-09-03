@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Fakih/Scenes/LevelSelect.unity
     guid: 8e59a991e91957c47bf39e37503bd474
   - enabled: 1
+    path: Assets/Fakih/Scenes/Intro.unity
+    guid: 64c8ace1a94d50244a3a1a470be61afa
+  - enabled: 1
+    path: Assets/Fakih/Scenes/Intro_Lv1.unity
+    guid: abb621b114572b047af94a52ad51d5e7
+  - enabled: 1
     path: Assets/Drag And Drop Refactor/Scene/DragAnddropCopy.unity
     guid: 93598c5ad806b0f40ba974a1f151c1a0
   - enabled: 1

@@ -30,8 +30,8 @@ public class LevelSelectionHandler : MonoBehaviour {
     public List<Button> levelButtons;
     [Header("Ukuran Gambar")]
     public List<Vector2> levelImageSizes;
-    [Header("Game Scene")]
-    public string gameScene;
+    //[Header("Game Scene")]
+    //public string gameScene;
 
     void Awake() {
         if (Instance != null && Instance != this) {
@@ -62,7 +62,7 @@ public class LevelSelectionHandler : MonoBehaviour {
         }
 
         LevelSessionManager.Instance.StartLevel(levelToStart);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(gameScene);
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(gameScene);
     }
 
     public void setupLevelButtons() {
