@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
-  m_Name: Panel1Test
+  m_Name: Panel_3_LV1 2
   m_EditorClassIdentifier: 
-  panelImage: {fileID: -5122792506541145818, guid: ff67d1e15d58708419c8f078c753005b, type: 3}
+  panelImage: {fileID: -570359017737332032, guid: f94078d92217668488b4a653536866c8, type: 3}
   bubbleSprite: {fileID: 0}
-  dialogueText: 
+  dialogueText: Africa
   displayDuration: 2.5
   waitForInput: 0
   isNextPanel: 0
   stayonthefirstslot: 0
-  distancex: 1920
-  distancey: 1080
-  transitionIn: 2
+  distancex: 500
+  distancey: 0
+  transitionIn: 1
   chatPanelTransitionType: 5
   transitionDuration: 0.4
   chatPanelTransitionDuration: 0.2
   sfxOnEnter: {fileID: 0}
   voiceOver: {fileID: 0}
-  useKenBurnsEffect: 1
+  useKenBurnsEffect: 0
   zoomAmount: 1.15
