@@ -35,14 +35,11 @@ public class ComicCutscenePlayer : MonoBehaviour
 
     [Tooltip("Root empty GO for the entire cutscene UI — SetActive(false) when done.")]
     [SerializeField] private GameObject panelParent;
-
-    [Tooltip("The chat/dialogue bubble panel (RectTransform — needs a CanvasGroup on the same GO).")]
-    [SerializeField] private RectTransform chatPanel;
-
+ 
     [Header("Panel Slots  (parallel lists, same length)")]
     [SerializeField] private List<Image>    panelImages;
-    [SerializeField] private List<Image>    bubbleImages;
-    [SerializeField] private List<TMP_Text> dialogueTexts;
+ 
+    
 
     [Header("End")]
     [SerializeField] private Button nextButton;
@@ -87,12 +84,7 @@ public class ComicCutscenePlayer : MonoBehaviour
         }
 
         // Cache chat panel CanvasGroup and its resting position
-        if (chatPanel != null)
-        {
-            chatPanelCG = chatPanel.GetComponent<CanvasGroup>();
-            if (chatPanelCG == null) chatPanelCG = chatPanel.gameObject.AddComponent<CanvasGroup>();
-            chatPanelRestPos = chatPanel.anchoredPosition;
-        }
+        
 
         // Next button: hide, wire up click
         if (nextButton != null)
@@ -179,17 +171,9 @@ public class ComicCutscenePlayer : MonoBehaviour
             panelImages[slot].sprite = panel.panelImage;
         
        
-        bool hasBubble = panel.bubbleSprite != null;
-        if (slot < bubbleImages.Count && bubbleImages[slot] != null)
-        {
-            bubbleImages[slot].gameObject.SetActive(hasBubble);
-            if (hasBubble)
-                bubbleImages[slot].sprite = panel.bubbleSprite;
-        }
         
 
-        if (slot < dialogueTexts.Count && dialogueTexts[slot] != null)
-            dialogueTexts[slot].text = panel.dialogueText;
+        
 
         // ── 2. Activate this slot (harmless if it's already active because it's being reused) ──
         GameObject slotRoot = GetSlotRoot(slot);
@@ -217,15 +201,7 @@ public class ComicCutscenePlayer : MonoBehaviour
              
               panelImages[0].sprite = panel.panelImage;
                bool hasBubble = panel.bubbleSprite != null;
-        if (slot < bubbleImages.Count && bubbleImages[0] != null)
-        {
-            bubbleImages[0].gameObject.SetActive(hasBubble);
-            if (hasBubble)
-                bubbleImages[0].sprite = panel.bubbleSprite;
-                  if (slot < dialogueTexts.Count && dialogueTexts[0] != null)
-            dialogueTexts[0].text = panel.dialogueText;
-
-        }
+       
         }
         // ── 6. Ken Burns (optional slow zoom) ──
         Coroutine kb = panel.useKenBurnsEffect
@@ -335,54 +311,7 @@ public class ComicCutscenePlayer : MonoBehaviour
                 }
             }
 
-            // Chat panel entrance — uses its own pChat progress
-            if (chatPanel != null && chatPanelCG != null)
-            {
-                switch (panel.chatPanelTransitionType)
-                {
-                    case ChatPanelTransitionType.Fade:
-                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
-                        break;
-
-                    case ChatPanelTransitionType.Pop:
-                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
-                        chatPanel.localScale = Vector3.one * Mathf.Lerp(0.5f, 1f, pChat);
-                        break;
-
-                    case ChatPanelTransitionType.SlideFromRight:
-                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
-                        chatPanel.anchoredPosition = Vector2.Lerp(
-                            chatPanelRestPos + new Vector2(chatPanel.rect.width, 0f),
-                            chatPanelRestPos, pChat);
-                        break;
-
-                    case ChatPanelTransitionType.SlideFromLeft:
-                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
-                        chatPanel.anchoredPosition = Vector2.Lerp(
-                            chatPanelRestPos - new Vector2(chatPanel.rect.width, 0f),
-                            chatPanelRestPos, pChat);
-                        break;
-
-                    case ChatPanelTransitionType.SlideFromTop:
-                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
-                        chatPanel.anchoredPosition = Vector2.Lerp(
-                            chatPanelRestPos + new Vector2(0f, chatPanel.rect.height),
-                            chatPanelRestPos, pChat);
-                        break;
-
-                    case ChatPanelTransitionType.SlideFromBottom:
-                        chatPanelCG.alpha = Mathf.Lerp(0f, 1f, pChat);
-                        chatPanel.anchoredPosition = Vector2.Lerp(
-                            chatPanelRestPos - new Vector2(0f, chatPanel.rect.height),
-                            chatPanelRestPos, pChat);
-                        break;
-
-                    default: // None
-                        chatPanelCG.alpha = 1f;
-                        break;
-                }
-            }
-
+           
             t += Time.deltaTime;
             yield return null;
         }
@@ -398,12 +327,7 @@ public class ComicCutscenePlayer : MonoBehaviour
         {
             slotRt.anchoredPosition = slotRestPos;
         }
-        if (chatPanel != null && chatPanelCG != null)
-        {
-            chatPanelCG.alpha            = 1f;
-            chatPanel.localScale         = Vector3.one;
-            chatPanel.anchoredPosition   = chatPanelRestPos;
-        }
+       
     }
 
     // ── Wait for player to advance ──────────────────────────────────────────
@@ -510,7 +434,7 @@ public class ComicCutscenePlayer : MonoBehaviour
                         rt.anchoredPosition = restPos;
                         break;
                 }
-            }
+            
         }
 
         // ComicPop also starts scaled down
@@ -520,41 +444,7 @@ public class ComicCutscenePlayer : MonoBehaviour
             panelImages[index].transform.localScale = Vector3.one;
 
         // Reset chat panel to its pre-transition state
-        if (chatPanel != null && chatPanelCG != null)
-        {
-            chatPanel.localScale = Vector3.one;
-            switch (panel.chatPanelTransitionType)
-            {
-                case ChatPanelTransitionType.None:
-                    chatPanelCG.alpha          = 1f;
-                    chatPanel.anchoredPosition = chatPanelRestPos;
-                    break;
-                case ChatPanelTransitionType.Pop:
-                    chatPanelCG.alpha          = 0f;
-                    chatPanel.localScale       = Vector3.one * 0.5f;
-                    chatPanel.anchoredPosition = chatPanelRestPos;
-                    break;
-                case ChatPanelTransitionType.SlideFromRight:
-                    chatPanelCG.alpha          = 0f;
-                    chatPanel.anchoredPosition = chatPanelRestPos + new Vector2(chatPanel.rect.width, 0f);
-                    break;
-                case ChatPanelTransitionType.SlideFromLeft:
-                    chatPanelCG.alpha          = 0f;
-                    chatPanel.anchoredPosition = chatPanelRestPos - new Vector2(chatPanel.rect.width, 0f);
-                    break;
-                case ChatPanelTransitionType.SlideFromTop:
-                    chatPanelCG.alpha          = 0f;
-                    chatPanel.anchoredPosition = chatPanelRestPos + new Vector2(0f, chatPanel.rect.height);
-                    break;
-                case ChatPanelTransitionType.SlideFromBottom:
-                    chatPanelCG.alpha          = 0f;
-                    chatPanel.anchoredPosition = chatPanelRestPos - new Vector2(0f, chatPanel.rect.height);
-                    break;
-                default: // Fade
-                    chatPanelCG.alpha          = 0f;
-                    chatPanel.anchoredPosition = chatPanelRestPos;
-                    break;
-            }
+        
         }
     }
 
