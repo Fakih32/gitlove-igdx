@@ -15,7 +15,6 @@ MonoBehaviour:
   level: 0
   panels:
   - {fileID: 11400000, guid: 510866b6760c7104c86c39a91a2476c6, type: 2}
-  - {fileID: 11400000, guid: cbd34528ba5c1134f86794f537ff532f, type: 2}
   - {fileID: 11400000, guid: 3c7683861cbbaa148971868db5a75636, type: 2}
   - {fileID: 11400000, guid: c0c930cff37fa7c4cadef854557272ec, type: 2}
   skippable: 0

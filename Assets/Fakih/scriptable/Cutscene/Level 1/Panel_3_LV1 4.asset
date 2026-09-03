@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
-  m_Name: Panel2
+  m_Name: Panel_3_LV1 4
   m_EditorClassIdentifier: 
-  panelImage: {fileID: -7479393008202049932, guid: d407ad15abdfb6e43b669efcaca34955, type: 3}
-  bubbleSprite: {fileID: -1256213575624702963, guid: dc7ee8e10df5e0540b34514d66a20c21, type: 3}
+  panelImage: {fileID: -8945303955481345684, guid: 9b881617908cd7243912238799d0c8a7, type: 3}
+  bubbleSprite: {fileID: 0}
   dialogueText: Africa
   displayDuration: 2.5
   waitForInput: 0
-  isNextPanel: 1
+  isNextPanel: 0
+  stayonthefirstslot: 0
   distancex: 500
   distancey: 0
-  transitionIn: 4
+  transitionIn: 1
   chatPanelTransitionType: 5
   transitionDuration: 0.4
   chatPanelTransitionDuration: 0.2
