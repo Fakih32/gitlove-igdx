@@ -7,6 +7,9 @@ public class MovetoScene : MonoBehaviour
     {
         
     }
+public void Gotoscene(string scene){
+  UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+}
  public void CompletedCutscene()
     {
         LevelSessionManager .Instance.OnMechanicComplete();

@@ -15,7 +15,7 @@ MonoBehaviour:
   levelId: level_1
   levelIndex: 0
   mechanicSceneNames:
-  - Intro
+  - Intro_Lv1
   - DragAnddropCopy
   - WordQuizScene
   gameOverSceneName: GameOverScene

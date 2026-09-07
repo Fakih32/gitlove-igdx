@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuButton: {fileID: 783282260}
   QuitButton: {fileID: 2138417095}
-  levelSelectionScene: LevelSelect
+  levelSelectionScene: Intro
 --- !u!4 &398570436
 Transform:
   m_ObjectHideFlags: 0
