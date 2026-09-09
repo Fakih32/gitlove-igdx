@@ -9,6 +9,7 @@ public class WordQuizController : MonoBehaviour {
     public Transform letterFieldParent;
     public Transform letterButtonsParent;
     public Image quizImage;
+    public Image backgroundImage;
 
     [Header("Konfigurasi Mekanik Ini")]
     public int questionsPerLevel = 2;
@@ -34,7 +35,20 @@ public class WordQuizController : MonoBehaviour {
             Debug.LogWarning($"WordQuizController: questionsPerLevel ({questionsPerLevel}) lebih besar dari jumlah quiz yang tersedia ({currentLevelQuizzes.Length}) untuk level ini -- soal akan berulang.");
         }
 
+        ApplyBackground(levelIndex);
         LoadQuiz(currentQuizIndex);
+    }
+
+    void ApplyBackground(int levelIndex) {
+        if (backgroundImage == null) {
+            Debug.LogWarning("WordQuizController: backgroundImage tidak di-assign di Inspector, dilewati.");
+            return;
+        }
+
+        Sprite background = quizData.GetBackgroundForLevel(levelIndex);
+        if (background != null) {
+            backgroundImage.sprite = background;
+        }
     }
 
     void LoadQuiz(int quizIndex) {
