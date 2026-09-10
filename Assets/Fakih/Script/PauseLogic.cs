@@ -21,6 +21,7 @@ public class PauseLogic : MonoBehaviour
     public void Restart(string restartwhat)
 {
     Time.timeScale = 1f;
+    LevelSessionManager.Instance.restartlevel();
     UnityEngine.SceneManagement.SceneManager.LoadScene(restartwhat);
 }
 public void BacktoLevelSelection(string Scene)

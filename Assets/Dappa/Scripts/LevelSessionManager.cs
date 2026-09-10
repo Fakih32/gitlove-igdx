@@ -37,6 +37,16 @@ public class LevelSessionManager : MonoBehaviour {
         }
     }
 
+public void restartlevel()
+    {
+       currentMechanicIndex =1;
+           timeRemaining = currentLevel.timeLimit;
+        score = 0;
+          levelFailed = false;
+         SceneManager.LoadScene(currentLevel.mechanicSceneNames[currentMechanicIndex]);
+         
+
+    }
     public void StartLevel(LevelData levelData) {
         currentLevel = levelData;
         timeRemaining = levelData.timeLimit;
