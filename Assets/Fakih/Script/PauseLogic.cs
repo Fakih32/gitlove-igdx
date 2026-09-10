@@ -5,7 +5,7 @@ public class PauseLogic : MonoBehaviour
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    public GameObject pauseMenu;
-
+    
   public void TogglePause()
     {
         
@@ -18,9 +18,10 @@ public class PauseLogic : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         }
-    public void Restart()
+    public void Restart(string restartwhat)
 {
-    UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    Time.timeScale = 1f;
+    UnityEngine.SceneManagement.SceneManager.LoadScene(restartwhat);
 }
 public void BacktoLevelSelection(string Scene)
     {
