@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: f7ef3688b1a807347acca36dccca32d5
+guid: 629fb511f8c000e40a202c2c5d3336c5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4791353922484391530
-    second: Assetlv1-02_0
-  - first:
-      213: 6827498438324558895
-    second: Assetlv1-02_1
-  - first:
-      213: -4000405590642032301
-    second: Assetlv1-02_2
-  - first:
-      213: 7267864155780209261
-    second: Assetlv1-02_3
+      213: -6531728700432529446
+    second: lvl_1-04_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Assetlv1-02_0
+      name: lvl_1-04_0
       rect:
         serializedVersion: 2
-        x: 80
-        y: 48
-        width: 118
-        height: 289
+        x: 432
+        y: 415
+        width: 2275
+        height: 671
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,74 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 691b4214ef0b18db0800000000000000
-      internalID: -4791353922484391530
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assetlv1-02_1
-      rect:
-        serializedVersion: 2
-        x: 496
-        y: 48
-        width: 65
-        height: 288
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f2c9ed0f7a520ce50800000000000000
-      internalID: 6827498438324558895
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assetlv1-02_2
-      rect:
-        serializedVersion: 2
-        x: 806
-        y: 48
-        width: 65
-        height: 288
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3518b447f44bb78c0800000000000000
-      internalID: -4000405590642032301
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assetlv1-02_3
-      rect:
-        serializedVersion: 2
-        x: 1160
-        y: 48
-        width: 119
-        height: 289
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d6ad21161f3acd460800000000000000
-      internalID: 7267864155780209261
+      spriteID: ad7ce718a53aa55a0800000000000000
+      internalID: -6531728700432529446
       vertices: []
       indices: 
       edges: []
@@ -223,10 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Assetlv1-02_0: -4791353922484391530
-      Assetlv1-02_1: 6827498438324558895
-      Assetlv1-02_2: -4000405590642032301
-      Assetlv1-02_3: 7267864155780209261
+      lvl_1-04_0: -6531728700432529446
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

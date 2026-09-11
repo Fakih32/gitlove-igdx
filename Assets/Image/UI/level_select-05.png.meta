@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 6d5a564e4c144af4d9d645a269bfc324
+guid: ba4b74e227f0c324da919421eaf74f90
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1054227754858559337
-    second: Assetlv1-02_WhiteStroke_0
-  - first:
-      213: -2631001727943378623
-    second: Assetlv1-02_WhiteStroke_1
-  - first:
-      213: -2545039629206045980
-    second: Assetlv1-02_WhiteStroke_2
-  - first:
-      213: 9119663856365079534
-    second: Assetlv1-02_WhiteStroke_3
+      213: -8326344127730334101
+    second: level_select-05_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -105,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Assetlv1-02_WhiteStroke_0
+      name: level_select-05_0
       rect:
         serializedVersion: 2
-        x: 148
-        y: 82
-        width: 285
-        height: 639
+        x: 73
+        y: 669
+        width: 2105
+        height: 913
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,74 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 967b3b8be8e51ae00800000000000000
-      internalID: 1054227754858559337
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assetlv1-02_WhiteStroke_1
-      rect:
-        serializedVersion: 2
-        x: 1013
-        y: 82
-        width: 177
-        height: 638
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 149fe7a3eddcc7bd0800000000000000
-      internalID: -2631001727943378623
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assetlv1-02_WhiteStroke_2
-      rect:
-        serializedVersion: 2
-        x: 1659
-        y: 82
-        width: 177
-        height: 638
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4eab1e101f33eacd0800000000000000
-      internalID: -2545039629206045980
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Assetlv1-02_WhiteStroke_3
-      rect:
-        serializedVersion: 2
-        x: 2398
-        y: 82
-        width: 285
-        height: 639
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eeb0c9595fd8f8e70800000000000000
-      internalID: 9119663856365079534
+      spriteID: b6649f47122e27c80800000000000000
+      internalID: -8326344127730334101
       vertices: []
       indices: 
       edges: []
@@ -213,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -223,10 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Assetlv1-02_WhiteStroke_0: 1054227754858559337
-      Assetlv1-02_WhiteStroke_1: -2631001727943378623
-      Assetlv1-02_WhiteStroke_2: -2545039629206045980
-      Assetlv1-02_WhiteStroke_3: 9119663856365079534
+      level_select-05_0: -8326344127730334101
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
