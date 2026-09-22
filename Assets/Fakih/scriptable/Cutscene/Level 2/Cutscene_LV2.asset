@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad9dd8b65340cb4fb3df22e3599e12f, type: 3}
+  m_Name: Cutscene_LV2
+  m_EditorClassIdentifier: 
+  level: 0
+  panels:
+  - {fileID: 11400000, guid: 4b8fc4a4642b4a745b487b066de67691, type: 2}
+  - {fileID: 11400000, guid: 5f9e961be0463584299176a00e63bed2, type: 2}
+  - {fileID: 11400000, guid: f2ba9946e095d05468d6d544907e23bb, type: 2}
+  - {fileID: 11400000, guid: c4fac0ab9a6ea294da126660f77bb77b, type: 2}
+  - {fileID: 11400000, guid: 882bd10a9f929024a99788aa799758e1, type: 2}
+  - {fileID: 11400000, guid: 8be78e50b6b01874ebc8a686a4ce22db, type: 2}
+  - {fileID: 11400000, guid: 8cb08a73208d98148b4c25a3d2aa704f, type: 2}
+  - {fileID: 11400000, guid: fa29e5e712e6f8749b93dce83e6c553d, type: 2}
+  - {fileID: 11400000, guid: 26b6f394cbb76b142a82a1ccda387388, type: 2}
+  - {fileID: 11400000, guid: 41f1678f766ff4843916b0daeaac0fdb, type: 2}
+  skippable: 0
