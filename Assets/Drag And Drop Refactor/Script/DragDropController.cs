@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq;
 
 // ROMBAK dari versi sebelumnya.
 // Perubahan utama:
@@ -15,6 +14,12 @@ using System.Linq;
 //   sumber kebenaran soal "level yang sedang dimainkan", yang sudah
 //   di-set benar oleh LevelSelectionHandler.selectlevel() saat player
 //   memilih level.
+//
+// - LoadLevel() direfactor total untuk menggunakan struktur database baru:
+//   DragDropLevelData.LevelEntry.dragdropquiz[] (DDquiz[]).
+//   Setiap DDquiz[i] berkorespondensi 1-to-1 dengan:
+//     dragimage[i]      -> sprite drag + scale drag
+//     destinyobject[i]  -> sprite siluet + scale tujuan + posisi tujuan
 public class DragDropController : MonoBehaviour {
     public static DragDropController Instance;
 
@@ -28,7 +33,7 @@ public class DragDropController : MonoBehaviour {
     private int targetsTotal;
 
     [Header("Gambar yang Di-drag")]
-   public List<Image> dragimage;
+    public List<Image> dragimage;
     public Image backgroundImage;
 
     [Header("Posisi Tujuan di Scene")]
@@ -50,44 +55,60 @@ public class DragDropController : MonoBehaviour {
             return;
         }
 
-        foreach (var data in levelData.levels) {
-            if (data.level == currentLevel) {
-                for(int z = 0; z <dragimage.Count ; z++) {
-                    
-                
-                for(int i = 0; i <data.Dragobject.Count ; i++) {
-                    dragimage[z].sprite = data.Dragobject[i];
-                }
-                 for(int w = 0; w <data.Imagescale.Count ; w++) {
-                    dragimage[z].GetComponent<RectTransform>().localScale = data.Imagescale[w];
-                }
-                }
-                 for(int z = 0; z <destinyobject.Count ; z++) {
-                    
-                
-                for(int i = 0; i <data.SiluetDrag.Count ; i++) {
-                    dragimage[z].sprite = data.Dragobject[i];
-                }
-                 for(int f = 0; f <data.DestinyImagescale.Count ; f++) {
-                    dragimage[z].GetComponent<RectTransform>().localScale = data.DestinyImagescale[f];
-                }
-                for(int g = 0; g <data.Destinypos.Count ; g++) {
-                    dragimage[z].GetComponent<RectTransform>().anchoredPosition = data.Destinypos[g];
-                }
-                }
+        // Ambil quiz array & background dari database sesuai level aktif
+        DragDropLevelData.DDquiz[] quizzes = levelData.getquizdragdrop(currentLevel);
+        Sprite bg = levelData.getspritebg(currentLevel);
 
-              
-                if (backgroundImage != null) {
-                    backgroundImage.sprite = data.BackgroundImage;
-                } else {
-                    Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
-                }
-               
-                return;
-            }
+        if (quizzes == null || quizzes.Length == 0) {
+            Debug.LogWarning($"DragDropController: Level {currentLevel} tidak ditemukan atau tidak punya quiz di DragDropLevelData");
+            return;
         }
 
-        Debug.LogWarning($"Level {currentLevel} tidak ditemukan di DragDropLevelData");
+        // Set background
+        if (backgroundImage != null) {
+            backgroundImage.sprite = bg;
+        } else {
+            Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
+        }
+
+        // Setiap DDquiz[i] dipasangkan 1-to-1 dengan dragimage[i] dan destinyobject[i]
+        for (int i = 0; i < quizzes.Length; i++) {
+            DragDropLevelData.DDquiz quiz = quizzes[i];
+
+            // --- Setup drag image ---
+            if (i < dragimage.Count && dragimage[i] != null) {
+                Image img = dragimage[i];
+                RectTransform imgRect = img.GetComponent<RectTransform>();
+
+                if (quiz.Dragobject != null && quiz.Dragobject.Count > 0)
+                    img.sprite = quiz.Dragobject[0];
+
+                if (quiz.Imagescale != null && quiz.Imagescale.Count > 0)
+                    imgRect.localScale = (Vector3)quiz.Imagescale[0] + Vector3.forward;
+            } else {
+                Debug.LogWarning($"DragDropController: dragimage[{i}] tidak ada atau null");
+            }
+
+            // --- Setup destiny object (siluet / slot tujuan) ---
+            if (i < destinyobject.Count && destinyobject[i] != null) {
+                GameObject dest = destinyobject[i];
+                Image destImg = dest.GetComponent<Image>();
+                RectTransform destRect = dest.GetComponent<RectTransform>();
+
+                if (destImg != null && quiz.SiluetDrag != null && quiz.SiluetDrag.Count > 0)
+                    destImg.sprite = quiz.SiluetDrag[0];
+
+                if (destRect != null) {
+                    if (quiz.DestinyImagescale != null && quiz.DestinyImagescale.Count > 0)
+                        destRect.localScale = (Vector3)quiz.DestinyImagescale[0] + Vector3.forward;
+
+                    if (quiz.Destinypos != null && quiz.Destinypos.Count > 0)
+                        destRect.anchoredPosition = quiz.Destinypos[0];
+                }
+            } else {
+                Debug.LogWarning($"DragDropController: destinyobject[{i}] tidak ada atau null");
+            }
+        }
     }
 
     // Dipanggil dari DraggableItem tiap kali 1 item berhasil ditaruh di target yang benar
