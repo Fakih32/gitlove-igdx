@@ -23,9 +23,20 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     private Vector3 startPosition;
     private Vector2 dragOffset;
-    private bool placedOnTarget = false;
+    [HideInInspector] public bool placedOnTarget = false;
 
     void Start() {
+        CaptureStartPosition();
+    }
+
+    // Dipanggil oleh DragDropController saat level di-load ulang.
+    // Mereset state drag supaya item bisa di-drag lagi dari posisi awalnya.
+    public void ResetState() {
+        placedOnTarget = false;
+        CaptureStartPosition();
+    }
+
+    private void CaptureStartPosition() {
         if (draggedObject != null) {
             var rect = draggedObject.GetComponent<RectTransform>();
             if (rect != null) startPosition = rect.position;
