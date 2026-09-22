@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 // ROMBAK dari versi sebelumnya.
 // Perubahan utama:
@@ -27,15 +28,11 @@ public class DragDropController : MonoBehaviour {
     private int targetsTotal;
 
     [Header("Gambar yang Di-drag")]
-    public Image firstImage;
-    public Image secondImage;
-    public Image thirdImage;
+   public List<Image> dragimage;
     public Image backgroundImage;
 
     [Header("Posisi Tujuan di Scene")]
-    public GameObject targetSlot1;
-    public GameObject targetSlot2;
-    public GameObject targetSlot3;
+    public List<GameObject> destinyobject;
 
     void Awake() {
         Instance = this;
@@ -55,27 +52,37 @@ public class DragDropController : MonoBehaviour {
 
         foreach (var data in levelData.levels) {
             if (data.level == currentLevel) {
-                firstImage.sprite = data.firstImage;
-                secondImage.sprite = data.secondImage;
-                   thirdImage.sprite = data.thirdImage;
+                for(int z = 0; z <dragimage.Count ; z++) {
+                    
+                
+                for(int i = 0; i <data.Dragobject.Count ; i++) {
+                    dragimage[z].sprite = data.Dragobject[i];
+                }
+                 for(int w = 0; w <data.Imagescale.Count ; w++) {
+                    dragimage[z].GetComponent<RectTransform>().localScale = data.Imagescale[w];
+                }
+                }
+                 for(int z = 0; z <destinyobject.Count ; z++) {
+                    
+                
+                for(int i = 0; i <data.SiluetDrag.Count ; i++) {
+                    dragimage[z].sprite = data.Dragobject[i];
+                }
+                 for(int f = 0; f <data.DestinyImagescale.Count ; f++) {
+                    dragimage[z].GetComponent<RectTransform>().localScale = data.DestinyImagescale[f];
+                }
+                for(int g = 0; g <data.Destinypos.Count ; g++) {
+                    dragimage[z].GetComponent<RectTransform>().anchoredPosition = data.Destinypos[g];
+                }
+                }
 
-                    targetSlot1.GetComponent<Image>().sprite = data.firstsiluet;
-                    targetSlot2.GetComponent<Image>().sprite = data.secondsiluet;
-                    targetSlot3.GetComponent<Image>().sprite = data.thridsiluet;
-                firstImage.GetComponent<RectTransform>().localScale = data.firstimageScale;
-                secondImage.GetComponent<RectTransform>().localScale = data.secondimageScale;
-                thirdImage.GetComponent<RectTransform>().localScale = data.thirdimageScale;
-                targetSlot1.GetComponent<RectTransform>().localScale = data.firstsiluetsize;
-                 targetSlot2.GetComponent<RectTransform>().localScale = data.secondsiluetsize;
-                targetSlot3.GetComponent<RectTransform>().localScale = data.thridsiluetsize;
+              
                 if (backgroundImage != null) {
                     backgroundImage.sprite = data.BackgroundImage;
                 } else {
                     Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
                 }
-                targetSlot1.GetComponent<RectTransform>().anchoredPosition = data.firstImagePos;
-                targetSlot2.GetComponent<RectTransform>().anchoredPosition = data.secondImagePos;
-                targetSlot3.GetComponent<RectTransform>().anchoredPosition = data.thirdImagePos;
+               
                 return;
             }
         }

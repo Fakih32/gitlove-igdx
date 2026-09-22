@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 // ROMBAK dari DraganddropLevelScriptable.cs.
 // Perubahan: cuma rename class & field (levels -> LevelEntry, Levels -> level)
 // biar casing-nya konsisten sama konvensi C# (PascalCase untuk class,
@@ -10,27 +10,19 @@ public class DragDropLevelData : ScriptableObject {
     public class LevelEntry {
         public int level;
         [Header("Gambar Drag")]
-        public Sprite firstImage;
-        public Sprite secondImage;
-        public Sprite thirdImage;
+        public List<Sprite> Dragobject;
         [Header("Siluet")]
-        public Sprite firstsiluet;
-        public Sprite secondsiluet;
-        public Sprite thridsiluet;
+        public List<Sprite> SiluetDrag;
         [Header("Background")]
         public Sprite BackgroundImage;
         [Header("Posisi Tujuan")]
-        public Vector2 firstImagePos;
-        public Vector2 secondImagePos;
-        public Vector2 thirdImagePos;
+         public List<Vector2> Destinypos;
+      
         [Header("Ukuran Gambar Drag")]
-        public Vector2 firstimageScale;
-        public Vector2 secondimageScale;
-        public Vector2 thirdimageScale;
+         public List<Vector2> Imagescale;
+       
         [Header("Ukuran Gambar tujuan")]
-        public Vector2 firstsiluetsize;
-        public Vector2 secondsiluetsize;
-        public Vector2 thridsiluetsize;
+        public List<Vector2> DestinyImagescale;
     }
 
     public LevelEntry[] levels;

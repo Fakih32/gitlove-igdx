@@ -1355,13 +1355,15 @@ MonoBehaviour:
   - {fileID: 273571595}
   - {fileID: 644104489}
   targetsHit: 0
-  firstImage: {fileID: 914078396}
-  secondImage: {fileID: 1918180942}
-  thirdImage: {fileID: 132443969}
+  dragimage:
+  - {fileID: 914078396}
+  - {fileID: 1918180942}
+  - {fileID: 132443969}
   backgroundImage: {fileID: 528676290}
-  targetSlot1: {fileID: 359073217}
-  targetSlot2: {fileID: 273571594}
-  targetSlot3: {fileID: 644104488}
+  destinyobject:
+  - {fileID: 359073217}
+  - {fileID: 644104488}
+  - {fileID: 273571594}
 --- !u!1 &1178698824
 GameObject:
   m_ObjectHideFlags: 0

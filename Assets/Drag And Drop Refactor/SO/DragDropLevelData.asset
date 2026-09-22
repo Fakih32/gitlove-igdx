@@ -14,53 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - level: 0
-    firstImage: {fileID: 21300000, guid: 629fb511f8c000e40a202c2c5d3336c5, type: 3}
-    secondImage: {fileID: 21300000, guid: aed198db3a6018948a13b4751715e8b6, type: 3}
-    thirdImage: {fileID: 21300000, guid: 9cbd6e9483678c340a476bfdd3b554a6, type: 3}
-    firstsiluet: {fileID: 21300000, guid: ca5ba72cac5ce81429e7fe1cdd883d02, type: 3}
-    secondsiluet: {fileID: 21300000, guid: 65e9cc8719ede5a4dbdf2f71bd216b8f, type: 3}
-    thridsiluet: {fileID: 21300000, guid: 36b05b57f34a4fe43a9c38e7180637b3, type: 3}
+    Dragobject:
+    - {fileID: 0}
+    SiluetDrag: []
     BackgroundImage: {fileID: -9184769780311372204, guid: d49ffcde20a7b694eb916848df6c061a, type: 3}
-    firstImagePos: {x: 0, y: -52}
-    secondImagePos: {x: 0, y: -45}
-    thirdImagePos: {x: 0, y: 180}
-    firstimageScale: {x: 4.5, y: 4.7}
-    secondimageScale: {x: 4.5, y: 4.7}
-    thirdimageScale: {x: 4.5, y: 4}
-    firstsiluetsize: {x: 1, y: 1}
-    secondsiluetsize: {x: 1, y: 1}
-    thridsiluetsize: {x: 1, y: 1}
+    Destinypos:
+    - {x: 0, y: 20}
+    - {x: 0, y: 25}
+    - {x: 0, y: 40}
+    Imagescale:
+    - {x: 1, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: 1}
+    DestinyImagescale:
+    - {x: 1, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: 1}
   - level: 1
-    firstImage: {fileID: 21300000, guid: 01b5a5bb3951e464bb42be9bbdc27086, type: 3}
-    secondImage: {fileID: 21300000, guid: 345e4916aa7726347a29c1893a1c520f, type: 3}
-    thirdImage: {fileID: 21300000, guid: 27a824b625305e644bd41bbfc6e4c4dd, type: 3}
-    firstsiluet: {fileID: 0}
-    secondsiluet: {fileID: 0}
-    thridsiluet: {fileID: 0}
+    Dragobject: []
+    SiluetDrag: []
     BackgroundImage: {fileID: 7573958088529151493, guid: 1f878f6ede9e9d146b964ce99831d84f, type: 3}
-    firstImagePos: {x: -300, y: 0}
-    secondImagePos: {x: 0, y: 0}
-    thirdImagePos: {x: 300, y: 0}
-    firstimageScale: {x: 1.5, y: 2}
-    secondimageScale: {x: 1.5, y: 2}
-    thirdimageScale: {x: 1.5, y: 2}
-    firstsiluetsize: {x: 0, y: 0}
-    secondsiluetsize: {x: 0, y: 0}
-    thridsiluetsize: {x: 0, y: 0}
+    Destinypos: []
+    Imagescale: []
+    DestinyImagescale: []
   - level: 2
-    firstImage: {fileID: 21300000, guid: e3abf629965cfdd4185abbe84eea2dc4, type: 3}
-    secondImage: {fileID: 21300000, guid: 69ed4455be822504a843ac3cb142637d, type: 3}
-    thirdImage: {fileID: 21300000, guid: 69ed4455be822504a843ac3cb142637d, type: 3}
-    firstsiluet: {fileID: 0}
-    secondsiluet: {fileID: 0}
-    thridsiluet: {fileID: 0}
+    Dragobject: []
+    SiluetDrag: []
     BackgroundImage: {fileID: 6532206365432363777, guid: 6d7fd2beabcef5144a53552415065167, type: 3}
-    firstImagePos: {x: -300, y: 0}
-    secondImagePos: {x: 0, y: 0}
-    thirdImagePos: {x: 300, y: 0}
-    firstimageScale: {x: 1.5, y: 2}
-    secondimageScale: {x: 1.5, y: 2}
-    thirdimageScale: {x: 1.5, y: 2}
-    firstsiluetsize: {x: 0, y: 0}
-    secondsiluetsize: {x: 0, y: 0}
-    thridsiluetsize: {x: 0, y: 0}
+    Destinypos: []
+    Imagescale: []
+    DestinyImagescale: []
