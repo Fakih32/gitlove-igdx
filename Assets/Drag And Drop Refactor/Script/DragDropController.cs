@@ -23,6 +23,10 @@ public class DragDropController : MonoBehaviour {
     public DragDropLevelData levelData;
     public int currentLevel;
 
+    [Header("Konfigurasi Mekanik Ini")]
+    [Tooltip("Jumlah quiz yang dimainkan per level. Jika 0, akan otomatis memainkan seluruh quiz yang ada di DDquiz level ini.")]
+    public int questionsPerLevel = 0;
+
     [Header("Target Posisi yang Benar")]
     public List<Transform> targets;
     [HideInInspector] public int targetsHit;
@@ -55,6 +59,10 @@ public class DragDropController : MonoBehaviour {
     [Header("Posisi Tujuan di Scene")]
     public List<GameObject> destinyobject;
 
+    private DragDropLevelData.DDquiz[] currentLevelQuizzes;
+    private int currentQuizIndex = 0;
+    private int questionsAnswered = 0;
+
     void Awake() {
         Instance = this;
         currentLevel = ResolveCurrentLevelIndex(LevelSessionManager.Instance?.currentLevel);
@@ -79,10 +87,10 @@ public class DragDropController : MonoBehaviour {
             return;
         }
 
-        DragDropLevelData.DDquiz[] quizzes = levelData.getquizdragdrop(currentLevel);
+        currentLevelQuizzes = levelData.getquizdragdrop(currentLevel);
         Sprite bg = levelData.getspritebg(currentLevel);
 
-        if (quizzes == null || quizzes.Length == 0) {
+        if (currentLevelQuizzes == null || currentLevelQuizzes.Length == 0) {
             Debug.LogWarning($"DragDropController: Level {currentLevel} tidak ditemukan atau tidak punya quiz.");
             return;
         }
@@ -93,8 +101,23 @@ public class DragDropController : MonoBehaviour {
         else
             Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
 
-        // Bersihkan targets agar tidak tercampur dengan entry lama dari Inspector.
-        // LoadLevel akan mengisi ulang dari destinyobject yang benar-benar dipakai.
+        if (questionsPerLevel > currentLevelQuizzes.Length) {
+            Debug.LogWarning($"DragDropController: questionsPerLevel ({questionsPerLevel}) lebih besar dari jumlah quiz yang tersedia ({currentLevelQuizzes.Length}) untuk level ini -- soal akan berulang.");
+        }
+
+        currentQuizIndex = 0;
+        questionsAnswered = 0;
+        LoadQuiz(currentQuizIndex);
+    }
+
+    void LoadQuiz(int quizIndex) {
+        CancelInvoke(nameof(NextQuiz));
+
+        if (currentLevelQuizzes == null || currentLevelQuizzes.Length == 0) {
+            Debug.LogError("DragDropController: currentLevelQuizzes belum di-setup dengan benar");
+            return;
+        }
+
         targets.Clear();
         targetsHit = 0;
 
@@ -106,133 +129,127 @@ public class DragDropController : MonoBehaviour {
             Debug.LogWarning("DragDropController WARNING: destinyObjectParent has a LayoutGroup component (Grid/Horizontal/Vertical Layout). Unity Layout Groups WILL OVERRIDE and force object positions to layout slots, ignoring Destinypos data!");
         }
 
-        // k = indeks global untuk dragimage[] & destinyobject[]
-        // Setiap elemen [j] dalam DDquiz.Dragobject → satu pasangan drag-destiny
-        int k = 0;
-        for (int q = 0; q < quizzes.Length; q++) {
-            DragDropLevelData.DDquiz quiz = quizzes[q];
+        DragDropLevelData.DDquiz quiz = currentLevelQuizzes[quizIndex % currentLevelQuizzes.Length];
 
-            if (quiz.Dragobject == null || quiz.Dragobject.Count == 0) {
-                Debug.LogWarning($"DragDropController: DDquiz[{q}] tidak punya Dragobject, skip.");
-                continue;
+        if (quiz.Dragobject == null || quiz.Dragobject.Count == 0) {
+            Debug.LogWarning($"DragDropController: DDquiz[{quizIndex}] tidak punya Dragobject.");
+            return;
+        }
+
+        int itemCount = quiz.Dragobject.Count;
+
+        // Helper untuk data non-posisi (sprite, scale): fallback ke 0 jika list hanya 1
+        T SafeGet<T>(List<T> list, int idx) => (list != null && list.Count > idx) ? list[idx]
+                                              : (list != null && list.Count > 0) ? list[0]
+                                              : default;
+
+        // Helper khusus posisi: HANYA ambil jika index idx benar-benar ada
+        bool HasPosAt(List<Vector2> list, int idx, out Vector2 pos) {
+            if (list != null && idx >= 0 && idx < list.Count) {
+                pos = list[idx];
+                return true;
+            }
+            pos = Vector2.zero;
+            return false;
+        }
+
+        for (int j = 0; j < itemCount; j++) {
+            // --- Pastikan dragimage[j] ada ---
+            if (j >= dragimage.Count || dragimage[j] == null) {
+                if (SpawnDragImage(j) == null) {
+                    Debug.LogWarning($"DragDropController: gagal spawn dragimage[{j}] (quiz[{quizIndex}] item[{j}])");
+                    continue;
+                }
             }
 
-            int itemCount = quiz.Dragobject.Count;
-
-            for (int j = 0; j < itemCount; j++, k++) {
-                // Helper untuk data non-posisi (sprite, scale): fallback ke 0 jika list hanya 1
-                T SafeGet<T>(List<T> list, int idx) => (list != null && list.Count > idx) ? list[idx]
-                                                      : (list != null && list.Count > 0) ? list[0]
-                                                      : default;
-
-                // Helper khusus posisi: hANYA ambil jika index j benar-benar ada (posisi tidak boleh fallback ke index 0!)
-                bool HasPosAt(List<Vector2> list, int idx, out Vector2 pos) {
-                    if (list != null && idx >= 0 && idx < list.Count) {
-                        pos = list[idx];
-                        return true;
-                    }
-                    pos = Vector2.zero;
-                    return false;
+            // --- Pastikan destinyobject[j] ada ---
+            if (j >= destinyobject.Count || destinyobject[j] == null) {
+                if (SpawnDestinyObject(j) == null) {
+                    Debug.LogWarning($"DragDropController: gagal spawn destinyobject[{j}] (quiz[{quizIndex}] item[{j}])");
+                    continue;
                 }
+            }
 
-                // --- Pastikan dragimage[k] ada ---
-                if (k >= dragimage.Count || dragimage[k] == null) {
-                    if (SpawnDragImage(k) == null) {
-                        Debug.LogWarning($"DragDropController: gagal spawn dragimage[{k}] (quiz[{q}] item[{j}])");
-                        continue;
-                    }
+            // --- Apply data drag image ---
+            {
+                Image img = dragimage[j];
+                img.gameObject.SetActive(true);
+                RectTransform imgRect = img.GetComponent<RectTransform>();
+
+                Sprite dragSprite = SafeGet(quiz.Dragobject, j);
+                if (dragSprite != null) img.sprite = dragSprite;
+
+                Vector2 scale = SafeGet(quiz.Imagescale, j);
+                if (scale != default)
+                    imgRect.localScale = new Vector3(scale.x, scale.y, 1f);
+
+                if (HasPosAt(quiz.Dragpos, j, out Vector2 dragPos)) {
+                    imgRect.anchoredPosition = dragPos;
+                    Debug.Log($"DragDropController: dragimage[{j}] (quiz[{quizIndex}] item[{j}]) Dragpos set to {dragPos}");
+                } else {
+                    Debug.LogWarning($"DragDropController: quiz[{quizIndex}] item[{j}] tidak punya entry Dragpos di index [{j}]. Posisi saat ini: {imgRect.anchoredPosition}");
                 }
+            }
 
-                // --- Pastikan destinyobject[k] ada ---
-                if (k >= destinyobject.Count || destinyobject[k] == null) {
-                    if (SpawnDestinyObject(k) == null) {
-                        Debug.LogWarning($"DragDropController: gagal spawn destinyobject[{k}] (quiz[{q}] item[{j}])");
-                        continue;
+            // --- Apply data destiny object ---
+            {
+                GameObject dest = destinyobject[j];
+                dest.SetActive(true);
+                Image destImg = dest.GetComponent<Image>();
+                RectTransform destRect = dest.GetComponent<RectTransform>();
+
+                Sprite siluet = SafeGet(quiz.SiluetDrag, j);
+                if (destImg != null && siluet != null)
+                    destImg.sprite = siluet;
+
+                if (destRect != null) {
+                    bool hasScale = quiz.DestinyImagescale != null && quiz.DestinyImagescale.Count > 0;
+                    if (hasScale) {
+                        Vector2 destScale = SafeGet(quiz.DestinyImagescale, j);
+                        destRect.localScale = new Vector3(destScale.x, destScale.y, 1f);
                     }
-                }
 
-                // --- Apply data drag image ---
-                {
-                    Image img = dragimage[k];
-                    img.gameObject.SetActive(true);
-                    RectTransform imgRect = img.GetComponent<RectTransform>();
-
-                    Sprite dragSprite = SafeGet(quiz.Dragobject, j);
-                    if (dragSprite != null) img.sprite = dragSprite;
-
-                    Vector2 scale = SafeGet(quiz.Imagescale, j);
-                    if (scale != default)
-                        imgRect.localScale = new Vector3(scale.x, scale.y, 1f);
-
-                    if (HasPosAt(quiz.Dragpos, j, out Vector2 dragPos)) {
-                        imgRect.anchoredPosition = dragPos;
-                        Debug.Log($"DragDropController: dragimage[{k}] (quiz[{q}] item[{j}]) Dragpos set to {dragPos}");
+                    if (HasPosAt(quiz.Destinypos, j, out Vector2 destPos)) {
+                        destRect.anchoredPosition = destPos;
+                        Debug.Log($"DragDropController: destinyobject[{j}] (quiz[{quizIndex}] item[{j}]) Destinypos set to {destPos}");
                     } else {
-                        Debug.LogWarning($"DragDropController: quiz[{q}] item[{j}] tidak punya entry Dragpos di index [{j}]. Posisi saat ini: {imgRect.anchoredPosition}");
+                        Debug.LogWarning($"DragDropController: quiz[{quizIndex}] item[{j}] tidak punya entry Destinypos di index [{j}]. Posisi saat ini: {destRect.anchoredPosition}");
                     }
                 }
 
-                // --- Apply data destiny object ---
-                {
-                    GameObject dest = destinyobject[k];
-                    dest.SetActive(true);
-                    Image destImg = dest.GetComponent<Image>();
-                    RectTransform destRect = dest.GetComponent<RectTransform>();
+                // Daftarkan ke targets list agar targetsTotal otomatis sesuai
+                if (!targets.Contains(dest.transform))
+                    targets.Add(dest.transform);
+            }
 
-                    Sprite siluet = SafeGet(quiz.SiluetDrag, j);
-                    if (destImg != null && siluet != null)
-                        destImg.sprite = siluet;
+            // --- Wire DraggableItem ---
+            {
+                Image img = dragimage[j];
+                DraggableItem draggable = img.GetComponent<DraggableItem>();
+                if (draggable == null)
+                    draggable = img.gameObject.AddComponent<DraggableItem>();
 
-                    if (destRect != null) {
-                        bool hasScale = quiz.DestinyImagescale != null && quiz.DestinyImagescale.Count > 0;
-                        if (hasScale) {
-                            Vector2 destScale = SafeGet(quiz.DestinyImagescale, j);
-                            destRect.localScale = new Vector3(destScale.x, destScale.y, 1f);
-                        }
+                draggable.draggedObject = img.gameObject;
+                draggable.target = destinyobject[j].GetComponent<RectTransform>();
+                draggable.rootCanvas = img.GetComponentInParent<Canvas>();
 
-                        if (HasPosAt(quiz.Destinypos, j, out Vector2 destPos)) {
-                            destRect.anchoredPosition = destPos;
-                            Debug.Log($"DragDropController: destinyobject[{k}] (quiz[{q}] item[{j}]) Destinypos set to {destPos}");
-                        } else {
-                            Debug.LogWarning($"DragDropController: quiz[{q}] item[{j}] tidak punya entry Destinypos di index [{j}]. Posisi saat ini: {destRect.anchoredPosition}");
-                        }
-                    }
-
-                    // Daftarkan ke targets list agar targetsTotal otomatis sesuai
-                    if (!targets.Contains(dest.transform))
-                        targets.Add(dest.transform);
-                }
-
-                // --- Wire DraggableItem ---
-                // draggedObject = Image GO-nya sendiri, target = destiny yang berkorespondensi
-                {
-                    Image img = dragimage[k];
-                    DraggableItem draggable = img.GetComponent<DraggableItem>();
-                    if (draggable == null)
-                        draggable = img.gameObject.AddComponent<DraggableItem>();
-
-                    draggable.draggedObject = img.gameObject;
-                    draggable.target = destinyobject[k].GetComponent<RectTransform>();
-                    draggable.rootCanvas = img.GetComponentInParent<Canvas>();
-
-                    // Setup start position and reset state
-                    RectTransform imgRect = img.GetComponent<RectTransform>();
-                    draggable.SetStartPosition(imgRect.anchoredPosition);
-                    draggable.ResetState();
-                }
+                // Setup start position and reset state
+                RectTransform imgRect = img.GetComponent<RectTransform>();
+                draggable.SetStartPosition(imgRect.anchoredPosition);
+                draggable.ResetState();
             }
         }
 
-        // Deactivate unused dragimage and destinyobject instances for levels with fewer items
-        for (int i = k; i < dragimage.Count; i++) {
+        // Deactivate unused dragimage and destinyobject instances for this quiz
+        for (int i = itemCount; i < dragimage.Count; i++) {
             if (dragimage[i] != null) dragimage[i].gameObject.SetActive(false);
         }
-        for (int i = k; i < destinyobject.Count; i++) {
+        for (int i = itemCount; i < destinyobject.Count; i++) {
             if (destinyobject[i] != null) destinyobject[i].SetActive(false);
         }
 
         targetsTotal = targets.Count;
-        Debug.Log($"DragDropController: LoadLevel selesai — {k} pasangan drag-destiny di-setup untuk level {currentLevel}");
+        Debug.Log($"DragDropController: LoadQuiz[{quizIndex}] selesai — {itemCount} item drag-destiny di-setup untuk level {currentLevel}");
     }
 
     // ---------------------------------------------------------------------------
@@ -304,17 +321,33 @@ public class DragDropController : MonoBehaviour {
     // Dipanggil dari DraggableItem tiap kali 1 item berhasil ditaruh di target yang benar
     public void OnTargetHit() {
         targetsHit++;
-        //LevelSessionManager.Instance?.AddScore(pointsPerHit);
 
         if (targetsHit >= targetsTotal) {
-            LevelSessionManager.Instance?.OnMechanicComplete();
+            LevelSessionManager.Instance?.AddScore(100);
+            Invoke(nameof(NextQuiz), 1.0f);
         }
     }
 
-    // Fallback ke 0 kalau LevelSessionManager/currentLevel belum ke-set --
-    // seharusnya tidak pernah kejadian di alur normal (selalu lewat
-    // LevelSelectionHandler.selectlevel() dulu), tapi tetap aman daripada
-    // NullReferenceException kalau scene ini di-test langsung.
+    void NextQuiz() {
+        questionsAnswered++;
+        currentQuizIndex++;
+
+        int totalQuestions = (questionsPerLevel > 0 && questionsPerLevel <= currentLevelQuizzes.Length) 
+            ? questionsPerLevel 
+            : currentLevelQuizzes.Length;
+
+        if (questionsAnswered < totalQuestions) {
+            LoadQuiz(currentQuizIndex);
+        } else {
+            Debug.Log($"DragDropController: Selesai {questionsAnswered} quiz untuk level {currentLevel}. Menyelesaikan mekanik...");
+            if (LevelSessionManager.Instance != null) {
+                LevelSessionManager.Instance.OnMechanicComplete();
+            } else {
+                Debug.LogWarning("DragDropController: LevelSessionManager.Instance is null. Pastikan jalankan dari MainMenu/LevelSelection agar bisa pindah scene otomatis.");
+            }
+        }
+    }
+
     public static int ResolveCurrentLevelIndex(LevelData currentLevel) {
         if (currentLevel == null) {
             Debug.LogWarning("DragDropController: LevelSessionManager.currentLevel null, fallback ke level index 0");
