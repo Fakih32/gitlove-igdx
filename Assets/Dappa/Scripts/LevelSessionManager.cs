@@ -53,6 +53,7 @@ public void restartlevel()
         score = 0;
         currentMechanicIndex = 0;
         levelFailed = false;
+        AudioManager.Instance?.PlayBgm(AudioScript.instance.Bgmgame);
 
         SceneManager.LoadScene(currentLevel.mechanicSceneNames[currentMechanicIndex]);
     }

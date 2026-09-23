@@ -1,12 +1,12 @@
 using UnityEngine;
-
+//Jadinya Cuma Refrensi Audio
 public class AudioScript : MonoBehaviour
 {
     public static AudioScript instance;
-    [Header("Audio Source")]
-    public AudioSource sfxaudioplayer;
-    public AudioSource Bgmaudioplayer;
-    [Header("Audio Clip")]
+   
+    [Header("BGM")]
+    public AudioClip BgmMenu;
+    public AudioClip Bgmgame;
     [Header("Sfx")]
     public AudioClip correctaudio;
     public AudioClip Dragingup;
@@ -23,23 +23,15 @@ public class AudioScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-            
+        DontDestroyOnLoad(instance);
+           
         
     }
     void Start()
     {
         
     }
-    public void Playsfx(AudioClip Soundeffect)
-    {
-        sfxaudioplayer.clip = Soundeffect;
-        sfxaudioplayer.Play();
-
-    }
-    public void PlayBGM(AudioClip Musik){
-        Bgmaudioplayer.clip = Musik;
-        Bgmaudioplayer.Play();
-    }
+ 
     // Update is called once per frame
     void Update()
     {

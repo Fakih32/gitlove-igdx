@@ -84,6 +84,7 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         );
 
         dragOffset = (Vector2)rect.localPosition - localPoint;
+        if (AudioManager.Instance!=null)
         AudioManager.Instance?.PlaySfx(dragStartSfx);
     }
 
@@ -110,7 +111,7 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData) {
         if (placedOnTarget) return;
-
+         if (AudioManager.Instance!=null)
         AudioManager.Instance?.PlaySfx(dropSfx);
 
         RectTransform draggedRect = GetDraggedRect();

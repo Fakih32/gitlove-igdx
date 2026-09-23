@@ -18,6 +18,7 @@ public class MainMenuHandler : MonoBehaviour
     }
     void Start()
     {
+          AudioManager.Instance?.PlayBgm(AudioScript.instance.BgmMenu);
         mainMenuButton.onClick.AddListener(gotoLevelSelectionScene);
         QuitButton.onClick.AddListener(quitGame);
         

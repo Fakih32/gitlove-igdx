@@ -26,6 +26,8 @@ public class PauseLogic : MonoBehaviour
 }
 public void BacktoLevelSelection(string Scene)
     {
+        
+          AudioManager.Instance?.PlayBgm(AudioScript.instance.BgmMenu);
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene(Scene);
     }    
