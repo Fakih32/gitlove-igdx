@@ -23,7 +23,8 @@ public class DragDropLevelData : ScriptableObject {
         [Header("Siluet")]
         public List<Sprite> SiluetDrag;
        
-        
+        [Header("Posisi Gambar Drag")]
+        public List<Vector2> Dragpos;
         [Header("Posisi Tujuan")]
          public List<Vector2> Destinypos;
       

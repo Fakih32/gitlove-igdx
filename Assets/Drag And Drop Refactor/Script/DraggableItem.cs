@@ -21,50 +21,61 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public AudioClip dropSfx;
     public AudioClip correctSfx;
 
-    private Vector3 startPosition;
+    private Vector2 startAnchoredPosition;
     private Vector2 dragOffset;
     [HideInInspector] public bool placedOnTarget = false;
 
     void Start() {
+        if (rootCanvas == null) {
+            rootCanvas = GetComponentInParent<Canvas>();
+        }
         CaptureStartPosition();
+    }
+
+    // Dipanggil oleh DragDropController saat level di-load atau posisi diset dari data level.
+    public void SetStartPosition(Vector2 pos) {
+        startAnchoredPosition = pos;
+        RectTransform rect = GetDraggedRect();
+        if (rect != null) {
+            rect.anchoredPosition = pos;
+        }
     }
 
     // Dipanggil oleh DragDropController saat level di-load ulang.
     // Mereset state drag supaya item bisa di-drag lagi dari posisi awalnya.
     public void ResetState() {
         placedOnTarget = false;
-        CaptureStartPosition();
+        RectTransform rect = GetDraggedRect();
+        if (rect != null) {
+            rect.anchoredPosition = startAnchoredPosition;
+        }
+    }
+
+    private RectTransform GetDraggedRect() {
+        if (draggedObject != null) {
+            return draggedObject.GetComponent<RectTransform>();
+        }
+        return GetComponent<RectTransform>();
     }
 
     private void CaptureStartPosition() {
-        if (draggedObject != null) {
-            var rect = draggedObject.GetComponent<RectTransform>();
-            if (rect != null) startPosition = rect.position;
+        RectTransform rect = GetDraggedRect();
+        if (rect != null) {
+            startAnchoredPosition = rect.anchoredPosition;
         }
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (placedOnTarget) return;
 
-        RectTransform rect = draggedObject.GetComponent<RectTransform>();
+        if (rootCanvas == null) {
+            rootCanvas = GetComponentInParent<Canvas>();
+        }
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rootCanvas.transform as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out dragOffset
-        );
+        RectTransform rect = GetDraggedRect();
+        if (rect == null) return;
 
-        dragOffset = rect.localPosition - (Vector3)dragOffset;
-        AudioManager.Instance?.PlaySfx(dragStartSfx);
-    }
-
-    public void OnDrag(PointerEventData eventData) {
-        if (placedOnTarget) return;
-
-        RectTransform rect = draggedObject.GetComponent<RectTransform>();
         Vector2 localPoint;
-
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rootCanvas.transform as RectTransform,
             eventData.position,
@@ -72,22 +83,51 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             out localPoint
         );
 
-        rect.localPosition = localPoint + dragOffset;
+        dragOffset = (Vector2)rect.localPosition - localPoint;
+        AudioManager.Instance?.PlaySfx(dragStartSfx);
+    }
+
+    public void OnDrag(PointerEventData eventData) {
+        if (placedOnTarget) return;
+
+        if (rootCanvas == null) {
+            rootCanvas = GetComponentInParent<Canvas>();
+        }
+
+        RectTransform rect = GetDraggedRect();
+        if (rect == null) return;
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rootCanvas.transform as RectTransform,
+            eventData.position,
+            eventData.pressEventCamera,
+            out localPoint
+        );
+
+        rect.localPosition = (Vector3)(localPoint + dragOffset);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        AudioManager.Instance?.PlaySfx(dropSfx);
-
         if (placedOnTarget) return;
 
-        RectTransform draggedRect = draggedObject.GetComponent<RectTransform>();
+        AudioManager.Instance?.PlaySfx(dropSfx);
 
-        if (IsOverTargetWithMargin(draggedRect, target, margin: 15f)) {
-            draggedObject.transform.position = target.position;
+        RectTransform draggedRect = GetDraggedRect();
+
+        if (IsOverTargetWithMargin(draggedRect, target, margin: 25f)) {
+            if (target != null && draggedRect != null) {
+                draggedRect.position = target.position;
+            }
             placedOnTarget = true;
 
             DragDropController.Instance?.OnTargetHit();
             AudioManager.Instance?.PlaySfx(correctSfx);
+        } else {
+            // Snap back to start position if missed target!
+            if (draggedRect != null) {
+                draggedRect.anchoredPosition = startAnchoredPosition;
+            }
         }
     }
 
@@ -102,8 +142,8 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         Rect draggedRect = new Rect(
             draggedCorners[0].x - margin,
             draggedCorners[0].y - margin,
-            draggedCorners[2].x - draggedCorners[0].x + 2 * margin,
-            draggedCorners[2].y - draggedCorners[0].y + 2 * margin
+            (draggedCorners[2].x - draggedCorners[0].x) + 2 * margin,
+            (draggedCorners[2].y - draggedCorners[0].y) + 2 * margin
         );
         Rect targetRect = new Rect(
             targetCorners[0].x,
@@ -115,3 +155,4 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         return draggedRect.Overlaps(targetRect);
     }
 }
+

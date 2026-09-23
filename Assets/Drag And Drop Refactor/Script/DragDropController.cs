@@ -62,8 +62,15 @@ public class DragDropController : MonoBehaviour {
 
     void Start() {
         LoadLevel();
-        // targetsTotal dihitung setelah LoadLevel() selesai spawn semua destiny objects
-        targetsTotal = targets.Count;
+    }
+
+    public void LoadLevelIndex(int levelIndex) {
+        currentLevel = levelIndex;
+        LoadLevel();
+    }
+
+    public void NextLevel() {
+        LoadLevelIndex(currentLevel + 1);
     }
 
     void LoadLevel() {
@@ -91,6 +98,14 @@ public class DragDropController : MonoBehaviour {
         targets.Clear();
         targetsHit = 0;
 
+        // Warning check for LayoutGroup interference on parents
+        if (dragImageParent != null && dragImageParent.GetComponent<LayoutGroup>() != null) {
+            Debug.LogWarning("DragDropController WARNING: dragImageParent has a LayoutGroup component (Grid/Horizontal/Vertical Layout). Unity Layout Groups WILL OVERRIDE and force object positions to layout slots, ignoring Dragpos data!");
+        }
+        if (destinyObjectParent != null && destinyObjectParent.GetComponent<LayoutGroup>() != null) {
+            Debug.LogWarning("DragDropController WARNING: destinyObjectParent has a LayoutGroup component (Grid/Horizontal/Vertical Layout). Unity Layout Groups WILL OVERRIDE and force object positions to layout slots, ignoring Destinypos data!");
+        }
+
         // k = indeks global untuk dragimage[] & destinyobject[]
         // Setiap elemen [j] dalam DDquiz.Dragobject → satu pasangan drag-destiny
         int k = 0;
@@ -105,10 +120,20 @@ public class DragDropController : MonoBehaviour {
             int itemCount = quiz.Dragobject.Count;
 
             for (int j = 0; j < itemCount; j++, k++) {
-                // Helper: ambil elemen ke-j atau fallback ke 0 jika list terlalu pendek
+                // Helper untuk data non-posisi (sprite, scale): fallback ke 0 jika list hanya 1
                 T SafeGet<T>(List<T> list, int idx) => (list != null && list.Count > idx) ? list[idx]
                                                       : (list != null && list.Count > 0) ? list[0]
                                                       : default;
+
+                // Helper khusus posisi: hANYA ambil jika index j benar-benar ada (posisi tidak boleh fallback ke index 0!)
+                bool HasPosAt(List<Vector2> list, int idx, out Vector2 pos) {
+                    if (list != null && idx >= 0 && idx < list.Count) {
+                        pos = list[idx];
+                        return true;
+                    }
+                    pos = Vector2.zero;
+                    return false;
+                }
 
                 // --- Pastikan dragimage[k] ada ---
                 if (k >= dragimage.Count || dragimage[k] == null) {
@@ -129,6 +154,7 @@ public class DragDropController : MonoBehaviour {
                 // --- Apply data drag image ---
                 {
                     Image img = dragimage[k];
+                    img.gameObject.SetActive(true);
                     RectTransform imgRect = img.GetComponent<RectTransform>();
 
                     Sprite dragSprite = SafeGet(quiz.Dragobject, j);
@@ -137,11 +163,19 @@ public class DragDropController : MonoBehaviour {
                     Vector2 scale = SafeGet(quiz.Imagescale, j);
                     if (scale != default)
                         imgRect.localScale = new Vector3(scale.x, scale.y, 1f);
+
+                    if (HasPosAt(quiz.Dragpos, j, out Vector2 dragPos)) {
+                        imgRect.anchoredPosition = dragPos;
+                        Debug.Log($"DragDropController: dragimage[{k}] (quiz[{q}] item[{j}]) Dragpos set to {dragPos}");
+                    } else {
+                        Debug.LogWarning($"DragDropController: quiz[{q}] item[{j}] tidak punya entry Dragpos di index [{j}]. Posisi saat ini: {imgRect.anchoredPosition}");
+                    }
                 }
 
                 // --- Apply data destiny object ---
                 {
                     GameObject dest = destinyobject[k];
+                    dest.SetActive(true);
                     Image destImg = dest.GetComponent<Image>();
                     RectTransform destRect = dest.GetComponent<RectTransform>();
 
@@ -150,18 +184,17 @@ public class DragDropController : MonoBehaviour {
                         destImg.sprite = siluet;
 
                     if (destRect != null) {
-                        // Cek ada datanya dulu (jangan cek != default karena (0,0) adalah posisi valid)
                         bool hasScale = quiz.DestinyImagescale != null && quiz.DestinyImagescale.Count > 0;
-                        bool hasPos   = quiz.Destinypos != null && quiz.Destinypos.Count > 0;
-
                         if (hasScale) {
                             Vector2 destScale = SafeGet(quiz.DestinyImagescale, j);
                             destRect.localScale = new Vector3(destScale.x, destScale.y, 1f);
                         }
 
-                        if (hasPos) {
-                            Vector2 pos = SafeGet(quiz.Destinypos, j);
-                            destRect.anchoredPosition = pos;
+                        if (HasPosAt(quiz.Destinypos, j, out Vector2 destPos)) {
+                            destRect.anchoredPosition = destPos;
+                            Debug.Log($"DragDropController: destinyobject[{k}] (quiz[{q}] item[{j}]) Destinypos set to {destPos}");
+                        } else {
+                            Debug.LogWarning($"DragDropController: quiz[{q}] item[{j}] tidak punya entry Destinypos di index [{j}]. Posisi saat ini: {destRect.anchoredPosition}");
                         }
                     }
 
@@ -182,13 +215,23 @@ public class DragDropController : MonoBehaviour {
                     draggable.target = destinyobject[k].GetComponent<RectTransform>();
                     draggable.rootCanvas = img.GetComponentInParent<Canvas>();
 
-                    // Reset state — clone atau pre-existing bisa saja punya placedOnTarget = true
-                    // dari sesi sebelumnya; pastikan selalu bisa di-drag ulang saat level load
+                    // Setup start position and reset state
+                    RectTransform imgRect = img.GetComponent<RectTransform>();
+                    draggable.SetStartPosition(imgRect.anchoredPosition);
                     draggable.ResetState();
                 }
             }
         }
 
+        // Deactivate unused dragimage and destinyobject instances for levels with fewer items
+        for (int i = k; i < dragimage.Count; i++) {
+            if (dragimage[i] != null) dragimage[i].gameObject.SetActive(false);
+        }
+        for (int i = k; i < destinyobject.Count; i++) {
+            if (destinyobject[i] != null) destinyobject[i].SetActive(false);
+        }
+
+        targetsTotal = targets.Count;
         Debug.Log($"DragDropController: LoadLevel selesai — {k} pasangan drag-destiny di-setup untuk level {currentLevel}");
     }
 
