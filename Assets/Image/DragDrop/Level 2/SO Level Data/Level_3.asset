@@ -19,6 +19,6 @@ MonoBehaviour:
   - DragAnddropCopy
   - WordQuizScene
   gameOverSceneName: GameOverScene
-  timeLimit: 1000
-  threeStarTime: 20
-  twoStarTime: 40
+  timeLimit: 120
+  threeStarTime: 30
+  twoStarTime: 60

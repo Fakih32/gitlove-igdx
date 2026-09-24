@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
   m_Name: Panel_2_LV1
   m_EditorClassIdentifier: 
-  panelImage: {fileID: 6353787118297185058, guid: e7f0e5c2667043141b188078b1725b08, type: 3}
+  panelImage: {fileID: 5263900370085150428, guid: 9f58ab71215003f45abc8b32a847d7f7, type: 3}
   bubbleSprite: {fileID: 0}
   dialogueText: Welcome
   displayDuration: 1

@@ -885,15 +885,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -4542445161045310382, guid: 6ccfe74b6a3d2914c9fa43d5fc3cce28, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -956,6 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelData: {fileID: 11400000, guid: 1ec5e827a11bf4f44a27be80b5a76496, type: 2}
   currentLevel: 0
+  questionsPerLevel: 0
   targets:
   - {fileID: 273571595}
   targetsHit: 0
@@ -1650,7 +1651,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1798616351914397704, guid: 7c53e6798777d16499ba3ee988947f74, type: 3}
+  m_Sprite: {fileID: -7924493212156863434, guid: 8f160174214ad934090cb204a26e93a7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
