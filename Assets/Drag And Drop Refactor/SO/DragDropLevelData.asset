@@ -31,15 +31,15 @@ MonoBehaviour:
       - {x: 500, y: 0}
       - {x: 700, y: 0}
       Destinypos:
-      - {x: 20, y: 0}
-      - {x: -100, y: 0}
-      - {x: -400, y: 0}
-      - {x: -800, y: 0}
+      - {x: -504.5, y: -62.9}
+      - {x: -337.5, y: -60.2}
+      - {x: -119.9, y: -56.3}
+      - {x: 307, y: -41}
       Imagescale:
-      - {x: 1, y: 1}
-      - {x: 1, y: 1}
-      - {x: 1, y: 1}
-      - {x: 1, y: 1}
+      - {x: 0.387, y: 2.057}
+      - {x: 0.436, y: 2.534}
+      - {x: 0.404, y: 3.092}
+      - {x: 0.825, y: 4.289}
       DestinyImagescale:
       - {x: 1, y: 1}
       - {x: 1, y: 1}
@@ -54,18 +54,34 @@ MonoBehaviour:
       - {fileID: 7882605504907470947, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
       SiluetDrag:
       - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
       Dragpos:
       - {x: 100, y: 0}
       - {x: 200, y: 0}
       - {x: 500, y: 0}
       - {x: 700, y: 0}
+      - {x: 700, y: 0}
       Destinypos:
-      - {x: 20, y: 0}
-      - {x: -100, y: 0}
-      - {x: -400, y: 0}
-      - {x: -800, y: 0}
-      Imagescale: []
-      DestinyImagescale: []
+      - {x: -158.5, y: 83.6}
+      - {x: 284.8, y: 145}
+      - {x: 343.1, y: 145.6}
+      - {x: -560.1, y: 27.3}
+      - {x: -404.6, y: 48.2}
+      Imagescale:
+      - {x: 0.196, y: 0.376}
+      - {x: 0.194, y: 0.653}
+      - {x: 0.242, y: 0.638}
+      - {x: 0.096, y: 0.212}
+      - {x: 0.125, y: 0.294}
+      DestinyImagescale:
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
       backgroudquiz: {fileID: 1633492202700524168, guid: 0f4ee3de3e0fa5240af1f0367b140c05, type: 3}
   - level: 2
     dragdropquiz: []
