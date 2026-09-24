@@ -83,9 +83,69 @@ MonoBehaviour:
       - {x: 0, y: 0}
       - {x: 0, y: 0}
       backgroudquiz: {fileID: 1633492202700524168, guid: 0f4ee3de3e0fa5240af1f0367b140c05, type: 3}
-  - level: 2
-    dragdropquiz: []
   - level: 1
-    dragdropquiz: []
+    dragdropquiz:
+    - Dragobject:
+      - {fileID: 21300000, guid: 01b5a5bb3951e464bb42be9bbdc27086, type: 3}
+      - {fileID: 21300000, guid: 345e4916aa7726347a29c1893a1c520f, type: 3}
+      - {fileID: 21300000, guid: 27a824b625305e644bd41bbfc6e4c4dd, type: 3}
+      SiluetDrag:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      Dragpos:
+      - {x: -300, y: 0}
+      - {x: 0, y: 0}
+      - {x: 300, y: 0}
+      Destinypos:
+      - {x: -472, y: 174}
+      - {x: -69, y: 59}
+      - {x: 388, y: 76}
+      Imagescale:
+      - {x: 1, y: 2.087}
+      - {x: 1.637, y: 3.752}
+      - {x: 1.593, y: 3.539}
+      DestinyImagescale:
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      backgroudquiz: {fileID: 7573958088529151493, guid: 1f878f6ede9e9d146b964ce99831d84f, type: 3}
   - level: 2
-    dragdropquiz: []
+    dragdropquiz:
+    - Dragobject:
+      - {fileID: 21300000, guid: e3abf629965cfdd4185abbe84eea2dc4, type: 3}
+      - {fileID: 21300000, guid: 69ed4455be822504a843ac3cb142637d, type: 3}
+      - {fileID: 21300000, guid: f9769585798390a4696136685ac85895, type: 3}
+      - {fileID: 21300000, guid: 8e974dd0699f59641856f6ffb9184203, type: 3}
+      - {fileID: 21300000, guid: 9c9e4212a3e3ed749b4218fe0795d059, type: 3}
+      SiluetDrag:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      Dragpos:
+      - {x: -600, y: -100}
+      - {x: -300, y: -100}
+      - {x: 0, y: -100}
+      - {x: 300, y: -100}
+      - {x: 600, y: -100}
+      Destinypos:
+      - {x: -354, y: 146}
+      - {x: -183, y: 146}
+      - {x: -13, y: 146}
+      - {x: 160, y: 146}
+      - {x: 331, y: 146}
+      Imagescale:
+      - {x: 1.07, y: 2.394}
+      - {x: 1.07, y: 2.394}
+      - {x: 1.07, y: 2.394}
+      - {x: 1.07, y: 2.394}
+      - {x: 1.07, y: 2.394}
+      DestinyImagescale:
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      - {x: 0, y: 0}
+      backgroudquiz: {fileID: 6532206365432363777, guid: 6d7fd2beabcef5144a53552415065167, type: 3}

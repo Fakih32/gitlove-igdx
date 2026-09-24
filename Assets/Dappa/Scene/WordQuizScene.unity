@@ -2883,7 +2883,7 @@ MonoBehaviour:
   letterButtonsParent: {fileID: 2089600678}
   quizImage: {fileID: 451365857}
   backgroundImage: {fileID: 472132945}
-  questionsPerLevel: 2
+  questionsPerLevel: 5
 --- !u!4 &2126994910
 Transform:
   m_ObjectHideFlags: 0
