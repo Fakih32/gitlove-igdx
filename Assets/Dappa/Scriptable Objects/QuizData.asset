@@ -41,4 +41,4 @@ MonoBehaviour:
     - image: {fileID: 21300000, guid: 69ed4455be822504a843ac3cb142637d, type: 3}
       correctWord: GEPLAK
     - image: {fileID: 21300000, guid: f9769585798390a4696136685ac85895, type: 3}
-      correctWord: SATEKLATA
+      correctWord: SATEKLATAK

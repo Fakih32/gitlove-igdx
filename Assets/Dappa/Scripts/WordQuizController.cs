@@ -1,6 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// ROMBAK dari versi sebelumnya.
+// Perubahan: field "questionsPerLevel" yang di-set manual di Inspector
+// DIHAPUS. Sebelumnya ini duplikasi data dari WordQuizData -- dua tempat
+// nyimpen "berapa soal per level" yang harus disinkronkan manual, dan
+// begitu lupa disamakan, soal jadi berulang (modulo) sebelum akhirnya
+// OnMechanicComplete() kepanggil. Sekarang jumlah soal SELALU sama
+// dengan currentLevelQuizzes.Length -- pemain menjawab semua soal yang
+// ada di WordQuizData untuk level itu, tidak lebih tidak kurang, dan
+// tidak ada modulo/pengulangan sama sekali. Level design bisa bebas
+// atur 2, 3, 5, atau berapa pun soal per level cukup lewat WordQuizData,
+// tanpa perlu sentuh Inspector WordQuizController lagi.
 public class WordQuizController : MonoBehaviour {
     [Header("Data & Referensi Scene")]
     public WordQuizData quizData;
@@ -11,10 +22,8 @@ public class WordQuizController : MonoBehaviour {
     public Image quizImage;
     public Image backgroundImage;
 
-    [Header("Konfigurasi Mekanik Ini")]
-    public int questionsPerLevel = 2;
-
     private WordQuizData.Quiz[] currentLevelQuizzes;
+    private int questionsPerLevel;
     private Text[] letterFields;
     private Button[] letterButtons;
     private int currentFieldIndex = 0;
@@ -31,9 +40,7 @@ public class WordQuizController : MonoBehaviour {
             return;
         }
 
-        if (questionsPerLevel > currentLevelQuizzes.Length) {
-            Debug.LogWarning($"WordQuizController: questionsPerLevel ({questionsPerLevel}) lebih besar dari jumlah quiz yang tersedia ({currentLevelQuizzes.Length}) untuk level ini -- soal akan berulang.");
-        }
+        questionsPerLevel = GetQuestionsPerLevel(currentLevelQuizzes);
 
         ApplyBackground(levelIndex);
         LoadQuiz(currentQuizIndex);
@@ -54,12 +61,10 @@ public class WordQuizController : MonoBehaviour {
     void LoadQuiz(int quizIndex) {
         ResetGame();
 
-        if (currentLevelQuizzes == null || currentLevelQuizzes.Length == 0) {
-            Debug.LogError("Quiz Data belum disetup dengan benar");
-            return;
-        }
-
-        WordQuizData.Quiz quiz = currentLevelQuizzes[quizIndex % currentLevelQuizzes.Length];
+        // Tidak lagi pakai modulo -- quizIndex selalu valid karena
+        // questionsPerLevel == currentLevelQuizzes.Length, jadi loop
+        // NextQuiz() akan berhenti tepat sebelum index keluar batas.
+        WordQuizData.Quiz quiz = currentLevelQuizzes[quizIndex];
 
         if (quizImage == null) {
             Debug.LogError("Quiz Image belum di-assign di Inspector");
@@ -94,12 +99,13 @@ public class WordQuizController : MonoBehaviour {
             Destroy(child.gameObject);
         }
 
-        letterButtons = new Button[9];
+        int totalSlots = Mathf.Max(9, correctWord.Length);
+        letterButtons = new Button[totalSlots];
 
         char[] correctLetters = correctWord.ToCharArray();
-        char[] wrongLetters = GenerateRandomLetters(9 - correctLetters.Length, correctLetters);
+        char[] wrongLetters = GenerateRandomLetters(totalSlots - correctLetters.Length, correctLetters);
 
-        char[] allLetters = new char[9];
+        char[] allLetters = new char[totalSlots];
         correctLetters.CopyTo(allLetters, 0);
         wrongLetters.CopyTo(allLetters, correctLetters.Length);
 
@@ -156,7 +162,7 @@ public class WordQuizController : MonoBehaviour {
             playerReply += field.text;
         }
 
-        bool isCorrect = playerReply == currentLevelQuizzes[currentQuizIndex % currentLevelQuizzes.Length].correctWord;
+        bool isCorrect = playerReply == currentLevelQuizzes[currentQuizIndex].correctWord;
 
         if (isCorrect) {
             isAnswering = false;
@@ -225,5 +231,9 @@ public class WordQuizController : MonoBehaviour {
             return 0;
         }
         return currentLevel.levelIndex;
+    }
+
+    public static int GetQuestionsPerLevel(WordQuizData.Quiz[] quizzes) {
+        return quizzes?.Length ?? 0;
     }
 }
