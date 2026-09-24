@@ -16,10 +16,10 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public GameObject draggedObject;
     public RectTransform target;
 
-    [Header("Sound Effects")]
-    public AudioClip dragStartSfx;
-    public AudioClip dropSfx;
-    public AudioClip correctSfx;
+    //[Header("Sound Effects")]
+   // public AudioClip dragStartSfx;
+   // public AudioClip dropSfx;
+    //public AudioClip correctSfx;
 
     private Vector2 startAnchoredPosition;
     private Vector2 dragOffset;
@@ -85,7 +85,7 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
         dragOffset = (Vector2)rect.localPosition - localPoint;
         if (AudioManager.Instance!=null)
-        AudioManager.Instance?.PlaySfx(dragStartSfx);
+        AudioManager.Instance?.PlaySfx(AudioScript.instance.Dragingup);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -112,7 +112,7 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData) {
         if (placedOnTarget) return;
          if (AudioManager.Instance!=null)
-        AudioManager.Instance?.PlaySfx(dropSfx);
+        AudioManager.Instance?.PlaySfx(AudioScript.instance.Dropingdown);
 
         RectTransform draggedRect = GetDraggedRect();
 
@@ -123,7 +123,7 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             placedOnTarget = true;
 
             DragDropController.Instance?.OnTargetHit();
-            AudioManager.Instance?.PlaySfx(correctSfx);
+            AudioManager.Instance?.PlaySfx(AudioScript.instance.correctaudio);
         } else {
             // Snap back to start position if missed target!
             if (draggedRect != null) {

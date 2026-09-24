@@ -517,9 +517,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BgmMenu: {fileID: 8300000, guid: c6b63c867b7614f449a3771ba0608f48, type: 3}
   Bgmgame: {fileID: 8300000, guid: 180a19c7f2253644f8556bf35d879756, type: 3}
-  correctaudio: {fileID: 8300000, guid: fc25b1a4e41156244b59d8db57d36882, type: 3}
-  Dragingup: {fileID: 8300000, guid: a21163a586b143546a250509ecae11c9, type: 3}
-  Dropingdown: {fileID: 8300000, guid: 1c0580a0e872797408d8f8bf306f36f9, type: 3}
+  correctaudio: {fileID: 8300000, guid: 1155c8168a5f40042beccc421c8144f0, type: 3}
+  Dragingup: {fileID: 8300000, guid: 14dff6d5e73b6854e986f302fd3b1297, type: 3}
+  Dropingdown: {fileID: 8300000, guid: fce489fef3f299045941e543ae3b9fa6, type: 3}
+  wronganswer: {fileID: 8300000, guid: e94cb396bb62f574a865b7e1b5481274, type: 3}
+  Clicking: {fileID: 8300000, guid: f8a1aef860400b44b9db103e995f3f58, type: 3}
+  Winsound: {fileID: 8300000, guid: 34bd94ec2a0a39b46aac6548a4d7bdf6, type: 3}
 --- !u!1 &1386899254
 GameObject:
   m_ObjectHideFlags: 0

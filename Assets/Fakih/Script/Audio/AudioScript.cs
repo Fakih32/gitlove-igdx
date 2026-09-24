@@ -11,6 +11,9 @@ public class AudioScript : MonoBehaviour
     public AudioClip correctaudio;
     public AudioClip Dragingup;
     public AudioClip Dropingdown;
+    public AudioClip wronganswer;
+    public AudioClip Clicking;
+    public AudioClip Winsound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {

@@ -76,6 +76,8 @@ public void restartlevel()
         if (currentMechanicIndex < currentLevel.mechanicSceneNames.Length) {
             SceneManager.LoadScene(currentLevel.mechanicSceneNames[currentMechanicIndex]);
         } else {
+            AudioManager.Instance?.PlayBgm(AudioScript.instance.BgmMenu);
+            AudioManager.Instance?.PlaySfx(AudioScript.instance.Winsound);
             SceneManager.LoadScene(currentLevel.gameOverSceneName);
         }
     }

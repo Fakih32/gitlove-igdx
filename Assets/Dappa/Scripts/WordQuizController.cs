@@ -132,11 +132,12 @@ public class WordQuizController : MonoBehaviour {
         letterFields[currentFieldIndex].text = letter;
         letterButtons[buttonIndex].interactable = false;
         currentFieldIndex++;
+         AudioManager.Instance?.PlaySfx(AudioScript.instance.Clicking);
     }
 
     public void DeleteLastLetter() {
         if (currentFieldIndex <= 0) return;
-
+        AudioManager.Instance?.PlaySfx(AudioScript.instance.Clicking);
         currentFieldIndex--;
         string deletedLetter = letterFields[currentFieldIndex].text;
 
@@ -169,10 +170,11 @@ public class WordQuizController : MonoBehaviour {
 
             foreach (Text field in letterFields) field.color = Color.green;
             LevelSessionManager.Instance?.AddScore(100);
-
+             AudioManager.Instance?.PlaySfx(AudioScript.instance.correctaudio);
             Invoke(nameof(NextQuiz), 1.5f);
         } else {
             foreach (Text field in letterFields) field.color = Color.red;
+            AudioManager.Instance?.PlaySfx(AudioScript.instance.wronganswer);
         }
     }
 
