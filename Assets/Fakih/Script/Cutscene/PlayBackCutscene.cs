@@ -136,7 +136,11 @@ public class ComicCutscenePlayer : MonoBehaviour
                 : Vector2.zero;
         }
     }
-
+void playvoice(AudioClip vc)
+    {
+        voiceSource.clip = vc;
+        voiceSource.Play();
+    }
     // ── Main panel loop ────────────────────────────────────────────────────
     private IEnumerator ShowCurrentPanel()
     {
@@ -162,46 +166,35 @@ public class ComicCutscenePlayer : MonoBehaviour
 
         int slot = currentSlotIndex;
 
-        // ── 1. Push this panel's content onto the target slot ──
+        // ── 1. Audio ──
+        if (panel.sfxOnEnter && sfxSource)   sfxSource.PlayOneShot(panel.sfxOnEnter);
+        if (panel.voiceOver  && voiceSource) playvoice(panel.voiceOver);
+
+        // ── 2. Push this panel's content onto the target slot ──
         if (!panel.stayonthefirstslot)
         {
+            if (panelImages[slot] != null)
+                panelImages[slot].sprite = panel.panelImage;
             
-        
-        if (panelImages[slot] != null)
-            panelImages[slot].sprite = panel.panelImage;
-        
-       
-        
+            // ── 3. Activate this slot (harmless if it's already active because it's being reused) ──
+            GameObject slotRoot = GetSlotRoot(slot);
+            if (slotRoot != null) slotRoot.SetActive(true);
 
-        
+            // ── 4. Prepare slot for its entrance ──
+            CanvasGroup cg = GetSlotCG(slot);
+            PrepareEntrance(panel, slot, cg);
+            
+            // ── 5. Keep the container fixed ──
+            Vector2 targetPos = Vector2.zero;
 
-        // ── 2. Activate this slot (harmless if it's already active because it's being reused) ──
-        GameObject slotRoot = GetSlotRoot(slot);
-        if (slotRoot != null) slotRoot.SetActive(true);
-
-        // ── 3. Prepare slot for its entrance ──
-        CanvasGroup cg = GetSlotCG(slot);
-        PrepareEntrance(panel, slot, cg);
-        
-    
-        
-        // ── 4. Audio ──
-        if (panel.sfxOnEnter && sfxSource)   sfxSource.PlayOneShot(panel.sfxOnEnter);
-        if (panel.voiceOver  && voiceSource) voiceSource.PlayOneShot(panel.voiceOver);
-
-        // ── 5. Keep the container fixed ──
-        Vector2 targetPos = Vector2.zero;
-
-        yield return StartCoroutine(
-            SlideAndTransitionIn(panel, slot, targetPos, cg)
-        );
+            yield return StartCoroutine(
+                SlideAndTransitionIn(panel, slot, targetPos, cg)
+            );
         }
         else
         {
-             
-              panelImages[0].sprite = panel.panelImage;
-               bool hasBubble = panel.bubbleSprite != null;
-       
+            panelImages[0].sprite = panel.panelImage;
+            bool hasBubble = panel.bubbleSprite != null;
         }
         // ── 6. Ken Burns (optional slow zoom) ──
         Coroutine kb = panel.useKenBurnsEffect
