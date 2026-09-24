@@ -8,11 +8,8 @@ using System.Collections.Generic;
 public class DragDropLevelData : ScriptableObject {
     [System.Serializable]
     public class LevelEntry {
-          public int level;
+        public int level;
         public DDquiz[] dragdropquiz;
-         [Header("Background")]
-        public Sprite BackgroundImage;
-
     }
     [System.Serializable]
     public class DDquiz
@@ -26,25 +23,20 @@ public class DragDropLevelData : ScriptableObject {
         [Header("Posisi Gambar Drag")]
         public List<Vector2> Dragpos;
         [Header("Posisi Tujuan")]
-         public List<Vector2> Destinypos;
+        public List<Vector2> Destinypos;
       
         [Header("Ukuran Gambar Drag")]
-         public List<Vector2> Imagescale;
+        public List<Vector2> Imagescale;
        
         [Header("Ukuran Gambar tujuan")]
         public List<Vector2> DestinyImagescale;
+        [Header("Gambar Background")]
+        public Sprite backgroudquiz;
     }
     public DDquiz[] getquizdragdrop(int index)
     {
          foreach (var entry in levels) {
             if (entry.level == index) return entry.dragdropquiz;
-        }
-        return null;
-    }
-    public Sprite getspritebg(int index)
-    {
-         foreach (var entry in levels) {
-            if (entry.level == index) return entry.BackgroundImage;
         }
         return null;
     }

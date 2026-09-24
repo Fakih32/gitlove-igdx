@@ -18,7 +18,6 @@ MonoBehaviour:
   - Intro_Lv1
   - DragAnddropCopy
   - WordQuizScene
-  - DragAnddropCopy
   gameOverSceneName: GameOverScene
   timeLimit: 60
   threeStarTime: 20

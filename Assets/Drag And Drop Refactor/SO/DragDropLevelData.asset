@@ -45,6 +45,7 @@ MonoBehaviour:
       - {x: 1, y: 1}
       - {x: 1, y: 1}
       - {x: 1, y: 1}
+      backgroudquiz: {fileID: -8570858487484089284, guid: 11312a0ea8189414d8e4dd3ab0378ef4, type: 3}
     - Dragobject:
       - {fileID: -1901790440523153144, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
       - {fileID: 3763099409931575115, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
@@ -65,13 +66,10 @@ MonoBehaviour:
       - {x: -800, y: 0}
       Imagescale: []
       DestinyImagescale: []
-    BackgroundImage: {fileID: -8570858487484089284, guid: 11312a0ea8189414d8e4dd3ab0378ef4, type: 3}
+      backgroudquiz: {fileID: 1633492202700524168, guid: 0f4ee3de3e0fa5240af1f0367b140c05, type: 3}
   - level: 2
     dragdropquiz: []
-    BackgroundImage: {fileID: 1633492202700524168, guid: 0f4ee3de3e0fa5240af1f0367b140c05, type: 3}
   - level: 1
     dragdropquiz: []
-    BackgroundImage: {fileID: 7573958088529151493, guid: 1f878f6ede9e9d146b964ce99831d84f, type: 3}
   - level: 2
     dragdropquiz: []
-    BackgroundImage: {fileID: 6532206365432363777, guid: 6d7fd2beabcef5144a53552415065167, type: 3}

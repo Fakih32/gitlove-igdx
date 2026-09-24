@@ -88,18 +88,11 @@ public class DragDropController : MonoBehaviour {
         }
 
         currentLevelQuizzes = levelData.getquizdragdrop(currentLevel);
-        Sprite bg = levelData.getspritebg(currentLevel);
 
         if (currentLevelQuizzes == null || currentLevelQuizzes.Length == 0) {
             Debug.LogWarning($"DragDropController: Level {currentLevel} tidak ditemukan atau tidak punya quiz.");
             return;
         }
-
-        // Set background
-        if (backgroundImage != null)
-            backgroundImage.sprite = bg;
-        else
-            Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
 
         if (questionsPerLevel > currentLevelQuizzes.Length) {
             Debug.LogWarning($"DragDropController: questionsPerLevel ({questionsPerLevel}) lebih besar dari jumlah quiz yang tersedia ({currentLevelQuizzes.Length}) untuk level ini -- soal akan berulang.");
@@ -130,6 +123,15 @@ public class DragDropController : MonoBehaviour {
         }
 
         DragDropLevelData.DDquiz quiz = currentLevelQuizzes[quizIndex % currentLevelQuizzes.Length];
+
+        // Set background per question (DDquiz)
+        if (backgroundImage != null) {
+            if (quiz.backgroudquiz != null) {
+                backgroundImage.sprite = quiz.backgroudquiz;
+            }
+        } else {
+            Debug.LogWarning("DragDropController: backgroundImage is not assigned in the Inspector!");
+        }
 
         if (quiz.Dragobject == null || quiz.Dragobject.Count == 0) {
             Debug.LogWarning($"DragDropController: DDquiz[{quizIndex}] tidak punya Dragobject.");
