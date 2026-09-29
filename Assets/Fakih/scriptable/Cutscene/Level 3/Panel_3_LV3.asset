@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
   m_Name: Panel_3_LV3
   m_EditorClassIdentifier: 
-  panelImage: {fileID: -5161565611552284676, guid: ea110435fc4c3d94b8db4ad2ba796a83, type: 3}
+  panelImage: {fileID: -7937658552264707835, guid: c720d4d765a949641b2c2f208e4b9c05, type: 3}
   bubbleSprite: {fileID: 0}
   dialogueText: Welcome
   displayDuration: 1
@@ -26,6 +26,6 @@ MonoBehaviour:
   transitionDuration: 0.4
   chatPanelTransitionDuration: 0.2
   sfxOnEnter: {fileID: 0}
-  voiceOver: {fileID: 0}
+  voiceOver: {fileID: 8300000, guid: 480da9147a9400342929fc411e5e7959, type: 3}
   useKenBurnsEffect: 0
   zoomAmount: 1.15

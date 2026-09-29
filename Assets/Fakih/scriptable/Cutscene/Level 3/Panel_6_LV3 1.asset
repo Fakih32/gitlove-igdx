@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
   m_Name: Panel_6_LV3 1
   m_EditorClassIdentifier: 
-  panelImage: {fileID: 7529135460185057659, guid: 033d3210fd38368469236f2f98ac7559, type: 3}
+  panelImage: {fileID: -8846653114767007988, guid: c2b45a815fd4ea74083947589f953375, type: 3}
   bubbleSprite: {fileID: 0}
   dialogueText: Africa
   displayDuration: 2.5
@@ -26,6 +26,6 @@ MonoBehaviour:
   transitionDuration: 0.4
   chatPanelTransitionDuration: 0.2
   sfxOnEnter: {fileID: 0}
-  voiceOver: {fileID: 0}
+  voiceOver: {fileID: 8300000, guid: 58722a0f2c6fa9b4dbc624464c2a242e, type: 3}
   useKenBurnsEffect: 0
   zoomAmount: 1.15

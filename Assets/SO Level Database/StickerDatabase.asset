@@ -12,11 +12,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055eb497674800648a7b62153db5e5e6, type: 3}
   m_Name: StickerDatabase
   m_EditorClassIdentifier: 
-  lockedSprite: {fileID: 0}
+  lockedSprite: {fileID: 1601482008677013324, guid: 2e7460598d5071947802de9e80d18ef5, type: 3}
   levelStickers:
   - level: {fileID: 11400000, guid: 59243d32e79eec24f802f703c9a9baf1, type: 2}
-    stickers: []
+    stickers:
+    - tier: 0
+      unlockedSprite: {fileID: 21300000, guid: 67321e62ba6bbbf4d90129b00c921293, type: 3}
+      title: Joglo Bronze
+      description: Rumah joglo adalah...
+    - tier: 1
+      unlockedSprite: {fileID: 21300000, guid: 25a2ed1a849854646b9508f192dc60a1, type: 3}
+      title: Joglo Silver
+      description: Joglo Silver...
+    - tier: 2
+      unlockedSprite: {fileID: 21300000, guid: fc7b79700da7ca143b92a665824dad9a, type: 3}
+      title: Joglo Gold
+      description: Joglo Gold...
   - level: {fileID: 11400000, guid: e0bf74cb32cf2d04795d77832420b9e7, type: 2}
-    stickers: []
+    stickers:
+    - tier: 0
+      unlockedSprite: {fileID: 21300000, guid: 5404042b2a0d56048a4cd584723545fd, type: 3}
+      title: Blankon Bronze
+      description: Blankon adalah....
+    - tier: 1
+      unlockedSprite: {fileID: 21300000, guid: 5576d7125a1e6fb49b740dcb5604332e, type: 3}
+      title: Blankon Silver
+      description: Blankon Silver...
+    - tier: 2
+      unlockedSprite: {fileID: 21300000, guid: 8d96fced1445c3a478cf83adc3143632, type: 3}
+      title: Blankon Gold
+      description: Blankon Gold...
   - level: {fileID: 11400000, guid: c80fe5517e7b9054d856c15af38d8df1, type: 2}
-    stickers: []
+    stickers:
+    - tier: 0
+      unlockedSprite: {fileID: 21300000, guid: b328cd24bc7cca043988f97a2d70b8ca, type: 3}
+      title: Makanan Bronze
+      description: Makanan Bronze
+    - tier: 1
+      unlockedSprite: {fileID: 21300000, guid: 79e297b5b74a3f34f857e284fc8fc82d, type: 3}
+      title: Makanan Silver
+      description: Makanan Silver
+    - tier: 2
+      unlockedSprite: {fileID: 21300000, guid: 86ad687846fb1b54390376b05da6b02a, type: 3}
+      title: Makanan Gold
+      description: Makanan Gold
