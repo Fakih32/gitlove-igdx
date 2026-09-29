@@ -14,6 +14,8 @@ public class AudioScript : MonoBehaviour
     public AudioClip wronganswer;
     public AudioClip Clicking;
     public AudioClip Winsound;
+    public AudioClip kakeksalah;
+    public AudioClip arkanbenar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {

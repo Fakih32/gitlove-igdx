@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using System.Collections;
 // ROMBAK dari versi sebelumnya.
 // Perubahan utama:
 // - Ketergantungan ke DataLevelHandler DIHAPUS TOTAL.
@@ -320,14 +320,38 @@ public class DragDropController : MonoBehaviour {
 
     // ---------------------------------------------------------------------------
 
-    // Dipanggil dari DraggableItem tiap kali 1 item berhasil ditaruh di target yang benar
     public void OnTargetHit() {
         targetsHit++;
 
+        Debug.Log($"[DragDrop] OnTargetHit called! targetsHit={targetsHit} / targetsTotal={targetsTotal}");
+
         if (targetsHit >= targetsTotal) {
             LevelSessionManager.Instance?.AddScore(100);
-            Invoke(nameof(NextQuiz), 1.0f);
+
+            int totalQuestions = (questionsPerLevel > 0 && questionsPerLevel <= currentLevelQuizzes.Length) 
+                ? questionsPerLevel 
+                : currentLevelQuizzes.Length;
+
+            Debug.Log($"[DragDrop] All targets hit! questionsAnswered={questionsAnswered}, totalQuestions={totalQuestions}, isLastQuiz={questionsAnswered + 1 >= totalQuestions}");
+
+            bool isLastQuiz = questionsAnswered + 1 >= totalQuestions;
+
+            if (WinAndLoseEffect.instance != null) {
+                Debug.Log($"win and lose start ({(isLastQuiz ? "last quiz / level end" : "between quizzes")})");
+                Coroutine effectCoroutine = WinAndLoseEffect.instance.efekmenang();
+                StartCoroutine(WaitForEffectThenContinue(effectCoroutine));
+            } else {
+                Debug.LogWarning("[DragDrop] WinAndLoseEffect.instance is NULL! Skipping effect.");
+                Invoke(nameof(NextQuiz), 1.0f);
+            }
         }
+    }
+
+    private IEnumerator WaitForEffectThenContinue(Coroutine effectCoroutine) {
+        // Tunggu sampai efek BENAR-BENAR selesai (animasi MoveTowards + pause + keluar)
+        yield return effectCoroutine;
+        Debug.Log("[DragDrop] Effect finished, calling NextQuiz...");
+        NextQuiz();
     }
 
     void NextQuiz() {
@@ -343,13 +367,13 @@ public class DragDropController : MonoBehaviour {
         } else {
             Debug.Log($"DragDropController: Selesai {questionsAnswered} quiz untuk level {currentLevel}. Menyelesaikan mekanik...");
             if (LevelSessionManager.Instance != null) {
-                LevelSessionManager.Instance.OnMechanicComplete();
+                // Tambahkan logika LevelSessionManager di sini, misalnya pindah ke level selection
+                // LevelSessionManager.Instance.FinishLevel();
             } else {
                 Debug.LogWarning("DragDropController: LevelSessionManager.Instance is null. Pastikan jalankan dari MainMenu/LevelSelection agar bisa pindah scene otomatis.");
             }
         }
     }
-
     public static int ResolveCurrentLevelIndex(LevelData currentLevel) {
         if (currentLevel == null) {
             Debug.LogWarning("DragDropController: LevelSessionManager.currentLevel null, fallback ke level index 0");
