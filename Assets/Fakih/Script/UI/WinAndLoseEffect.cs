@@ -8,7 +8,8 @@ public class WinAndLoseEffect : MonoBehaviour
      [SerializeField] public GameObject Lostffect;
     [Header("Tempat Masuk Keluar")]
     public Transform winstart;
-    public Transform tengah;
+    public Transform tengahmenang;
+    public Transform tengahkalah;
     public Transform loststart;
     public Transform lostend;
     public Transform winend;
@@ -49,13 +50,13 @@ public class WinAndLoseEffect : MonoBehaviour
         float speed = Kecepatanefek > 0 ? Kecepatanefek : 500f; // fallback kecepatan
         
         // Pindah ke tengah secara perlahan
-        while (Vector2.Distance(WinEffect.transform.position, tengah.position) > 0.1f)
+        while (Vector2.Distance(WinEffect.transform.position, tengahmenang.position) > 0.1f)
         {
-            WinEffect.transform.position = Vector2.MoveTowards(WinEffect.transform.position, tengah.position, speed * Time.deltaTime);
+            WinEffect.transform.position = Vector2.MoveTowards(WinEffect.transform.position, tengahmenang.position, speed * Time.deltaTime);
             yield return null;
         }
         
-        WinEffect.transform.position = tengah.position;
+        WinEffect.transform.position = tengahmenang.position;
         AudioManager.Instance?.PlaySfx(AudioScript.instance.arkanbenar);
         
         yield return new WaitForSeconds(slient);
@@ -77,13 +78,13 @@ public class WinAndLoseEffect : MonoBehaviour
         float speed = Kecepatanefek > 0 ? Kecepatanefek : 500f; // fallback kecepatan
         
         // Pindah ke tengah secara perlahan
-        while (Vector2.Distance(Lostffect.transform.position, tengah.position) > 0.1f)
+        while (Vector2.Distance(Lostffect.transform.position, tengahkalah.position) > 0.1f)
         {
-            Lostffect.transform.position = Vector2.MoveTowards(Lostffect.transform.position, tengah.position, speed * Time.deltaTime);
+            Lostffect.transform.position = Vector2.MoveTowards(Lostffect.transform.position, tengahkalah.position, speed * Time.deltaTime);
             yield return null;
         }
         
-        Lostffect.transform.position = tengah.position;
+        Lostffect.transform.position = tengahkalah.position;
         AudioManager.Instance?.PlaySfx(AudioScript.instance.kakeksalah);
         
         yield return new WaitForSeconds(slient);
