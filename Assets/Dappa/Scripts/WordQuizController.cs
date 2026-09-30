@@ -172,12 +172,12 @@ public class WordQuizController : MonoBehaviour {
                Coroutine effectCoroutine = WinAndLoseEffect.instance.efekmenang();
                 StartCoroutine(WaitForWinEffectThenContinue(effectCoroutine));
             }
-            foreach (Text field in letterFields) field.color = Color.green;
+            //foreach (Text field in letterFields) field.color = Color.green; //dikomen bang since udah ada efek menang kalah
             LevelSessionManager.Instance?.AddScore(100);
              AudioManager.Instance?.PlaySfx(AudioScript.instance.correctaudio);
             
         } else {
-            foreach (Text field in letterFields) field.color = Color.red;
+            //foreach (Text field in letterFields) field.color = Color.red; //dikomen bang since udah ada efek menang kalah
               if (WinAndLoseEffect.instance != null)
             {
                WinAndLoseEffect.instance.efekkalah();
