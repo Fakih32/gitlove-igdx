@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 384689329}
   - component: {fileID: 384689328}
   m_Layer: 5
-  m_Name: titktengah
+  m_Name: titktengahLost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,7 +384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1229, y: 90}
+  m_AnchoredPosition: {x: 454, y: 98}
   m_SizeDelta: {x: 393.4371, y: 317.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &384689328
@@ -1885,6 +1885,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1069723216}
   m_CullTransparentMesh: 1
+--- !u!1 &1150439056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150439057}
+  - component: {fileID: 1150439059}
+  - component: {fileID: 1150439058}
+  m_Layer: 5
+  m_Name: titktengahWin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1150439057
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150439056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1779402899}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1910, y: 98}
+  m_SizeDelta: {x: 393.4371, y: 317.24}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1150439058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150439056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1150439059
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150439056}
+  m_CullTransparentMesh: 1
 --- !u!1 &1218096033
 GameObject:
   m_ObjectHideFlags: 0
@@ -3119,6 +3194,7 @@ RectTransform:
   - {fileID: 1976125714}
   - {fileID: 1335350688}
   - {fileID: 384689327}
+  - {fileID: 1150439057}
   - {fileID: 1465264376}
   m_Father: {fileID: 1218096037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3142,7 +3218,8 @@ MonoBehaviour:
   WinEffect: {fileID: 322881231}
   Lostffect: {fileID: 1976125713}
   winstart: {fileID: 1335350688}
-  tengah: {fileID: 384689327}
+  tengahmenang: {fileID: 1150439057}
+  tengahkalah: {fileID: 384689327}
   loststart: {fileID: 1465264376}
   lostend: {fileID: 1335350688}
   winend: {fileID: 1465264376}
