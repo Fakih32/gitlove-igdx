@@ -32,7 +32,7 @@ public class WinAndLoseEffect : MonoBehaviour
         }
    
      
-     DontDestroyOnLoad(gameObject);
+
     }
     public Coroutine efekmenang()
     {
