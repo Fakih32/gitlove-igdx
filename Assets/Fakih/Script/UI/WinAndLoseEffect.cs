@@ -67,6 +67,8 @@ public class WinAndLoseEffect : MonoBehaviour
             yield return null;
         }
         
+        WinEffect.transform.position = winstart.position;
+        
         if (WinEffect != null) WinEffect.SetActive(false);
     }
 
@@ -92,6 +94,8 @@ public class WinAndLoseEffect : MonoBehaviour
             Lostffect.transform.position = Vector2.MoveTowards(Lostffect.transform.position, lostend.position, speed * Time.deltaTime);
             yield return null;
         }
+        
+        Lostffect.transform.position = loststart.position;
         
         if (Lostffect != null) Lostffect.SetActive(false);
     }

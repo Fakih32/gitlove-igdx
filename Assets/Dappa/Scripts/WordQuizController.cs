@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections;
 // ROMBAK dari versi sebelumnya.
 // Perubahan: field "questionsPerLevel" yang di-set manual di Inspector
 // DIHAPUS. Sebelumnya ini duplikasi data dari WordQuizData -- dua tempat
@@ -167,17 +167,31 @@ public class WordQuizController : MonoBehaviour {
 
         if (isCorrect) {
             isAnswering = false;
-
+            if (WinAndLoseEffect.instance != null)
+            {
+               Coroutine effectCoroutine = WinAndLoseEffect.instance.efekmenang();
+                StartCoroutine(WaitForWinEffectThenContinue(effectCoroutine));
+            }
             foreach (Text field in letterFields) field.color = Color.green;
             LevelSessionManager.Instance?.AddScore(100);
              AudioManager.Instance?.PlaySfx(AudioScript.instance.correctaudio);
-            Invoke(nameof(NextQuiz), 1.5f);
+            
         } else {
             foreach (Text field in letterFields) field.color = Color.red;
+              if (WinAndLoseEffect.instance != null)
+            {
+               WinAndLoseEffect.instance.efekkalah();
+               
+            }
             AudioManager.Instance?.PlaySfx(AudioScript.instance.wronganswer);
         }
     }
-
+private IEnumerator WaitForWinEffectThenContinue(Coroutine effectCoroutine) {
+        // Tunggu sampai efek BENAR-BENAR selesai (animasi MoveTowards + pause + keluar)
+        yield return effectCoroutine;
+        Debug.Log("[DragDrop] Effect finished, calling NextQuiz...");
+        Invoke(nameof(NextQuiz), 1.5f);
+    }
     void NextQuiz() {
         questionsAnswered++;
         currentQuizIndex++;

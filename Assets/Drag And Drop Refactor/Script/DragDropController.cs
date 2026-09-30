@@ -367,8 +367,7 @@ public class DragDropController : MonoBehaviour {
         } else {
             Debug.Log($"DragDropController: Selesai {questionsAnswered} quiz untuk level {currentLevel}. Menyelesaikan mekanik...");
             if (LevelSessionManager.Instance != null) {
-                // Tambahkan logika LevelSessionManager di sini, misalnya pindah ke level selection
-                // LevelSessionManager.Instance.FinishLevel();
+                LevelSessionManager.Instance.OnMechanicComplete();
             } else {
                 Debug.LogWarning("DragDropController: LevelSessionManager.Instance is null. Pastikan jalankan dari MainMenu/LevelSelection agar bisa pindah scene otomatis.");
             }
