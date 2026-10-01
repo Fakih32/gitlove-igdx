@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 470a9425076119d4b9371784f5b7d452
+guid: 5b8e71f127c8e4b4c9f4ba12d519c51e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7264386934665760103
-    second: UI_Buku_0
+      213: -4287570491126458440
+    second: BGwithPanel-04_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_Buku_0
+      name: BGwithPanel-04_0
       rect:
         serializedVersion: 2
-        x: 117
-        y: 75
-        width: 1656
-        height: 966
+        x: 0
+        y: 0
+        width: 4000
+        height: 2251
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 72, y: 90, z: 87, w: 85}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 76dcdbfbd6940d460800000000000000
-      internalID: 7264386934665760103
+      spriteID: 8b7d5f6da5d7f74c0800000000000000
+      internalID: -4287570491126458440
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7120e1c007075044594984cf08f5cfbd
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UI_Buku_0: 7264386934665760103
+      BGwithPanel-04_0: -4287570491126458440
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

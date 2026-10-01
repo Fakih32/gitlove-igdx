@@ -26,15 +26,15 @@ MonoBehaviour:
       - {fileID: 8102128973190087006, guid: b3c04869f898c654a9d596cb80fbb26e, type: 3}
       - {fileID: 8991721380198878447, guid: b3c04869f898c654a9d596cb80fbb26e, type: 3}
       Dragpos:
-      - {x: -500, y: -300}
-      - {x: -250, y: -300}
-      - {x: 250, y: -300}
-      - {x: 500, y: -300}
+      - {x: -580, y: -350}
+      - {x: -260, y: -350}
+      - {x: 260, y: -350}
+      - {x: 580, y: -350}
       Destinypos:
-      - {x: -504.5, y: -62.9}
-      - {x: -337.5, y: -60.2}
-      - {x: -119.9, y: -56.3}
-      - {x: 307, y: -41}
+      - {x: -504.5, y: 140}
+      - {x: -337.5, y: 142.7}
+      - {x: -119.9, y: 146.6}
+      - {x: 307, y: 161.9}
       Imagescale:
       - {x: 0.387, y: 2.057}
       - {x: 0.436, y: 2.534}
@@ -45,44 +45,38 @@ MonoBehaviour:
       - {x: 0.872, y: 2.534}
       - {x: 0.808, y: 3.092}
       - {x: 1.65, y: 4.289}
-      backgroudquiz: {fileID: -8570858487484089284, guid: 11312a0ea8189414d8e4dd3ab0378ef4, type: 3}
+      backgroudquiz: {fileID: -1709662523366921522, guid: aad9894ee0489ca449a704865a3bfc4c, type: 3}
     - Dragobject:
       - {fileID: -1901790440523153144, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
       - {fileID: 3763099409931575115, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
-      - {fileID: -3528306167028181262, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
       - {fileID: 1425925147243648415, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
       - {fileID: 7882605504907470947, guid: 312fcda03391e70438c0365ba084e3a5, type: 3}
       SiluetDrag:
       - {fileID: -6193680244586860599, guid: 5ae823d865b17e348b144fe3c980e49a, type: 3}
       - {fileID: 6164007084374466768, guid: 5ae823d865b17e348b144fe3c980e49a, type: 3}
-      - {fileID: -2452252402366136541, guid: 5ae823d865b17e348b144fe3c980e49a, type: 3}
       - {fileID: -1447182049469136140, guid: 5ae823d865b17e348b144fe3c980e49a, type: 3}
       - {fileID: -9000294522402989358, guid: 5ae823d865b17e348b144fe3c980e49a, type: 3}
       Dragpos:
-      - {x: 100, y: 0}
-      - {x: 200, y: 0}
-      - {x: 500, y: 0}
-      - {x: 700, y: 0}
-      - {x: 700, y: 0}
+      - {x: -580, y: -350}
+      - {x: -260, y: -350}
+      - {x: 260, y: -350}
+      - {x: 580, y: -350}
       Destinypos:
-      - {x: -158.5, y: 83.6}
-      - {x: 284.8, y: 145}
-      - {x: 343.1, y: 145.6}
-      - {x: -560.1, y: 27.3}
-      - {x: -404.6, y: 48.2}
+      - {x: -532.2, y: 183.9}
+      - {x: 701, y: 348}
+      - {x: -817.5, y: 150.3}
+      - {x: -96, y: 241.7}
       Imagescale:
-      - {x: 0.196, y: 0.376}
-      - {x: 0.194, y: 0.653}
-      - {x: 0.242, y: 0.638}
-      - {x: 0.096, y: 0.212}
-      - {x: 0.125, y: 0.294}
+      - {x: 0.325, y: 0.791}
+      - {x: 0.5, y: 1.682}
+      - {x: 0.32, y: 0.625}
+      - {x: 0.44, y: 1.034}
       DestinyImagescale:
-      - {x: 0.196, y: 0.376}
-      - {x: 0.194, y: 0.653}
-      - {x: 0.242, y: 0.638}
-      - {x: 0.096, y: 0.212}
-      - {x: 0.125, y: 0.294}
-      backgroudquiz: {fileID: 1633492202700524168, guid: 0f4ee3de3e0fa5240af1f0367b140c05, type: 3}
+      - {x: 0.325, y: 0.791}
+      - {x: 0.5, y: 1.682}
+      - {x: 0.32, y: 0.625}
+      - {x: 0.44, y: 1.034}
+      backgroudquiz: {fileID: -142147899901207535, guid: 624f6c9b6d484424e8ca5ea5f05588a4, type: 3}
   - level: 1
     dragdropquiz:
     - Dragobject:
@@ -94,13 +88,13 @@ MonoBehaviour:
       - {fileID: 21300000, guid: eb7315fa06eac0f439835ac11b921950, type: 3}
       - {fileID: 21300000, guid: 818dd38f8a6977c4283fe06819f50598, type: 3}
       Dragpos:
-      - {x: -500, y: -300}
-      - {x: 0, y: -300}
-      - {x: 500, y: -300}
+      - {x: 500, y: -350}
+      - {x: 0, y: -350}
+      - {x: -500, y: -350}
       Destinypos:
-      - {x: -472, y: 174}
-      - {x: -69, y: 59}
-      - {x: 388, y: 76}
+      - {x: -472, y: 375}
+      - {x: -69, y: 260}
+      - {x: 388, y: 277}
       Imagescale:
       - {x: 1, y: 2.087}
       - {x: 1.637, y: 3.752}
@@ -109,7 +103,7 @@ MonoBehaviour:
       - {x: 2, y: 2.087}
       - {x: 3.274, y: 3.752}
       - {x: 3.186, y: 3.539}
-      backgroudquiz: {fileID: 7573958088529151493, guid: 1f878f6ede9e9d146b964ce99831d84f, type: 3}
+      backgroudquiz: {fileID: 1624421203954616888, guid: 085bfa8e410933c43b8262d7fde6fe75, type: 3}
   - level: 2
     dragdropquiz:
     - Dragobject:
@@ -125,17 +119,17 @@ MonoBehaviour:
       - {fileID: 21300000, guid: a5dd3cabd0a4a4f4f917415b150bdf37, type: 3}
       - {fileID: 21300000, guid: de40801cffa26164b98a95d3476ad4e5, type: 3}
       Dragpos:
-      - {x: -600, y: -100}
-      - {x: -300, y: -100}
-      - {x: 0, y: -100}
-      - {x: 300, y: -100}
-      - {x: 600, y: -100}
+      - {x: 0, y: -340}
+      - {x: 300, y: -340}
+      - {x: -600, y: -340}
+      - {x: -300, y: -340}
+      - {x: 600, y: -340}
       Destinypos:
-      - {x: -354, y: 146}
-      - {x: -183, y: 146}
-      - {x: -13, y: 146}
-      - {x: 160, y: 146}
-      - {x: 331, y: 146}
+      - {x: -354, y: 219}
+      - {x: -183, y: 219}
+      - {x: -13, y: 219}
+      - {x: 160, y: 219}
+      - {x: 331, y: 219}
       Imagescale:
       - {x: 1.07, y: 2.394}
       - {x: 1.07, y: 2.394}
@@ -148,4 +142,4 @@ MonoBehaviour:
       - {x: 2.14, y: 2.394}
       - {x: 2.14, y: 2.394}
       - {x: 2.14, y: 2.394}
-      backgroudquiz: {fileID: 6532206365432363777, guid: 6d7fd2beabcef5144a53552415065167, type: 3}
+      backgroudquiz: {fileID: -4287570491126458440, guid: 5b8e71f127c8e4b4c9f4ba12d519c51e, type: 3}

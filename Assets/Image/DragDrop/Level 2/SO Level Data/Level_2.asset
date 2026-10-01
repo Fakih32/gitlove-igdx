@@ -18,7 +18,8 @@ MonoBehaviour:
   - Intro_Lv2
   - DragAnddropCopy
   - WordQuizScene
+  restartMechanicIndex: 1
   gameOverSceneName: GameOverScene
   timeLimit: 150
-  threeStarTime: 35
-  twoStarTime: 75
+  threeStarTime: 90
+  twoStarTime: 120
