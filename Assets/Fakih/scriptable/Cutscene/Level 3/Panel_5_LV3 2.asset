@@ -24,7 +24,7 @@ MonoBehaviour:
   transitionIn: 1
   chatPanelTransitionType: 5
   transitionDuration: 0.4
-  chatPanelTransitionDuration: 0.2
+  chatPanelTransitionDuration: 3
   sfxOnEnter: {fileID: 0}
   voiceOver: {fileID: 8300000, guid: fd5623dbe47a2b74ca94063561502202, type: 3}
   useKenBurnsEffect: 0

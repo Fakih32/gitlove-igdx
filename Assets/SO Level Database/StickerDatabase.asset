@@ -19,40 +19,46 @@ MonoBehaviour:
     - tier: 0
       unlockedSprite: {fileID: 21300000, guid: 67321e62ba6bbbf4d90129b00c921293, type: 3}
       title: Joglo Bronze
-      description: Rumah joglo adalah...
+      description: Rumah joglo adalah rumah adat tradisional masyarakat Jawa. Bentuknya
+        unik dengan atapnya yang berbentuk seperti gunung.
     - tier: 1
       unlockedSprite: {fileID: 21300000, guid: 25a2ed1a849854646b9508f192dc60a1, type: 3}
       title: Joglo Silver
-      description: Joglo Silver...
+      description: Rumah joglo adalah rumah adat tradisional masyarakat Jawa. Bentuknya
+        unik dengan atapnya yang berbentuk seperti gunung.
     - tier: 2
       unlockedSprite: {fileID: 21300000, guid: fc7b79700da7ca143b92a665824dad9a, type: 3}
       title: Joglo Gold
-      description: Joglo Gold...
+      description: Rumah joglo adalah rumah adat tradisional masyarakat Jawa. Bentuknya
+        unik dengan atapnya yang berbentuk seperti gunung.
   - level: {fileID: 11400000, guid: e0bf74cb32cf2d04795d77832420b9e7, type: 2}
     stickers:
     - tier: 0
       unlockedSprite: {fileID: 21300000, guid: 5404042b2a0d56048a4cd584723545fd, type: 3}
       title: Blankon Bronze
-      description: Blankon adalah....
+      description: Blangkon adalah aksesoris penutup kepala yang biasa dipakai oleh
+        masyarakat Jawa.
     - tier: 1
       unlockedSprite: {fileID: 21300000, guid: 5576d7125a1e6fb49b740dcb5604332e, type: 3}
       title: Blankon Silver
-      description: Blankon Silver...
+      description: Blangkon adalah aksesoris penutup kepala yang biasa dipakai oleh
+        masyarakat Jawa.
     - tier: 2
       unlockedSprite: {fileID: 21300000, guid: 8d96fced1445c3a478cf83adc3143632, type: 3}
       title: Blankon Gold
-      description: Blankon Gold...
+      description: Blangkon adalah aksesoris penutup kepala yang biasa dipakai oleh
+        masyarakat Jawa.
   - level: {fileID: 11400000, guid: c80fe5517e7b9054d856c15af38d8df1, type: 2}
     stickers:
     - tier: 0
       unlockedSprite: {fileID: 21300000, guid: b328cd24bc7cca043988f97a2d70b8ca, type: 3}
-      title: Makanan Bronze
-      description: Makanan Bronze
+      title: Yangko Bronze
+      description: Yangko, camilan tradisional yang manis dan memiliki teksturkenyal.
     - tier: 1
       unlockedSprite: {fileID: 21300000, guid: 79e297b5b74a3f34f857e284fc8fc82d, type: 3}
-      title: Makanan Silver
-      description: Makanan Silver
+      title: Yangko Silver
+      description: Yangko, camilan tradisional yang manis dan memiliki teksturkenyal.
     - tier: 2
       unlockedSprite: {fileID: 21300000, guid: 86ad687846fb1b54390376b05da6b02a, type: 3}
-      title: Makanan Gold
-      description: Makanan Gold
+      title: Yangko Gold
+      description: Yangko, camilan tradisional yang manis dan memiliki teksturkenyal.
