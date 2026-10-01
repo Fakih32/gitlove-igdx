@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a69121721563b4e84f430f199a7808, type: 3}
   m_Name: Panel_4_LV2
   m_EditorClassIdentifier: 
-  panelImage: {fileID: 8937383122877470381, guid: 6ff4a0b5280ae9f489be6dd33e96bb90, type: 3}
+  panelImage: {fileID: 5930439717680692118, guid: ef033cba7319e9249b4764d58797bb79, type: 3}
   bubbleSprite: {fileID: 0}
   dialogueText: Africa
   displayDuration: 2.5
